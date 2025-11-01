@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { Line } from "@/components/ui/line";
 
 const NavbarLogo = ({ className }: { className?: string }) => {
   return (
@@ -79,7 +80,7 @@ const Navbar = () => {
     <nav className="menu-container" ref={container}>
       <div className="menu-bar">
         <div className="menu-logo">
-          <NavbarLogo />
+          <NavbarLogo className="text-black dark:text-white"/>
         </div>
         <div className="flex flex-col gap-3 items-center" data-cursor="pointer" onClick={toggleMenu}>
           <div className="dark:bg-white bg-black w-[20px] h-[2px]"/>
@@ -88,15 +89,15 @@ const Navbar = () => {
         </div>
       </div>
       <div className="menu-overlay">
-        <div className="flex justify-between items-center border-b border-accent p-4">
+        <div className="flex justify-between items-center border-b border-black dark:border-accent p-4">
           <NavbarLogo className="text-black" />
           <div className="mr-3 text-black" data-cursor="pointer" onClick={toggleMenu}>
             <p className="text-3xl">&#x2715;</p>
           </div>
         </div>
 
-        <div className="hidden lg:flex h-full fixed top-0 right-20 bg-accent w-px" />
-        <div className="hidden lg:flex h-full fixed top-0 left-20 bg-accent w-px" />
+        <Line className="h-full fixed top-0 right-20 bg-black" direction="vertical" />
+        <Line className="h-full fixed top-0 left-20 bg-black" direction="vertical" />
 
         <div className="flex flex-col gap-10 max-w-[100em] mx-auto p-5 lg:pt-20">
           <div className="menu-links">

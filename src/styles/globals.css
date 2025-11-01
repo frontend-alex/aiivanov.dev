@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
 
-@import url('./custom.css');
+@import url('./elipsses.css');
 @import url('./navbar.css');
 @import url('./cursor.css');
 @import url('./loading-screen.css');
@@ -141,66 +141,46 @@
   font-family: var(--font-italiana);
 }
 
-@keyframes moveHorizontal {
-  0% {
-    transform: translateX(-50%) translateY(-10%);
-  }
-  50% {
-    transform: translateX(50%) translateY(10%);
-  }
-  100% {
-    transform: translateX(-50%) translateY(-10%);
-  }
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background: transparent;
 }
 
-@keyframes moveInCircle {
-  0% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(180deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+::-webkit-scrollbar-track {
+  background: var(--background, #fff);
+  border-radius: 9999px;
 }
 
-@keyframes moveVertical {
-  0% {
-    transform: translateY(-50%);
-  }
-  50% {
-    transform: translateY(50%);
-  }
-  100% {
-    transform: translateY(-50%);
-  }
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground, #d4d4d8);
+  border-radius: 9999px;
+  border: 2px solid var(--background, #fff);
 }
 
-@theme inline {
-  --animate-first: moveVertical 30s ease infinite;
-  --animate-second: moveInCircle 20s reverse infinite;
-  --animate-third: moveInCircle 40s linear infinite;
-  --animate-fourth: moveHorizontal 40s ease infinite;
-  --animate-fifth: moveInCircle 20s ease infinite;
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground, #18181b);
 }
 
-.animate-ellipse-first {
-  animation: moveVertical 30s ease infinite;
+body.dark ::-webkit-scrollbar-track {
+  background: var(--background, #09090b);
 }
 
-.animate-ellipse-second {
-  animation: moveInCircle 20s reverse infinite;
+body.dark ::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground, #27272a);
+  border: 2px solid var(--background, #09090b);
 }
 
-.animate-ellipse-third {
-  animation: moveInCircle 40s linear infinite;
+body.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground, #fafafa);
 }
 
-.animate-ellipse-fourth {
-  animation: moveHorizontal 40s ease infinite;
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted-foreground, #d4d4d8) var(--background, #fff);
 }
-
-.animate-ellipse-fifth {
-  animation: moveInCircle 20s ease infinite;
+body.dark * {
+  scrollbar-color: var(--muted-foreground, #27272a) var(--background, #09090b);
 }

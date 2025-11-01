@@ -1,3 +1,32 @@
+.h1-word-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.h1-line {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  line-height: 1;
+  gap: 10px;
+}
+
+.h1-word-item {
+  width: max-content;
+  display: flex;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.h1-word-holder {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+
 .loading-screen-container {
   position: fixed;
   top: 0;

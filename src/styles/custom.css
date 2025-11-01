@@ -1,0 +1,49 @@
+/* Ellipse animations are now handled by JavaScript for dynamic merge/explode/collide effects */
+
+.header-section {
+  position: relative;
+}
+
+.custom-ellipse {
+  position: absolute;
+  width: 506.71px;
+  height: 541px;
+  left: 1169px;
+  top: 51px;
+  z-index: -1;
+
+  background: linear-gradient(
+    180deg,
+    var(--primary-red) 0%,
+    rgba(115, 115, 115, 0) 100%
+  );
+  filter: blur(75px);
+  transform-origin: center;
+  will-change: transform, opacity, filter;
+}
+
+.custom-ellipse-2 {
+  position: absolute;
+  width: 271.91px;
+  height: 1569.27px;
+  left: 1169px;
+  top: 682px;
+
+  background: linear-gradient(180deg, var(--primary-red) 0%, rgba(115, 115, 115, 0) 100%);
+  filter: blur(75px);
+  transform: matrix(-0.4, 0.92, 0.92, 0.4, 0, 0);
+}
+
+.custom-ellipse-3 {
+  position: absolute;
+  width: 506.71px;
+  height: 541px;
+  left: -264px;
+  top: 200px;
+  z-index: -1;
+
+  background: linear-gradient(180deg, var(--primary-red) 0%, rgba(115, 115, 115, 0) 100%);
+  filter: blur(75px);
+  transform-origin: center;
+  will-change: transform, opacity, filter;
+}

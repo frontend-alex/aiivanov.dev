@@ -1,5 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
+
+@import url('./custom.css');
+@import url('./navbar.css');
+@import url('./cursor.css');
+
 @import "tailwindcss";
 @import "tw-animate-css";
+
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -37,6 +46,7 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-primary-red: var(--primary-red);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -44,6 +54,8 @@
 }
 
 :root {
+  --font-inter: 'Inter', sans-serif;
+  --font-italiana: 'Italiana', serif;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -76,6 +88,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --primary-red: oklch(0.577 0.195 25.34);
 }
 
 .dark {
@@ -110,6 +123,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --primary-red: oklch(0.577 0.195 25.34);
 }
 
 @layer base {
@@ -118,5 +132,74 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-inter);
   }
+}
+
+.font-italiana {
+  font-family: var(--font-italiana);
+}
+
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
+
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@theme inline {
+  --animate-first: moveVertical 30s ease infinite;
+  --animate-second: moveInCircle 20s reverse infinite;
+  --animate-third: moveInCircle 40s linear infinite;
+  --animate-fourth: moveHorizontal 40s ease infinite;
+  --animate-fifth: moveInCircle 20s ease infinite;
+}
+
+.animate-ellipse-first {
+  animation: moveVertical 30s ease infinite;
+}
+
+.animate-ellipse-second {
+  animation: moveInCircle 20s reverse infinite;
+}
+
+.animate-ellipse-third {
+  animation: moveInCircle 40s linear infinite;
+}
+
+.animate-ellipse-fourth {
+  animation: moveHorizontal 40s ease infinite;
+}
+
+.animate-ellipse-fifth {
+  animation: moveInCircle 20s ease infinite;
 }

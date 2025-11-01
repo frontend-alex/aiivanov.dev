@@ -1,0 +1,61 @@
+.custom-cursor {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), 
+              height 0.4s cubic-bezier(0.23, 1, 0.32, 1), 
+              border-radius 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+              background 0.3s ease;
+  will-change: transform, width, height;
+  backface-visibility: hidden;
+  left: 0;
+  top: 0;
+}
+
+.custom-cursor.cursor-hovering {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 1);
+  mix-blend-mode: difference;
+}
+
+.custom-cursor-follower {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  backface-visibility: hidden;
+  left: 0;
+  top: 0;
+}
+
+/* Hide cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor,
+  .custom-cursor-follower {
+    display: none;
+  }
+}
+
+/* Ensure cursor is visible on all backgrounds */
+body {
+  cursor: none !important;
+}
+
+* {
+  cursor: none !important;
+}
+

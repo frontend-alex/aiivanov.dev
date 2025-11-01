@@ -1,8 +1,10 @@
 import { ThemeProvider } from "@/contexts/ThemeProvider";
 import "@/styles/globals.css";
+import CustomCursor from "@/components/CustomCursor";
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import ReactLenis from "lenis/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,14 +31,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <ReactLenis root>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <CustomCursor />
+            {children}
+          </ThemeProvider>
+        </ReactLenis>
       </body>
     </html>
   );

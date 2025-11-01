@@ -68,8 +68,10 @@ const Navbar = () => {
   useEffect(() => {
     if (isMenuOpened) {
       tl.current?.play();
+      document.body.style.overflow = 'hidden';
     } else {
       tl.current?.reverse();
+      document.body.style.overflow = '';
     }
   }, [isMenuOpened]);
 
@@ -88,7 +90,7 @@ const Navbar = () => {
       <div className="menu-overlay">
         <div className="flex justify-between items-center border-b border-accent p-4">
           <NavbarLogo className="text-black" />
-          <div className="mr-7 text-black" data-cursor="pointer" onClick={toggleMenu}>
+          <div className="mr-3 text-black" data-cursor="pointer" onClick={toggleMenu}>
             <p className="text-3xl">&#x2715;</p>
           </div>
         </div>

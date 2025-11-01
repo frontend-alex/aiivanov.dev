@@ -1,0 +1,41 @@
+.loading-screen-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 9999;
+  pointer-events: none;
+  background-color: #C2FF35;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  background-color: #C2FF35;
+  z-index: 9999;
+  clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%);
+  opacity: 1;
+}
+
+.loading-ai-item {
+  width: max-content;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.loading-ai-holder {
+  position: relative;
+}
+
+.loading-ai-text {
+  color: black;
+  font-size: 80px;
+  font-family: var(--font-italiana);
+  letter-spacing: -0.02em;
+  line-height: 85%;
+  font-weight: bold;
+}
+

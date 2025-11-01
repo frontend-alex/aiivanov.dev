@@ -4,6 +4,7 @@
 @import url('./custom.css');
 @import url('./navbar.css');
 @import url('./cursor.css');
+@import url('./loading-screen.css');
 
 @import "tailwindcss";
 @import "tw-animate-css";

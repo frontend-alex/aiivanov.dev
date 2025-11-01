@@ -18,7 +18,6 @@ const page = () => {
       }}>
         <Navbar />
         <Header isLoading={isLoading} />
-        <div className="h-[2000dvh]"></div>
       </div>
     </>
   );

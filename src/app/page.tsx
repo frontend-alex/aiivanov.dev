@@ -1,158 +1,24 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
-import { EllipseAnimation } from "@/components/EllipseAnimation";
 import { LoadingScreen } from "@/components/LoadingScreen";
-import { useState, useRef } from "react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
+import { Header } from "@/components/header/Header";
+import { useState } from "react";
 
 const page = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const headerRef = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      if (!headerRef.current || isLoading) return;
-
-      // Set initial state for h1 words - hide them more
-      gsap.set(".h1-word-holder", { y: 10, opacity: 0 });
-      
-      // Set initial state for paragraphs
-      gsap.set(".header-subtitle", { y: 30, opacity: 0 });
-      gsap.set(".header-signature", { y: 30, opacity: 0 });
-
-      // Animate h1 words with stagger (same as menu links)
-      gsap.to(".h1-word-holder", {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        stagger: 0.1,
-        ease: "power4.inOut",
-        delay: 0.1,
-      });
-      
-      // Animate subtitle
-      gsap.to(".header-subtitle", {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power4.inOut",
-        delay: 0.5,
-      });
-      
-      // Animate signature
-      gsap.to(".header-signature", {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power4.inOut",
-        delay: 0.7,
-      });
-    },
-    { scope: headerRef, dependencies: [isLoading] }
-  );
 
   return (
     <>
-      {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+      {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />} 
       <div style={{ 
         opacity: isLoading ? 0 : 1, 
         transition: 'opacity 0.3s',
         visibility: isLoading ? 'hidden' : 'visible'
       }}>
         <Navbar />
-
-      {/*  header section */}
-      <header ref={headerRef} className="header-section min-h-[calc(100dvh-80px)] flex items-center justify-center overflow-hidden">
-        <div className="flex flex-col gap-20 max-w-7xl mx-auto relative">
-          <div className="flex flex-col gap-5">
-            <p className="text-stone-400 font-medium text-center text-sm header-subtitle">
-              Software engineer. Designer of interactions. Student of
-              perfection
-            </p>
-            <h1 className="text-4xl sm:text-6xl xl:text-8xl text-center max-w-4xl xl:max-w-full mx-auto h1-word-container">
-              <div className="h1-line">
-                <span className="h1-word-item">
-                  <span className="h1-word-holder">
-                    <span>"Where</span>
-                  </span>
-                </span>
-                <span className="h1-word-item">
-                  <span className="h1-word-holder">
-                    <span className="text-primary-red font-italiana">Code</span>
-                  </span>
-                </span>
-                <span className="h1-word-item">
-                  <span className="h1-word-holder">
-                    <span>Constructs</span>
-                  </span>
-                </span>
-              </div>
-              <div className="h1-line">
-                <span className="h1-word-item">
-                  <span className="h1-word-holder">
-                    <span className="text-primary-red font-italiana">Consciousness</span>
-                  </span>
-                </span>
-                <span className="h1-word-item">
-                  <span className="h1-word-holder">
-                    <span>and</span>
-                  </span>
-                </span>
-              </div>
-              <div className="h1-line">
-                <span className="h1-word-item">
-                  <span className="h1-word-holder">
-                    <span>Design Defines</span>
-                  </span>
-                </span>
-              </div>
-              <div className="h1-line">
-                <span className="h1-word-item">
-                  <span className="h1-word-holder">
-                    <span className="text-primary-red font-italiana">Existence</span>
-                  </span>
-                </span>
-                <span className="h1-word-item">
-                  <span className="h1-word-holder">
-                    <span>"</span>
-                  </span>
-                </span>
-              </div>
-            </h1>
-            <p className="flex justify-end text-sm max-w-5xl px-10 header-signature">
-              - Aleksandar Ivanov
-            </p>
-          </div>
-        </div>
-
-        {/*  vertical lines that will be fixed on the screen */}
-        <div className="w-full absolute bottom-0 bg-accent h-px" />
-        <div className="hidden lg:flex h-full fixed top-0 right-20 bg-accent w-px" />
-        <div className="hidden lg:flex h-full fixed top-0 left-20 bg-accent w-px" />
-        {/*  vertical lines that will be fixed on the screen */}
-
-        <EllipseAnimation
-          className="custom-ellipse"
-          startX={1169}
-          startY={51}
-          startRotation={19.29}
-          delay={0}
-          animationType="first"
-        />
-        <EllipseAnimation
-          className="custom-ellipse-3"
-          startX={-264}
-          startY={200}
-          startRotation={-66.57}
-          delay={2}
-          animationType="second"
-        />
-      </header>
-      {/*  header section */}
-
-      <div className="h-[2000dvh]"></div>
+        <Header isLoading={isLoading} />
+        <div className="h-[2000dvh]"></div>
       </div>
     </>
   );

@@ -8,7 +8,7 @@ import { LoadingScreen } from "@/components/loading-screen";
 import { Header } from "@/components/sections/Header";
 import { ScrollReveal } from "@/components/scroll/ScrollReveal";
 
-const page = () => {
+const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -35,4 +35,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

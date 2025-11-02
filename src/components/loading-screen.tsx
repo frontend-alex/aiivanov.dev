@@ -1,7 +1,7 @@
 "use client";
 
 import { gsap } from "gsap";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 
 interface LoadingScreenProps {

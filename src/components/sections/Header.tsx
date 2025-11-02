@@ -62,7 +62,7 @@ export const Header = ({ isLoading }: HeaderProps) => {
             <div className="h1-line">
               <span className="h1-word-item">
                 <span className="h1-word-holder">
-                  <span>"Where</span>
+                  <span>&ldquo;Where</span>
                 </span>
               </span>
               <span className="h1-word-item">
@@ -103,7 +103,7 @@ export const Header = ({ isLoading }: HeaderProps) => {
               </span>
               <span className="h1-word-item">
                 <span className="h1-word-holder">
-                  <span>"</span>
+                  <span>&rdquo;</span>
                 </span>
               </span>
             </div>

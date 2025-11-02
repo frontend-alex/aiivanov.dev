@@ -56,7 +56,6 @@ export const ScrollReveal = ({
   heroImage,
   logoImage,
   heroCopy = "",
-  overlayText,
   initialScale = 500,
   scrollDistance = 5,
   height = "h-dvh",

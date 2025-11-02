@@ -57,7 +57,7 @@ export default function CustomCursor() {
               isClickable = true;
               break;
             }
-          } catch (err) {
+          } catch {
             // Ignore invalid selector errors
           }
         }

@@ -35,7 +35,7 @@
   height: 100dvh;
   z-index: 9999;
   pointer-events: none;
-  background-color: #C2FF35;
+  background-color: var(--neon-green);
 }
 
 .loading-overlay {
@@ -44,7 +44,7 @@
   left: 0;
   width: 100vw;
   height: 100dvh;
-  background-color: #C2FF35;
+  background-color: var(--neon-green);
   z-index: 9999;
   clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%);
   opacity: 1;

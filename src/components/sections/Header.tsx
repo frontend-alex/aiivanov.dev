@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import { EllipseAnimation } from "@/components/EllipseAnimation";
+import { EllipseAnimation } from "@/components/ui/ellipse";
 import { Line } from "../ui/line";
 
 interface HeaderProps {
@@ -115,9 +115,9 @@ export const Header = ({ isLoading }: HeaderProps) => {
       </div>
 
       {/*  vertical lines that will be fixed on the screen */}
-      <Line className="w-full absolute bottom-0" direction="horizontal" />
-      <Line className="h-full fixed top-0 right-20" direction="vertical" />
-      <Line className="h-full fixed top-0 left-20" direction="vertical" />
+      <Line className="w-full absolute bottom-0 z-50" direction="horizontal" />
+      <Line className="h-full fixed top-0 right-20 z-50" direction="vertical" />
+      <Line className="h-full fixed top-0 left-20 z-50" direction="vertical" />
       {/*  vertical lines that will be fixed on the screen */}
 
       <EllipseAnimation

@@ -24,9 +24,11 @@ const Page = () => {
         <Navbar />
         <Header isLoading={isLoading} />
 
+        {/* Text Section */}
+        <SectionText />
+        
         {/* Scroll Reveal Section */}
         <ScrollReveal
-          logoImage={<SectionText />}
           initialScale={100}
           scrollDistance={2}
         />

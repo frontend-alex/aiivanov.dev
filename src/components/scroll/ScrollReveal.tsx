@@ -99,6 +99,19 @@ export const ScrollReveal = ({
 
   useGSAP(() => {
     if (!svgOverlayRef.current || !logoMaskRef.current) return;
+    
+    // Disable animations on mobile for performance
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      // Just show content, no animations
+      if (heroImgContainerRef.current) {
+        gsap.set(heroImgContainerRef.current, { opacity: 1, scale: 1 });
+      }
+      gsap.set([heroImgLogoRef.current, heroImgCopyRef.current], { opacity: 1 });
+      gsap.set(svgOverlayRef.current, { opacity: 0 });
+      gsap.set(overlayCopyRef.current, { opacity: 0 });
+      return;
+    }
 
     // Set overlay initial styles
     const overlay = svgOverlayRef.current;
@@ -220,9 +233,6 @@ export const ScrollReveal = ({
       {/* Hero logo */}
       <div
         ref={heroImgLogoRef}
-        className="will-change-[opacity]"
-        style={{
-        }}
       >
         {logoImage}
       </div>
@@ -240,7 +250,7 @@ export const ScrollReveal = ({
       {/* Fade overlay */}
       <div
         ref={fadeOverlayRef}
-        className="absolute top-0 left-0 w-full h-full bg-black dark:bg-white will-change-[opacity]"
+        className="absolute top-0 left-0 w-full h-full bg-white will-change-[opacity]"
         style={{ opacity: 0 }}
       />
 
@@ -282,9 +292,10 @@ export const ScrollReveal = ({
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
+          opacity: 0,
         }}
       >
-          <h1>cicki cicki cicki</h1>
+        <h1 className="text-6xl md:text-8xl font-bold uppercase">Animation Complete</h1>
       </div>
     </section>
   );

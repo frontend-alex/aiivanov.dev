@@ -1,14 +1,15 @@
 "use client";
 
 import Navbar from "@/components/navbar";
-import { LoadingScreen } from "@/components/loading-screen";
-import { Header } from "@/components/sections/Header";
-import { useState } from "react";
-import { ScrollReveal } from "@/components/scroll/ScrollReveal";
 import SectionText from "@/components/sections/SectionText";
 
+import { useState } from "react";
+import { LoadingScreen } from "@/components/loading-screen";
+import { Header } from "@/components/sections/Header";
+import { ScrollReveal } from "@/components/scroll/ScrollReveal";
+
 const page = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <div className="overflow-hidden">

@@ -28,10 +28,12 @@ const Page = () => {
         <SectionText />
         
         {/* Scroll Reveal Section */}
+        <div className="hidden md:block">
         <ScrollReveal
           initialScale={100}
           scrollDistance={2}
         />
+        </div>
       </div>
     </div>
   );

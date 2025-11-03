@@ -107,7 +107,7 @@ const SectionText = () => {
       {/* Animated Doodle SVG */}
       <svg
         ref={doodleRef}
-        className="absolute -rotate-12 left-0 top-[80%] -translate-y-1/2 pointer-events-none z-0 opacity-40 w-full h-[200px]"
+        className="absolute lg:-rotate-12 left-0 top-[70%] -translate-y-1/2 pointer-events-none z-0 opacity-40 w-full h-[200px]"
         viewBox="0 0 1920 200"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +169,7 @@ const SectionText = () => {
           </div>
         </div>
       </div>
-      <Line direction="horizontal" className="flex absolute top-1/2 lg:top-[80%]" />
+      <Line direction="horizontal" className="flex absolute top-[70%] lg:top-[80%]" />
     </section>
   );
 };

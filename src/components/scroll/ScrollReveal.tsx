@@ -149,13 +149,11 @@ export const ScrollReveal = ({
       pinSpacing: true,
       scrub: 1,
       onUpdate: (self) => {
-        // Only run animation if we're actually in the section
         if (self.progress === 0 && !self.isActive) {
-          return; // Don't animate if not scrolled to section yet
+          return;
         }
         const scrollProgress = self.progress;
 
-        // Scale hero image and SVG overlay
         if (scrollProgress <= 0.85) {
           const normalizedProgress = scrollProgress * (1 / 0.85);
           const heroImgContainerScale = 1.5 - 0.5 * normalizedProgress;

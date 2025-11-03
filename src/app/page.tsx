@@ -9,7 +9,7 @@ import { Header } from "@/components/sections/Header";
 import { ScrollReveal } from "@/components/scroll/ScrollReveal";
 
 const Page = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="overflow-hidden">
@@ -29,11 +29,12 @@ const Page = () => {
         
         {/* Scroll Reveal Section */}
         <div className="hidden md:block">
-        <ScrollReveal
-          initialScale={100}
-          scrollDistance={2}
-        />
+          <ScrollReveal
+            initialScale={100}
+            scrollDistance={2}
+          />  
         </div>
+
       </div>
     </div>
   );

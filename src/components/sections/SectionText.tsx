@@ -103,11 +103,11 @@ const SectionText = () => {
   });
 
   return (
-    <section ref={sectionRef} className="message-content -mt-[200px] relative">
+    <section ref={sectionRef} className="message-content relative">
       {/* Animated Doodle SVG */}
       <svg
         ref={doodleRef}
-        className="absolute lg:-rotate-12 left-0 top-[70%] -translate-y-1/2 pointer-events-none z-0 opacity-40 w-full h-[200px]"
+        className="absolute -rotate-12 left-0 top-1/2 lg:top-[70%] -translate-y-1/2 pointer-events-none z-0 opacity-40 w-full h-[200px]"
         viewBox="0 0 1920 200"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -160,16 +160,16 @@ const SectionText = () => {
       <div className="container mx-auto flex-center py-28 relative z-10">
         <div className="w-full h-full">
           <div className="msg-wrapper">
-            <h1 className="first-message">SDa ti eba maikata blq blq blq</h1>
+            <h1 className="first-message">Is this supposed to be a long message?</h1>
             <div className="msg-text-scroll">
               <div className="bg-primary-red px-20">
-                <h2 className="font-italiana">Fuel Up</h2>
+                <h2 className="font-italiana">Lets see</h2>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Line direction="horizontal" className="flex absolute top-[70%] lg:top-[80%]" />
+      <Line direction="horizontal"  className="absolute bottom-0"/>
     </section>
   );
 };

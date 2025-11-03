@@ -58,7 +58,7 @@ export const Header = ({ isLoading }: HeaderProps) => {
             Software engineer. Designer of interactions. Student of
             perfection
           </p>
-          <h1 className="text-3xl sm:text-6xl xl:text-8xl text-center max-w-4xl xl:max-w-full mx-auto h1-word-container">
+          <h1 className="text-3xl sm:text-6xl xl:text-8xl  2xl:text-[8.5rem] text-center max-w-4xl xl:max-w-full mx-auto h1-word-container">
             <div className="h1-line">
               <span className="h1-word-item">
                 <span className="h1-word-holder">

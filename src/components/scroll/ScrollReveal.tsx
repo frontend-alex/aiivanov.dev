@@ -56,9 +56,9 @@ export const ScrollReveal = ({
   heroImage,
   logoImage,
   heroCopy = "",
-  initialScale = 500,
+  initialScale = 1000,
   scrollDistance = 5,
-  height = "h-dvh",
+  height = "h-screen",
   showLogoAndCopy = true,
 }: ScrollRevealProps) => {
   const heroRef = useRef<HTMLElement>(null);
@@ -116,7 +116,7 @@ export const ScrollReveal = ({
     // Set overlay initial styles
     const overlay = svgOverlayRef.current;
     overlay.style.width = "100vw";
-    overlay.style.height = "100vh";
+    overlay.style.height = "100dvh";
     overlay.style.position = "fixed";
     overlay.style.top = "0";
     overlay.style.left = "0";
@@ -217,7 +217,7 @@ export const ScrollReveal = ({
   }, [initialScale, scrollDistance, showLogoAndCopy]);
 
   return (
-    <section ref={heroRef} className={`relative w-screen ${height} text-center overflow-hidden`}>
+    <section ref={heroRef} className={`${height} text-center overflow-hidden`}>
       {/* Hero image container */}
       {heroImage && (
         <div
@@ -248,14 +248,13 @@ export const ScrollReveal = ({
       {/* Fade overlay */}
       <div
         ref={fadeOverlayRef}
-        className="absolute top-0 left-0 w-full h-full bg-white will-change-[opacity]"
+        className="w-full h-full bg-white will-change-[opacity]"
         style={{ opacity: 0 }}
       />
 
       {/* SVG Overlay with mask */}
       <div
         ref={svgOverlayRef}
-        className="fixed top-0 left-0 w-screen h-[150vh] z-1"
         style={{
           transformOrigin: "center center",
         }}

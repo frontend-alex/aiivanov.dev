@@ -9,6 +9,19 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@keyframes scroll-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-x {
+  animation: scroll-x 20s linear infinite;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -187,7 +200,7 @@ body.dark * {
 
 @layer components {
   .message-content {
-    @apply min-h-dvh w-full overflow-hidden flex justify-center items-center z-20;
+    @apply w-full overflow-hidden flex justify-center items-center z-20;
 
     .msg-wrapper {
       @apply 2xl:text-[8.5rem] md:text-8xl text-[3.5rem] uppercase leading-[9vw] tracking-[-.35vw] flex flex-col justify-center items-center md:gap-24 gap-14;

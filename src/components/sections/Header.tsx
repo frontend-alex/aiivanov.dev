@@ -21,12 +21,15 @@ export const Header = ({ isLoading = false }: HeaderProps) => {
       className="header-section min-h-[calc(100dvh-80px)] flex items-center justify-center overflow-hidden bg-black"
     >
       <div className="">
-        {/* <img src="/bg.png" className="flex lg:hidden absolute h-screen top-0 w-full left-0 z-0 pointer-events-auto object-cover"/> */}
+        <img
+          src="/bg.png"
+          className="flex lg:hidden absolute h-screen top-0 w-full left-0 z-0 pointer-events-auto object-scale-down"
+        />
         {shouldLoadSpline && (
           <Suspense fallback={null}>
             <SplineScene
               scene="https://prod.spline.design/2Ql1ThaCB26xCcR0/scene.splinecode"
-              className="absolute h-screen top-0 w-full left-0 z-0 pointer-events-auto"
+              className="hidden lg:flex absolute h-screen top-0 w-full left-0 z-0 pointer-events-auto"
             />
           </Suspense>
         )}

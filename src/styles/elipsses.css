@@ -4,9 +4,9 @@
 
 .custom-ellipse {
   position: absolute;
-  width: 506.71px;
-  height: 541px;
-  left: 1169px;
+  width: 206.71px;
+  height: 241px;
+  left: 1469px;
   top: 51px;
   z-index: -1;
 
@@ -34,8 +34,8 @@
 
 .custom-ellipse-3 {
   position: absolute;
-  width: 506.71px;
-  height: 541px;
+  width: 306.71px;
+  height: 341px;
   left: -264px;
   top: 200px;
   z-index: -1;

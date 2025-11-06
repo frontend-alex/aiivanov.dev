@@ -27,8 +27,9 @@
     width: 100vw;
     height: 100dvh;
     background-color: var(--neon-green);
-    z-index: 2;
+    z-index: 200000;
     clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%);
+
 }
 
 

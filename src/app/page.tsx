@@ -9,7 +9,7 @@ import { Header } from "@/components/sections/Header";
 import { ScrollReveal } from "@/components/scroll/ScrollReveal";
 
 const Page = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <div className="overflow-hidden">

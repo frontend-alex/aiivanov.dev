@@ -199,32 +199,37 @@ body.dark * {
 }
 
 @layer components {
+  .header-title {
+    @apply 2xl:text-[8.5rem] md:text-8xl text-[3.5rem] uppercase leading-[9vw] tracking-[-.35vw];
+  }
+
   .message-content {
     @apply w-full overflow-hidden flex justify-center items-center z-20;
+  }
 
-    .msg-wrapper {
-      @apply 2xl:text-[8.5rem] md:text-8xl text-[3.5rem] uppercase leading-[9vw] tracking-[-.35vw] flex flex-col justify-center items-center md:gap-24 gap-14;
+  .message-content .msg-wrapper {
+    /* Replace @apply header-title with the actual utilities */
+    @apply 2xl:text-[8.5rem] md:text-8xl text-[3.5rem] uppercase leading-[9vw] tracking-[-.35vw] flex flex-col justify-center items-center md:gap-24 gap-14;
+  }
 
-      h1:first-of-type {
-        @apply 2xl:max-w-4xl md:max-w-2xl max-w-xs  text-[#b6b6b6] dark:text-[#070707];
-      }
+  .message-content .msg-wrapper h1:first-of-type {
+    @apply 2xl:max-w-4xl md:max-w-2xl max-w-xs text-[#b6b6b6] dark:text-[#070707];
+  }
 
-      h1:last-of-type {
-        @apply 2xl:max-w-7xl md:max-w-4xl max-w-xs  text-[#b6b6b6] dark:text-[#131313];
-      }
-    }
+  .message-content .msg-wrapper h1:last-of-type {
+    @apply 2xl:max-w-7xl md:max-w-4xl max-w-xs text-[#b6b6b6] dark:text-[#131313];
+  }
 
-    p {
-      @apply font-sans;
-    }
+  .message-content p {
+    @apply font-sans;
+  }
 
-    h1,
-    h2 {
-      @apply leading-none;
-    }
+  .message-content h1,
+  .message-content h2 {
+    @apply leading-none;
+  }
 
-    .msg-text-scroll {
-      @apply rotate-3 2xl:translate-y-5 -translate-y-5 absolute z-10;
-    }
+  .message-content .msg-text-scroll {
+    @apply rotate-3 2xl:translate-y-5 -translate-y-5 absolute z-10;
   }
 }

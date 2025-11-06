@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 import { Line } from "../ui/line";
 import { useGSAP } from "@gsap/react";
@@ -6,12 +7,20 @@ import { SplitText } from "gsap/all";
 import { useTheme } from "next-themes";
 import { useRef } from "react";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 const SectionText = () => {
   const { theme } = useTheme();
   const doodleRef = useRef<SVGSVGElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
+  const SCROLL_SPEED_PER_WORD = 30; 
+
   useGSAP(() => {
+    if (!sectionRef.current) return;
+
     const firstMsgSplit = SplitText.create(".first-message", {
       type: "words",
     });
@@ -23,55 +32,89 @@ const SectionText = () => {
       linesClass: "paragraph-line",
     });
 
-    gsap.to(firstMsgSplit.words, {
-      color: theme !== "dark" ? "#000" : "#fff",
-      ease: "power1.in",
-      stagger: 1,
-      scrollTrigger: {
-        trigger: ".message-content",
-        start: "top center",
-        end: "30% center",
-        scrub: true,
+    // Set initial state - text is transparent/low opacity
+    const targetColor = theme !== "dark" ? "#000" : "#fff";
+    const initialColor = theme !== "dark" ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.1)";
+    
+    gsap.set(firstMsgSplit.words, { color: initialColor });
+    if (secMsgSplit.words) {
+      gsap.set(secMsgSplit.words, { color: initialColor });
+    }
+
+    // Animate first message - lights up word by word as you scroll
+    const firstMsgWords = firstMsgSplit.words as HTMLElement[];
+    const wordCount = firstMsgWords.length;
+    const scrollDistance = wordCount * SCROLL_SPEED_PER_WORD;
+    
+    gsap.to(firstMsgWords, {
+      color: targetColor,
+      ease: "none",
+      stagger: {
+        each: 0.1,
+        from: "start",
       },
-    });
-    gsap.to(secMsgSplit.words, {
-      color: theme !== "dark" ? "#000" : "#fff",
-      ease: "power1.in",
-      stagger: 1,
       scrollTrigger: {
-        trigger: ".second-message",
+        trigger: sectionRef.current,
         start: "top center",
-        end: "bottom center",
-        scrub: true,
+        end: `+=${scrollDistance}`, // Scroll distance for all words to light up
+        scrub: 1,
       },
     });
 
+    // Animate second message if it exists - word by word
+    if (secMsgSplit.words && secMsgSplit.words.length > 0) {
+      const secMsgWords = secMsgSplit.words as HTMLElement[];
+      const secWordCount = secMsgWords.length;
+      const secScrollDistance = secWordCount * SCROLL_SPEED_PER_WORD;
+      
+      gsap.to(secMsgWords, {
+        color: targetColor,
+        ease: "none",
+        stagger: {
+          each: 0.1,
+          from: "start",
+        },
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "center center",
+          end: `+=${secScrollDistance}`, // Scroll distance for all words to light up
+          scrub: 1,
+        },
+      });
+    }
+
+    // Reveal scroll text with scroll
     const revealTl = gsap.timeline({
-      delay: 1,
       scrollTrigger: {
         trigger: ".msg-text-scroll",
         start: "top 60%",
+        end: "top 40%",
+        scrub: 1,
       },
     });
     revealTl.to(".msg-text-scroll", {
-      duration: 1,
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      ease: "circ.inOut",
+      ease: "none",
     });
 
-    const paragraphTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".message-content p",
-        start: "top center",
-      },
-    });
-    paragraphTl.from(paragraphSplit.words, {
-      yPercent: 300,
-      rotate: 3,
-      ease: "power1.inOut",
-      duration: 1,
-      stagger: 0.01,
-    });
+    // Paragraph animation with scroll
+    if (paragraphSplit.words && paragraphSplit.words.length > 0) {
+      gsap.set(paragraphSplit.words, { yPercent: 300, rotate: 3, opacity: 0 });
+      
+      gsap.to(paragraphSplit.words, {
+        yPercent: 0,
+        rotate: 0,
+        opacity: 1,
+        ease: "none",
+        stagger: 0.01,
+        scrollTrigger: {
+          trigger: ".message-content p",
+          start: "top center",
+          end: "center center",
+          scrub: 1,
+        },
+      });
+    }
 
     // Animate doodle drawing effect with scroll
     if (doodleRef.current && sectionRef.current) {
@@ -94,20 +137,20 @@ const SectionText = () => {
             trigger: sectionRef.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: 2,
+            scrub: 4,
             markers: false,
           },
         });
       }
     }
-  });
+  }, { scope: sectionRef, dependencies: [theme] });
 
   return (
     <section ref={sectionRef} className="message-content relative">
       {/* Animated Doodle SVG */}
       <svg
         ref={doodleRef}
-        className="absolute -rotate-12 left-0 top-1/2 lg:top-[70%] -translate-y-1/2 pointer-events-none z-0 opacity-40 w-full h-[200px]"
+        className="absolute -rotate-12 left-1/2 -translate-x-1/2 top-1/2 lg:top-[70%] -translate-y-1/2 pointer-events-none z-0 opacity-40 w-screen h-[200px]"
         viewBox="0 0 1920 200"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +212,9 @@ const SectionText = () => {
           </div>
         </div>
       </div>
-      <Line direction="horizontal"  className="absolute bottom-0"/>
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-screen">
+        <Line direction="horizontal" className="w-full"/>
+      </div>
     </section>
   );
 };

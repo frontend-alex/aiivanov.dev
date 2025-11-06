@@ -13,27 +13,40 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const aiHolderRef = useRef<HTMLDivElement>(null);
   const tl = useRef<GSAPTimeline>(null);
+  const safetyTimeoutId = useRef<number | null>(null);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-    
+    // Respect reduced motion: skip loader
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion) {
+      onComplete();
+      return;
+    }
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
     return () => {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
-  }, []);
+  }, [onComplete]);
 
   useGSAP(
     () => {
       if (!containerRef.current || !overlayRef.current || !aiHolderRef.current) return;
 
-      gsap.set(aiHolderRef.current, { y: 75 });
+      // Initial states
+      gsap.set(aiHolderRef.current, { y: 60 });
 
-      tl.current = gsap
+      // Build timeline (forward reveal -> auto reverse)
+      const timeline = gsap
         .timeline({ paused: true })
         .to(overlayRef.current, {
-          duration: 1.25,
+          duration: 0.9,
           clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
           ease: "power4.inOut",
         })
@@ -41,25 +54,41 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           aiHolderRef.current,
           {
             y: 0,
-            duration: 1,
+            duration: 0.7,
             ease: "power4.inOut",
           },
-          "-=0.75"
-        );
-      
-      // Start the timeline (play forward)
-      tl.current?.play();
+          "-=0.5"
+        )
+        // immediately schedule reverse after forward completes
+        .call(() => {
+          timeline.reverse();
+        });
 
-      // After showing, reverse the animation
-      setTimeout(() => {
+      tl.current = timeline;
+
+      // on reverse complete, finish
+      tl.current.eventCallback("onReverseComplete", () => {
+        onComplete();
+      });
+
+      // Safety timeout in case GSAP callbacks don't run
+      safetyTimeoutId.current = window.setTimeout(() => {
+        onComplete();
+      }, 4000);
+
+      // Play forward
+      tl.current.play(0);
+
+      return () => {
         if (tl.current) {
-          tl.current.reverse();
-          // Wait for reverse animation to complete
-          tl.current.eventCallback("onReverseComplete", () => {
-            onComplete();
-          });
+          tl.current.kill();
+          tl.current = null as unknown as GSAPTimeline;
         }
-      }, 2000); // Show time before reversing
+        if (safetyTimeoutId.current) {
+          clearTimeout(safetyTimeoutId.current);
+          safetyTimeoutId.current = null;
+        }
+      };
     },
     { scope: containerRef }
   );

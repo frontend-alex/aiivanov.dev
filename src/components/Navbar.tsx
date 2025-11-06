@@ -99,7 +99,7 @@ const Navbar = () => {
         <Line className="h-full fixed top-0 right-20 bg-black" direction="vertical" />
         <Line className="h-full fixed top-0 left-20 bg-black" direction="vertical" />
 
-        <div className="flex flex-col gap-10 max-w-[100em] mx-auto p-5 lg:pt-20">
+        <div className="flex flex-col gap-10 max-w-[90em] mx-auto p-5 lg:pt-20">
           <div className="menu-links">
             {navLinks.map((link, index) => (
               <div className="menu-link-item" key={index}>

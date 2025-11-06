@@ -6,7 +6,6 @@ import SectionText from "@/components/sections/SectionText";
 import { useState } from "react";
 import { LoadingScreen } from "@/components/loading-screen";
 import { Header } from "@/components/sections/Header";
-import { ScrollReveal } from "@/components/scroll/ScrollReveal";
 
 const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,15 +25,6 @@ const Page = () => {
 
         {/* Text Section */}
         <SectionText />
-        
-        {/* Scroll Reveal Section */}
-        <div className="hidden md:block">
-          <ScrollReveal
-            initialScale={100}
-            scrollDistance={2}
-          />  
-        </div>
-
       </div>
     </div>
   );

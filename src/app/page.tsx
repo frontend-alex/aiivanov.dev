@@ -1,14 +1,28 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Player from "@vimeo/player";
 
 export default function Page() {
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const videoTitleRef = useRef<HTMLDivElement>(null);
+  const desktopIframeRef = useRef<HTMLIFrameElement>(null);
+  const mobileIframeRef = useRef<HTMLIFrameElement>(null);
+  const desktopPlayerRef = useRef<Player | null>(null);
+  const mobilePlayerRef = useRef<Player | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
+    // Initialize Vimeo players
+    if (desktopIframeRef.current) {
+      desktopPlayerRef.current = new Player(desktopIframeRef.current);
+    }
+    if (mobileIframeRef.current) {
+      mobilePlayerRef.current = new Player(mobileIframeRef.current);
+    }
+
     if (typeof window === "undefined" || window.innerWidth < 900) return;
 
     gsap.registerPlugin(ScrollTrigger);
@@ -171,6 +185,18 @@ export default function Page() {
     };
   }, []);
 
+  const toggleMute = async () => {
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
+
+    if (desktopPlayerRef.current) {
+      await desktopPlayerRef.current.setMuted(newMutedState);
+    }
+    if (mobilePlayerRef.current) {
+      await mobilePlayerRef.current.setMuted(newMutedState);
+    }
+  };
+
   return (
     <>
       <section className="header-section header-hero">
@@ -185,9 +211,14 @@ export default function Page() {
       <section className="header-section header-intro">
         <div className="header-video-container-desktop" ref={videoContainerRef}>
           <div className="header-video-preview">
-            <div className="header-video-wrapper">
+            <div 
+              className="header-video-wrapper" 
+              onClick={toggleMute}
+              style={{ cursor: 'pointer' }}
+            >
               <iframe
-                src="https://player.vimeo.com/video/1027126039?background=1&autoplay=1&loop=1&muted=1&dnt=1&app_id=aiivanov"
+                ref={desktopIframeRef}
+                src="https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&muted=1"
                 allow="autoplay; fullscreen"
                 title="Portfolio Showreel"
                 loading="lazy"
@@ -202,9 +233,14 @@ export default function Page() {
 
         <div className="header-video-container-mobile">
           <div className="header-video-preview">
-            <div className="header-video-wrapper">
+            <div 
+              className="header-video-wrapper"
+              onClick={toggleMute}
+              style={{ cursor: 'pointer' }}
+            >
               <iframe
-                src="https://player.vimeo.com/video/1027126039?background=1&autoplay=1&loop=1&muted=1&dnt=1&app_id=aiivanov"
+                ref={mobileIframeRef}
+                src="https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&muted=1"
                 allow="autoplay; fullscreen"
                 title="Portfolio Showreel"
                 loading="lazy"
@@ -224,3 +260,4 @@ export default function Page() {
     </>
   );
 }
+

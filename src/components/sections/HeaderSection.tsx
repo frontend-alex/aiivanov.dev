@@ -5,26 +5,14 @@ import { MoveDown } from 'lucide-react'
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Player from "@vimeo/player";
 
-export default function HeaderSection() {
+export default function Page() {
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const videoTitleRef = useRef<HTMLDivElement>(null);
-  const desktopIframeRef = useRef<HTMLIFrameElement>(null);
-  const mobileIframeRef = useRef<HTMLIFrameElement>(null);
-  const desktopPlayerRef = useRef<Player | null>(null);
-  const mobilePlayerRef = useRef<Player | null>(null);
+
   const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
-    // Initialize Vimeo players
-    if (desktopIframeRef.current) {
-      desktopPlayerRef.current = new Player(desktopIframeRef.current);
-    }
-    if (mobileIframeRef.current) {
-      mobilePlayerRef.current = new Player(mobileIframeRef.current);
-    }
-
     if (typeof window === "undefined" || window.innerWidth < 900) return;
 
     gsap.registerPlugin(ScrollTrigger);
@@ -74,138 +62,119 @@ export default function HeaderSection() {
       currentMouseX: 0,
     };
 
-    let ctx = gsap.context(() => {
-      // Handle window resize
-      const handleResize = () => {
-        const newValues = getInitialValues();
-        animationState.initialTranslateY = newValues.translateY;
-        animationState.movementMultiplier = newValues.movementMultiplier;
+    // Handle window resize
+    const handleResize = () => {
+      const newValues = getInitialValues();
+      animationState.initialTranslateY = newValues.translateY;
+      animationState.movementMultiplier = newValues.movementMultiplier;
 
-        if (animationState.scrollProgress === 0) {
-          animationState.currentTranslateY = newValues.translateY;
-        }
-      };
+      if (animationState.scrollProgress === 0) {
+        animationState.currentTranslateY = newValues.translateY;
+      }
+    };
 
-      window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
 
-      // ScrollTrigger animation
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: ".header-intro",
-          start: "top bottom",
-          end: "top 10%",
-          scrub: true,
-          onUpdate: (self) => {
-            animationState.scrollProgress = self.progress;
+    // ScrollTrigger animation
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".header-intro",
+        start: "top bottom",
+        end: "top 10%",
+        scrub: true,
+        onUpdate: (self) => {
+          animationState.scrollProgress = self.progress;
 
-            animationState.currentTranslateY = gsap.utils.interpolate(
-              animationState.initialTranslateY,
-              0,
-              animationState.scrollProgress
+          animationState.currentTranslateY = gsap.utils.interpolate(
+            animationState.initialTranslateY,
+            0,
+            animationState.scrollProgress
+          );
+
+          animationState.scale = gsap.utils.interpolate(
+            0.25,
+            1,
+            animationState.scrollProgress
+          );
+
+          animationState.gap = gsap.utils.interpolate(
+            2,
+            1,
+            animationState.scrollProgress
+          );
+
+          if (animationState.scrollProgress <= 0.4) {
+            const firstPartProgress = animationState.scrollProgress / 0.4;
+            animationState.fontSize = gsap.utils.interpolate(
+              80,
+              40,
+              firstPartProgress
             );
-
-            animationState.scale = gsap.utils.interpolate(
-              0.25,
-              1,
-              animationState.scrollProgress
+          } else {
+            const secondPartProgress =
+              (animationState.scrollProgress - 0.4) / 0.6;
+            animationState.fontSize = gsap.utils.interpolate(
+              40,
+              20,
+              secondPartProgress
             );
-
-            animationState.gap = gsap.utils.interpolate(
-              2,
-              1,
-              animationState.scrollProgress
-            );
-
-            if (animationState.scrollProgress <= 0.4) {
-              const firstPartProgress = animationState.scrollProgress / 0.4;
-              animationState.fontSize = gsap.utils.interpolate(
-                80,
-                40,
-                firstPartProgress
-              );
-            } else {
-              const secondPartProgress =
-                (animationState.scrollProgress - 0.4) / 0.6;
-              animationState.fontSize = gsap.utils.interpolate(
-                40,
-                20,
-                secondPartProgress
-              );
-            }
-          },
+          }
         },
-      });
-
-      // Mouse tracking
-      const handleMouseMove = (e: MouseEvent) => {
-        animationState.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      };
-
-      document.addEventListener("mousemove", handleMouseMove);
-
-      // Animation loop using gsap.ticker for better performance
-      const updateAnimation = () => {
-        if (window.innerWidth < 900) return;
-
-        const {
-          scale,
-          targetMouseX,
-          currentMouseX,
-          currentTranslateY,
-          fontSize,
-          gap,
-          movementMultiplier,
-        } = animationState;
-
-        const scaledMovementMultiplier = (1 - scale) * movementMultiplier;
-
-        const maxHorizontalMovement =
-          scale < 0.95 ? targetMouseX * scaledMovementMultiplier : 0;
-
-        animationState.currentMouseX = gsap.utils.interpolate(
-          currentMouseX,
-          maxHorizontalMovement,
-          0.05
-        );
-
-        if (videoContainer) {
-          videoContainer.style.transform = `translateY(${currentTranslateY}%) translateX(${animationState.currentMouseX}px) scale(${scale})`;
-          videoContainer.style.gap = `${gap}em`;
-        }
-
-        if (videoTitleElements) {
-          videoTitleElements.forEach((element) => {
-            (element as HTMLElement).style.fontSize = `${fontSize}px`;
-          });
-        }
-      };
-
-      gsap.ticker.add(updateAnimation);
-
-      // Return cleanup function for context
-      return () => {
-        window.removeEventListener("resize", handleResize);
-        document.removeEventListener("mousemove", handleMouseMove);
-        gsap.ticker.remove(updateAnimation);
-      };
+      },
     });
 
+    // Mouse tracking
+    const handleMouseMove = (e: MouseEvent) => {
+      animationState.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+
+    // Animation loop
+    const animate = () => {
+      if (window.innerWidth < 900) return;
+
+      const {
+        scale,
+        targetMouseX,
+        currentMouseX,
+        currentTranslateY,
+        fontSize,
+        gap,
+        movementMultiplier,
+      } = animationState;
+
+      const scaledMovementMultiplier = (1 - scale) * movementMultiplier;
+
+      const maxHorizontalMovement =
+        scale < 0.95 ? targetMouseX * scaledMovementMultiplier : 0;
+
+      animationState.currentMouseX = gsap.utils.interpolate(
+        currentMouseX,
+        maxHorizontalMovement,
+        0.05
+      );
+
+      videoContainer.style.transform = `translateY(${currentTranslateY}%) translateX(${animationState.currentMouseX}px) scale(${scale})`;
+      videoContainer.style.gap = `${gap}em`;
+
+      videoTitleElements.forEach((element) => {
+        (element as HTMLElement).style.fontSize = `${fontSize}px`;
+      });
+
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    // Cleanup
     return () => {
-      ctx.revert(); // Cleanup GSAP context
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("mousemove", handleMouseMove);
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
-  const toggleMute = async () => {
-    const newMutedState = !isMuted;
-    setIsMuted(newMutedState);
-
-    if (desktopPlayerRef.current) {
-      await desktopPlayerRef.current.setMuted(newMutedState);
-    }
-    if (mobilePlayerRef.current) {
-      await mobilePlayerRef.current.setMuted(newMutedState);
-    }
-  };
 
   return (
     <>
@@ -234,42 +203,26 @@ export default function HeaderSection() {
       <section className="header-section header-intro">
         <div className="header-video-container-desktop" ref={videoContainerRef}>
           <div className="header-video-preview">
-            <div
-              className="header-video-wrapper"
-              onClick={toggleMute}
-              style={{
-                cursor: 'pointer',
-                backgroundImage: 'url(https://vumbnail.com/1140981207.jpg)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}
-            >
+            <div className="header-video-wrapper">
               <iframe
-                ref={desktopIframeRef}
-                src="https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&muted=1"
+                src="https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov"
                 allow="autoplay; fullscreen"
                 title="Portfolio Showreel"
                 loading="lazy"
               />
             </div>
           </div>
+          <div className="header-video-title" ref={videoTitleRef}>
+            <p></p>
+            <p></p>
+          </div>
         </div>
 
         <div className="header-video-container-mobile">
           <div className="header-video-preview">
-            <div
-              className="header-video-wrapper"
-              onClick={toggleMute}
-              style={{
-                cursor: 'pointer',
-                backgroundImage: 'url(https://vumbnail.com/1140981207.jpg)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}
-            >
+            <div className="header-video-wrapper">
               <iframe
-                ref={mobileIframeRef}
-                src="https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&muted=1"
+                src="https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov"
                 allow="autoplay; fullscreen"
                 title="Portfolio Showreel"
                 loading="lazy"
@@ -277,8 +230,8 @@ export default function HeaderSection() {
             </div>
           </div>
           <div className="header-video-title">
-            <p>Portfolio Showreel</p>
-            <p>2024 - 2025</p>
+            <p></p>
+            <p></p>
           </div>
         </div>
       </section>

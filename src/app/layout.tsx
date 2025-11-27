@@ -32,10 +32,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <CustomCursor />
-        <Preloader />
         <ReactLenis root>
-            {children}
+          <CustomCursor />
+          <Preloader />
+          {children}
         </ReactLenis>
       </body>
     </html>

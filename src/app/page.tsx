@@ -7,7 +7,7 @@ export default function Page() {
     <>
       <HeaderSection />
 
-      <section className="header-section header-outro mt-52">
+      <section className="header-section header-outro">
         <p>Building innovative solutions with cutting-edge technology.</p>
       </section>
     </>

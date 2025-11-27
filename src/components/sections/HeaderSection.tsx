@@ -1,5 +1,7 @@
 "use client";
 
+import { MoveDown } from 'lucide-react'
+
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -167,14 +169,14 @@ export default function HeaderSection() {
         );
 
         if (videoContainer) {
-            videoContainer.style.transform = `translateY(${currentTranslateY}%) translateX(${animationState.currentMouseX}px) scale(${scale})`;
-            videoContainer.style.gap = `${gap}em`;
+          videoContainer.style.transform = `translateY(${currentTranslateY}%) translateX(${animationState.currentMouseX}px) scale(${scale})`;
+          videoContainer.style.gap = `${gap}em`;
         }
 
         if (videoTitleElements) {
-            videoTitleElements.forEach((element) => {
+          videoTitleElements.forEach((element) => {
             (element as HTMLElement).style.fontSize = `${fontSize}px`;
-            });
+          });
         }
       };
 
@@ -208,21 +210,39 @@ export default function HeaderSection() {
   return (
     <>
       <section className="header-section header-hero">
-        <h1>AI Ivanov</h1>
-
-        <div className="header-hero-copy">
-          <p>Software Engineer & Entrepreneur</p>
-          <p>(Scroll)</p>
+        <div />
+        <div>
+          <div className="flex flex-col md:flex-row md:items-center justify-between uppercase text-xl font-bold">
+            <p>a</p>
+            <p>really</p>
+            <p>good</p>
+          </div>
+          <h1>software Engineer</h1>
+        </div>
+        <div className="flex items-center justify-between text-lg font-bold">
+          <div className='flex items-center gap-1'>
+            <p>Scroll for</p>
+            <MoveDown />
+          </div>
+          <div className='flex items-center'>
+            <p>cool sh*t</p>
+            <MoveDown />
+          </div>
         </div>
       </section>
 
       <section className="header-section header-intro">
         <div className="header-video-container-desktop" ref={videoContainerRef}>
           <div className="header-video-preview">
-            <div 
-              className="header-video-wrapper" 
+            <div
+              className="header-video-wrapper"
               onClick={toggleMute}
-              style={{ cursor: 'pointer' }}
+              style={{
+                cursor: 'pointer',
+                backgroundImage: 'url(https://vumbnail.com/1140981207.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
             >
               <iframe
                 ref={desktopIframeRef}
@@ -233,18 +253,19 @@ export default function HeaderSection() {
               />
             </div>
           </div>
-          <div className="header-video-title" ref={videoTitleRef}>
-            <p>Portfolio Showreel</p>
-            <p>2024 - 2025</p>
-          </div>
         </div>
 
         <div className="header-video-container-mobile">
           <div className="header-video-preview">
-            <div 
+            <div
               className="header-video-wrapper"
               onClick={toggleMute}
-              style={{ cursor: 'pointer' }}
+              style={{
+                cursor: 'pointer',
+                backgroundImage: 'url(https://vumbnail.com/1140981207.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
             >
               <iframe
                 ref={mobileIframeRef}

@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@import './preloader.css';
 @import './header-section.css';
 
 @keyframes scroll-x {

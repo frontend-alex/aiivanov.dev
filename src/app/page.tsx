@@ -1,6 +1,6 @@
 "use client";
 
-import HeaderSection from "@/components/HeaderSection";
+import HeaderSection from "@/components/sections/HeaderSection";
 
 export default function Page() {
   return (

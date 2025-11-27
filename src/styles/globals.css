@@ -1,18 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Italiana&display=swap");
-
-@import url("./elipsses.css");
-@import url("./navbar.css");
-@import url("./cursor.css");
-@import url("./loading-screen.css");
-
 @import "tailwindcss";
 @import "tw-animate-css";
+
+@import './preloader.css';
+@import './header-section.css';
 
 @keyframes scroll-x {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }
@@ -145,91 +141,9 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-inter);
-  }
-}
-
-.font-italiana {
-  font-family: var(--font-italiana);
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-  background: transparent;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--background, #fff);
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--muted-foreground, #d4d4d8);
-  border-radius: 9999px;
-  border: 2px solid var(--background, #fff);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--foreground, #18181b);
-}
-
-body.dark ::-webkit-scrollbar-track {
-  background: var(--background, #09090b);
-}
-
-body.dark ::-webkit-scrollbar-thumb {
-  background: var(--muted-foreground, #27272a);
-  border: 2px solid var(--background, #09090b);
-}
-
-body.dark ::-webkit-scrollbar-thumb:hover {
-  background: var(--foreground, #fafafa);
-}
-
-/* For Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--muted-foreground, #d4d4d8) var(--background, #fff);
-}
-body.dark * {
-  scrollbar-color: var(--muted-foreground, #27272a) var(--background, #09090b);
-}
-
-@layer components {
-  .header-title {
-    @apply 2xl:text-[8.5rem] md:text-8xl text-[3.5rem] uppercase leading-[9vw] tracking-[-.35vw];
-  }
-
-  .message-content {
-    @apply w-full overflow-hidden flex justify-center items-center z-20;
-  }
-
-  .message-content .msg-wrapper {
-    /* Replace @apply header-title with the actual utilities */
-    @apply 2xl:text-[8.5rem] md:text-8xl text-[3.5rem] uppercase leading-[9vw] tracking-[-.35vw] flex flex-col justify-center items-center md:gap-24 gap-14;
-  }
-
-  .message-content .msg-wrapper h1:first-of-type {
-    @apply 2xl:max-w-4xl md:max-w-2xl max-w-xs text-[#b6b6b6] dark:text-[#070707];
-  }
-
-  .message-content .msg-wrapper h1:last-of-type {
-    @apply 2xl:max-w-7xl md:max-w-4xl max-w-xs text-[#b6b6b6] dark:text-[#131313];
-  }
-
-  .message-content p {
-    @apply font-sans;
-  }
-
-  .message-content h1,
-  .message-content h2 {
-    @apply leading-none;
-  }
-
-  .message-content .msg-text-scroll {
-    @apply rotate-3 2xl:translate-y-5 -translate-y-5 absolute z-10;
   }
 }

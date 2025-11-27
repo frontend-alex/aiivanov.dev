@@ -1,28 +1,48 @@
 "use client";
 
-import { MoveDown } from 'lucide-react'
-
+import { MoveDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Player from "@vimeo/player";
 
 export default function Page() {
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const videoTitleRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const [isMuted, setIsMuted] = useState(true);
+  const [player, setPlayer] = useState<any>(null);
 
+  useEffect(() => {
+    if (iframeRef.current) {
+      const p = new Player(iframeRef.current);
+      p.setMuted(true);
+      setPlayer(p);
+    }
+  }, []);
+
+  const toggleMute = () => {
+    if (!player) return;
+    if (isMuted) {
+      player.setMuted(false);
+      player.setVolume(1);
+      setIsMuted(false);
+    } else {
+      player.setMuted(true);
+      setIsMuted(true);
+    }
+  };
+
+  // === your GSAP code unchanged ===
   useEffect(() => {
     if (typeof window === "undefined" || window.innerWidth < 900) return;
 
     gsap.registerPlugin(ScrollTrigger);
-
     const videoContainer = videoContainerRef.current;
     const videoTitleElements = videoTitleRef.current?.querySelectorAll("p");
-
     if (!videoContainer || !videoTitleElements) return;
 
-    // Responsive breakpoints for initial values
     const breakpoints = [
       { maxWidth: 1000, translateY: -135, movMultiplier: 450 },
       { maxWidth: 1100, translateY: -130, movMultiplier: 500 },
@@ -32,7 +52,6 @@ export default function Page() {
 
     const getInitialValues = () => {
       const width = window.innerWidth;
-
       for (const bp of breakpoints) {
         if (width <= bp.maxWidth) {
           return {
@@ -41,11 +60,7 @@ export default function Page() {
           };
         }
       }
-
-      return {
-        translateY: -105,
-        movementMultiplier: 650,
-      };
+      return { translateY: -105, movementMultiplier: 650 };
     };
 
     const initialValues = getInitialValues();
@@ -62,7 +77,6 @@ export default function Page() {
       currentMouseX: 0,
     };
 
-    // Handle window resize
     const handleResize = () => {
       const newValues = getInitialValues();
       animationState.initialTranslateY = newValues.translateY;
@@ -75,7 +89,6 @@ export default function Page() {
 
     window.addEventListener("resize", handleResize);
 
-    // ScrollTrigger animation
     gsap.timeline({
       scrollTrigger: {
         trigger: ".header-intro",
@@ -90,13 +103,11 @@ export default function Page() {
             0,
             animationState.scrollProgress
           );
-
           animationState.scale = gsap.utils.interpolate(
             0.25,
             1,
             animationState.scrollProgress
           );
-
           animationState.gap = gsap.utils.interpolate(
             2,
             1,
@@ -104,33 +115,22 @@ export default function Page() {
           );
 
           if (animationState.scrollProgress <= 0.4) {
-            const firstPartProgress = animationState.scrollProgress / 0.4;
-            animationState.fontSize = gsap.utils.interpolate(
-              80,
-              40,
-              firstPartProgress
-            );
+            const p = animationState.scrollProgress / 0.4;
+            animationState.fontSize = gsap.utils.interpolate(80, 40, p);
           } else {
-            const secondPartProgress =
-              (animationState.scrollProgress - 0.4) / 0.6;
-            animationState.fontSize = gsap.utils.interpolate(
-              40,
-              20,
-              secondPartProgress
-            );
+            const p = (animationState.scrollProgress - 0.4) / 0.6;
+            animationState.fontSize = gsap.utils.interpolate(40, 20, p);
           }
         },
       },
     });
 
-    // Mouse tracking
     const handleMouseMove = (e: MouseEvent) => {
       animationState.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
     };
 
     document.addEventListener("mousemove", handleMouseMove);
 
-    // Animation loop
     const animate = () => {
       if (window.innerWidth < 900) return;
 
@@ -145,7 +145,6 @@ export default function Page() {
       } = animationState;
 
       const scaledMovementMultiplier = (1 - scale) * movementMultiplier;
-
       const maxHorizontalMovement =
         scale < 0.95 ? targetMouseX * scaledMovementMultiplier : 0;
 
@@ -167,14 +166,12 @@ export default function Page() {
 
     animate();
 
-    // Cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("mousemove", handleMouseMove);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
-
 
   return (
     <>
@@ -188,12 +185,14 @@ export default function Page() {
           </div>
           <h1>software Engineer</h1>
         </div>
+
         <div className="flex items-center justify-between text-lg font-bold">
-          <div className='flex items-center gap-1'>
+          <div className="flex items-center gap-1">
             <p>Scroll for</p>
             <MoveDown />
           </div>
-          <div className='flex items-center'>
+
+          <div className="flex items-center">
             <p>cool sh*t</p>
             <MoveDown />
           </div>
@@ -201,10 +200,15 @@ export default function Page() {
       </section>
 
       <section className="header-section header-intro">
-        <div className="header-video-container-desktop" ref={videoContainerRef}>
+        <div
+          className="header-video-container-desktop"
+          ref={videoContainerRef}
+          onClick={toggleMute}
+        >
           <div className="header-video-preview">
             <div className="header-video-wrapper">
               <iframe
+                ref={iframeRef}
                 src="https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov"
                 allow="autoplay; fullscreen"
                 title="Portfolio Showreel"
@@ -212,13 +216,14 @@ export default function Page() {
               />
             </div>
           </div>
+
           <div className="header-video-title" ref={videoTitleRef}>
             <p></p>
             <p></p>
           </div>
         </div>
 
-        <div className="header-video-container-mobile">
+        <div className="header-video-container-mobile" onClick={toggleMute}>
           <div className="header-video-preview">
             <div className="header-video-wrapper">
               <iframe
@@ -229,6 +234,7 @@ export default function Page() {
               />
             </div>
           </div>
+
           <div className="header-video-title">
             <p></p>
             <p></p>

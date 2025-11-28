@@ -4,12 +4,12 @@ import { ReactNode } from "react";
 
 interface HoverEmojiButtonProps {
     children: ReactNode;
-    emoji?: string;
+    emoji?: string | ReactNode;
     onClick?: () => void;
     className?: string;
 }
 
-export default function HoverEmojiButton({
+export default function HoverSlideButton({
     children,
     emoji = ":)",
     onClick,
@@ -23,7 +23,7 @@ export default function HoverEmojiButton({
             <div className="relative">
                 {/* Emoji circle that slides in from the left */}
                 <div className="absolute left-0 top-0 w-12 h-12 bg-black dark:bg-white rounded-full flex items-center justify-center rotate-180 scale-95 group-hover:scale-100 group-hover:rotate-0 group-hover:-translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] -z-10">
-                    <span className="text-xl text-neutral-100 dark:text-neutral-900">{emoji}</span>
+                    {typeof emoji === "string" ? <span className="text-xl text-neutral-100 dark:text-neutral-900">{emoji}</span> : <i className="text-white dark:text-black">{emoji}</i>}
                 </div>
 
                 {/* Main button content */}

@@ -2,15 +2,14 @@
 
 import gsap from "gsap";
 import Matter from "matter-js";
-
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Link from "next/link";
 
+// Memoized constants outside component to prevent re-creation
 const SOCIAL_ITEMS = [
-    { name: "Instagram", href: "https://www.instagram.com/aleksandr_ivanov", color: "bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500" },
-    { name: "GitHub", href: "https://github.com/aleksandr-ivanov", color: "bg-black" },
-    { name: "LinkedIn", href: "https://www.linkedin.com/in/aleksandr-ivanov-0b0b0b0/", color: "bg-blue-600" },
+    { name: "Instagram", href: "https://www.instagram.com/yourrfavalex", color: "bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500" },
+    { name: "GitHub", href: "https://github.com/frontend-alex", color: "bg-black" },
+    { name: "LinkedIn", href: "https://www.linkedin.com/in/aleksandar-ivanov-0356a8274/", color: "bg-blue-600" },
 ] as const;
 
 const FallingObjects = () => {
@@ -28,8 +27,6 @@ const FallingObjects = () => {
         const container = containerRef.current;
         const scene = sceneRef.current;
 
-        let engine: Matter.Engine;
-        let runner: Matter.Runner;
         let mouseConstraint: Matter.MouseConstraint;
         let bodies: Array<{ body: Matter.Body; element: HTMLElement; width: number; height: number }> = [];
         let resizeObserver: ResizeObserver;
@@ -39,7 +36,12 @@ const FallingObjects = () => {
         }
 
         const initPhysics = () => {
-            engine = Matter.Engine.create();
+            // Prevent double initialization
+            if (engineRef.current) return;
+
+            const engine = Matter.Engine.create();
+            engineRef.current = engine;
+
             engine.gravity = { x: 0, y: 1, scale: 0.001 };
             engine.constraintIterations = 10;
             engine.positionIterations = 20;
@@ -124,11 +126,9 @@ const FallingObjects = () => {
 
             let dragging: Matter.Body | null = null;
             let originalInertia: number | null = null;
-            let isDragging = false;
 
             Matter.Events.on(mouseConstraint, "startdrag", function (event: any) {
                 dragging = event.body;
-                isDragging = true;
                 (window as any).__isDragging = true;
                 if (dragging) {
                     originalInertia = dragging.inertia;
@@ -145,7 +145,6 @@ const FallingObjects = () => {
                     originalInertia = null;
                 }
                 setTimeout(() => {
-                    isDragging = false;
                     (window as any).__isDragging = false;
                 }, 100);
             });
@@ -188,11 +187,11 @@ const FallingObjects = () => {
 
             Matter.World.add(engine.world, mouseConstraint);
 
-            runner = Matter.Runner.create();
+            const runner = Matter.Runner.create();
+            runnerRef.current = runner;
             Matter.Runner.run(runner, engine);
 
-            // Optimized update loop with RAF
-            let animationFrameId: number;
+            // Optimized update loop with GPU acceleration
             function updatePositions() {
                 bodies.forEach(({ body, element, width, height }) => {
                     const x = body.position.x;
@@ -203,7 +202,7 @@ const FallingObjects = () => {
                     element.style.transform = `translate3d(${x - width / 2}px, ${y - height / 2}px, 0) rotate(${angle}rad)`;
                 });
 
-                animationFrameId = requestAnimationFrame(updatePositions);
+                animationFrameRef.current = requestAnimationFrame(updatePositions);
             }
             updatePositions();
 
@@ -223,7 +222,7 @@ const FallingObjects = () => {
 
                     Matter.Body.setPosition(walls[2], { x: width + wallThickness / 2, y: height / 2 });
                     Matter.Body.setVertices(walls[2], Matter.Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height + wallThickness * 2).vertices);
-                }, 150); // Throttle resize
+                }, 150); // Throttle resize to 150ms
             };
 
             resizeObserver = new ResizeObserver(() => {
@@ -239,25 +238,44 @@ const FallingObjects = () => {
             start: "top bottom",
             once: true,
             onEnter: () => {
-                if (!engine) initPhysics();
+                if (!engineRef.current) initPhysics();
             },
         });
 
         return () => {
-            if (engine) {
-                Matter.World.clear(engine.world, false);
-                Matter.Engine.clear(engine);
-                if (runner) Matter.Runner.stop(runner);
+            // Cancel animation frame
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+                animationFrameRef.current = null;
             }
-            if (resizeObserver) resizeObserver.disconnect();
+
+            // Clean up physics engine
+            if (engineRef.current) {
+                Matter.World.clear(engineRef.current.world, false);
+                Matter.Engine.clear(engineRef.current);
+                engineRef.current = null;
+            }
+
+            // Stop runner
+            if (runnerRef.current) {
+                Matter.Runner.stop(runnerRef.current);
+                runnerRef.current = null;
+            }
+
+            // Disconnect resize observer
+            if (resizeObserver) {
+                resizeObserver.disconnect();
+            }
+
+            // Kill ScrollTrigger instances
             ScrollTrigger.getAll().forEach(t => t.kill());
         };
-    }, []);
+    }, []); // Empty dependency array - only run once
 
     return (
         <div ref={containerRef} className="absolute inset-0 z-10 overflow-hidden pointer-events-auto">
             <div ref={sceneRef} className="absolute inset-0 pointer-events-none">
-                {items.map((item, index) => (
+                {SOCIAL_ITEMS.map((item, index) => (
                     <a
                         key={index}
                         href={item.href}

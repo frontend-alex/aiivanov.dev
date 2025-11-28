@@ -218,7 +218,7 @@ const CustomCursor = () => {
   }, [isVisible]);
 
   return (
-    <>
+    <div className="hidden lg:block">
       {/* Outer ring – always circular */}
       <div
         ref={cursorRef}
@@ -238,7 +238,7 @@ const CustomCursor = () => {
           willChange: "transform",
         }}
       />
-    </>
+    </div>
   );
 };
 

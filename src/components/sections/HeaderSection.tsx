@@ -183,9 +183,7 @@ export default function Page() {
             <p>really</p>
             <p>good</p>
           </div>
-          <div className="hero-container">
-            <h1><span>Software Engineer</span></h1>
-          </div>
+          <h1 className="header-title text-[6vw] xl:text-[8vw] -tracking-[0.05em] font-black uppercase">Software Engineer</h1>
         </div>
 
         <div className="flex items-center justify-between text-lg font-bold">

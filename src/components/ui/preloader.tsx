@@ -3,19 +3,27 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
+import { useLenis } from "lenis/react";
+import { usePreloader } from "@/contexts/preloader-context";
 
 const Preloader = () => {
+  const lenis = useLenis();
+
   const preloaderRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLParagraphElement>(null);
   const [isComplete, setIsComplete] = useState(false);
 
+  const { setIsPreloaderComplete } = usePreloader();
+
   useEffect(() => {
-    // Prevent scrolling during preloader
+    if (lenis) {
+      lenis.stop();
+    }
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
 
     gsap.registerPlugin(SplitText);
 
-    // Split text into lines with wrapper for better animation
     const splitTextIntoLines = (selector: string) => {
       return new SplitText(selector, {
         type: "lines",
@@ -26,7 +34,6 @@ const Preloader = () => {
     const copySplit = splitTextIntoLines(".preloader-copy p");
     const counterSplit = splitTextIntoLines(".preloader-counter p");
 
-    // Set initial states with GPU acceleration
     gsap.set(".preloader-revealer", {
       scale: 0,
       transformOrigin: "center center",
@@ -34,11 +41,10 @@ const Preloader = () => {
     });
 
     gsap.set([".preloader-copy p .line", ".preloader-counter p .line"], {
-      y: "120%",
+      y: "100%",
       force3D: true,
     });
 
-    // Smoother counter animation with easing
     const animateCounter = () => {
       const counterElement = counterRef.current;
       if (!counterElement) return;
@@ -59,27 +65,30 @@ const Preloader = () => {
 
     animateCounter();
 
-    // Optimized main timeline with smoother transitions
     const tl = gsap.timeline({
       defaults: {
         ease: "power3.inOut",
       },
       onComplete: () => {
         setIsComplete(true);
+        setIsPreloaderComplete(true);
+
+        if (lenis) {
+          lenis.start();
+        }
+        document.documentElement.style.overflow = "";
         document.body.style.overflow = "";
       },
     });
 
     tl
-      // Text reveals with smoother stagger
       .to([".preloader-copy p .line", ".preloader-counter p .line"], {
         y: "0%",
-        duration: 1.2,
-        stagger: 0.05,
-        ease: "power4.out",
-        delay: 0.5,
+        duration: 1,
+        stagger: 0.075,
+        ease: "power3.out",
+        delay: 1,
       })
-      // Revealer animation - smoother progression
       .to(
         ".preloader-revealer",
         {
@@ -87,7 +96,7 @@ const Preloader = () => {
           duration: 1,
           ease: "power2.out",
         },
-        "-=0.6"
+        "<"
       )
       .to(".preloader-revealer", {
         scale: 0.4,
@@ -104,13 +113,11 @@ const Preloader = () => {
         duration: 1.2,
         ease: "power2.in",
       })
-      // Smooth exit with slight overshoot
       .to(".preloader-revealer", {
         scale: 1,
         duration: 0.3,
         ease: "power1.out",
       })
-      // Preloader exit
       .to(
         ".preloader",
         {
@@ -120,7 +127,6 @@ const Preloader = () => {
         },
         "-=0.8"
       )
-      // Fade out for extra smoothness
       .to(
         ".preloader",
         {
@@ -129,20 +135,46 @@ const Preloader = () => {
           ease: "power2.out",
         },
         "-=0.6"
-      );
+      )
+      .add(() => {
+        const h1Element = document.querySelector(".header-title");
+        if (h1Element) {
+          const split = new SplitText(h1Element, {
+            type: "chars",
+            charsClass: "char",
+          });
 
-    // Cleanup
+          gsap.set(split.chars, {
+            opacity: 0,
+            y: 20,
+          });
+
+          gsap.to(split.chars, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.03,
+            ease: "power3.out",
+          });
+        }
+      }, "-=0.8");
+
     return () => {
       copySplit.revert();
       counterSplit.revert();
       tl.kill();
+
+      if (lenis) {
+        lenis.start();
+      }
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     };
-  }, []);
+  }, [lenis, setIsPreloaderComplete]);
 
   return (
     <div
-      className="preloader fixed top-0 left-0 w-full h-[100svh] flex items-center p-8 bg-background [clip-path:polygon(0%_0%,100%_0%,100%_100%,0%_100%)] will-change-[clip-path,opacity] overflow-hidden z-[9999] [backface-visibility:hidden] antialiased translate-z-0 max-[1000px]:flex-col [&_.line]:will-change-transform [&_.line]:translate-y-[120%] [&_.line]:translate-z-0 [&_.line]:overflow-hidden [&_.line]:[backface-visibility:hidden] [&_.line]:block"
+      className="preloader fixed top-0 left-0 w-full h-[100svh] flex items-center p-8 bg-background [clip-path:polygon(0%_0%,100%_0%,100%_100%,0%_100%)] will-change-[clip-path,opacity] overflow-hidden z-[9999] [backface-visibility:hidden] antialiased translate-z-0 max-[1000px]:flex-col [&_.line]:will-change-transform [&_.line]:translate-y-[100%] [&_.line]:translate-z-0 [&_.line]:overflow-hidden [&_.line]:[backface-visibility:hidden] [&_.line]:block"
       ref={preloaderRef}
       style={{ display: isComplete ? 'none' : 'flex' }}
     >

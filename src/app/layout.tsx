@@ -9,6 +9,7 @@ import ThemeProvider from "@/contexts/theme-provider";
 
 import CustomCursor from "@/components/ui/cursor";
 import Preloader from "@/components/ui/preloader";
+import { PreloaderProvider } from "@/contexts/preloader-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,12 +42,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <ReactLenis root>
-            <CustomCursor />
-            <Preloader />
-            <Navbar />
-            {children}
-          </ReactLenis>
+          <PreloaderProvider>
+            <ReactLenis root>
+              <CustomCursor />
+              <Preloader />
+              <Navbar />
+              {children}
+            </ReactLenis>
+          </PreloaderProvider>
         </ThemeProvider>
       </body>
     </html>

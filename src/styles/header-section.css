@@ -14,30 +14,6 @@
 }
 
 
-.hero-container {
-    height: 20vw;         
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;      
-}
-
-.hero-container h1 {
-    position: relative;
-    margin: 0;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: -0.04em;
-    font-size: 12vw;       
-    line-height: 0.75;     
-}
-
-.hero-container h1 span {
-    display: inline-block;
-    transform-origin: center;
-    transform: translateY(0.1em);
-}
-
 .header-hero-copy {
     display: flex;
     justify-content: space-between;
@@ -140,10 +116,6 @@
     .header-hero {
         justify-content: flex-end;
         gap: 2em;
-    }
-
-    .header-hero h1 {
-        font-size: 15vw;
     }
 
     .header-video-container-desktop {

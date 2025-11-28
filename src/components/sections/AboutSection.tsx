@@ -51,8 +51,8 @@ const AboutSection = () => {
     }, []);
 
     return (
-        <section className="relative min-h-screen flex items-center flex-col gap-10 lg:justify-between lg:flex-row about-section">
-            <div className="flex flex-col gap-3">
+        <section className="relative min-h-screen flex items-center flex-col gap-10 lg:justify-center lg:flex-row about-section sticky top-20 about-section">
+            <div className="flex flex-col justify-center gap-3">
                 <p className="uppercase">Myself</p>
                 <h1
                     ref={h1Ref}
@@ -64,7 +64,7 @@ const AboutSection = () => {
                     forward-thinking brands around the world.
                 </h1>
             </div>
-            <div className="aspect-[16/9] w-full lg:w-[600px] sticky bg-primary top-50 rounded-4xl">
+            <div className="aspect-[16/9] w-full lg:w-[600px]  rounded-4xl">
                 <iframe
                     src="https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov"
                     allow="autoplay; fullscreen"

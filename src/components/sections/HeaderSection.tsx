@@ -135,6 +135,16 @@ export default function Page() {
       },
     });
 
+    gsap.to(".header-video-preview", {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: ".about-section",
+        start: "top bottom",
+        end: "top 0%",
+        scrub: true,
+      },
+    });
+
     const handleMouseMove = (e: MouseEvent) => {
       animationState.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
     };

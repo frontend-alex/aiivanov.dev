@@ -11,19 +11,31 @@
     flex-direction: column;
     justify-content: space-between;
     padding-top: 4em;
-    background-color: #e3e3db;
-    color: #1a1a1a;
 }
 
-.header-hero h1 {
+
+.hero-container {
+    height: 20vw;         
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;      
+}
+
+.hero-container h1 {
     position: relative;
-    left: -0.05em;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 9vw;
-    letter-spacing: -0.04em;
-    line-height: 1;
     margin: 0;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    font-size: 12vw;       
+    line-height: 0.75;     
+}
+
+.hero-container h1 span {
+    display: inline-block;
+    transform-origin: center;
+    transform: translateY(0.1em);
 }
 
 .header-hero-copy {
@@ -72,7 +84,6 @@
     width: 100%;
     aspect-ratio: 16/9;
     border-radius: 1.5rem;
-    background-color: #b9b9b3;
     overflow: hidden;
 }
 

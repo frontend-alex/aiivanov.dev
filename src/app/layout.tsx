@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import ReactLenis from "lenis/react";
+import Navbar from "@/components/navbar";
+import ThemeProvider from "@/contexts/theme-provider";
+
 import CustomCursor from "@/components/ui/cursor";
 import Preloader from "@/components/ui/preloader";
 
@@ -18,8 +21,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Ivanov",
+  title: "AI",
   description: "AI Ivanov is a software engineer and entrepreneur. He is the founder of AI Ivanov and the CEO of AI Ivanov.",
+  icons: {
+    icon: "/images/icon.png",
+    shortcut: "/images/icon.png",
+    apple: "/images/icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -32,11 +40,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReactLenis root>
-          <CustomCursor />
-          <Preloader />
-          {children}
-        </ReactLenis>
+        <ThemeProvider>
+          <ReactLenis root>
+            <CustomCursor />
+            <Preloader />
+            <Navbar />
+            {children}
+          </ReactLenis>
+        </ThemeProvider>
       </body>
     </html>
   );

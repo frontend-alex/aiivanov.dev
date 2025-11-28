@@ -177,13 +177,15 @@ export default function Page() {
     <>
       <section className="header-section header-hero">
         <div />
-        <div>
+        <div className="mt-[100px]">
           <div className="flex flex-col md:flex-row md:items-center justify-between uppercase text-xl font-bold">
             <p>a</p>
             <p>really</p>
             <p>good</p>
           </div>
-          <h1>software Engineer</h1>
+          <div className="hero-container">
+            <h1><span>Software Engineer</span></h1>
+          </div>
         </div>
 
         <div className="flex items-center justify-between text-lg font-bold">

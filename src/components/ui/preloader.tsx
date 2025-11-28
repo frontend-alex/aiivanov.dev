@@ -24,15 +24,15 @@ const Preloader = () => {
 
     gsap.registerPlugin(SplitText);
 
-    const splitTextIntoLines = (selector: string) => {
+    const splitText = (selector: string) => {
       return new SplitText(selector, {
-        type: "lines",
-        linesClass: "line",
+        type: "chars",
+        charsClass: "char",
       });
     };
 
-    const copySplit = splitTextIntoLines(".preloader-copy p");
-    const counterSplit = splitTextIntoLines(".preloader-counter p");
+    const copySplit = splitText(".preloader-copy p");
+    const counterSplit = splitText(".preloader-counter p");
 
     gsap.set(".preloader-revealer", {
       scale: 0,
@@ -40,8 +40,9 @@ const Preloader = () => {
       force3D: true,
     });
 
-    gsap.set([".preloader-copy p .line", ".preloader-counter p .line"], {
-      y: "100%",
+    gsap.set([".preloader-copy p .char", ".preloader-counter p .char"], {
+      opacity: 0,
+      y: 20,
       force3D: true,
     });
 
@@ -82,10 +83,11 @@ const Preloader = () => {
     });
 
     tl
-      .to([".preloader-copy p .line", ".preloader-counter p .line"], {
-        y: "0%",
-        duration: 1,
-        stagger: 0.075,
+      .to([".preloader-copy p .char", ".preloader-counter p .char"], {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.01,
         ease: "power3.out",
         delay: 1,
       })

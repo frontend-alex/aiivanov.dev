@@ -1,8 +1,6 @@
 "use client";
 
-import AboutSection from "@/components/sections/AboutSection";
-import HeaderSection from "@/components/sections/HeaderSection";
-import ProjectsSection from "@/components/sections/ProjectsSection";
+import { HeaderSection, AboutSection, ProjectsSection, TechSection } from "@/components/sections/index";
 
 export default function Page() {
   return (
@@ -10,6 +8,7 @@ export default function Page() {
       <HeaderSection />
       <AboutSection />
       <ProjectsSection />
+      {/* <TechSection /> */}
     </div>
   );
 }

@@ -22,3 +22,28 @@ export const projectsData: ProjectCard[] = [
     },
 
 ]
+
+
+export const footerLinks = [
+    {
+        name: "Sitemap",
+        links: [
+            {
+                name: "Home",
+                href: "/"
+            },
+            {
+                name: "About",
+                href: "/about"
+            },
+            {
+                name: "Projects",
+                href: "/projects"
+            },
+            {
+                name: "Contact",
+                href: "/contact"
+            },
+        ]
+    },
+]

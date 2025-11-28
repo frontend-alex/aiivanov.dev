@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
 
 interface RevealTextProps {
-    children: string;
+    children: string | React.ReactNode;
     className?: string;
     tagName?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div";
     trigger?: "scroll" | "manual";

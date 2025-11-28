@@ -11,7 +11,7 @@ const PreloaderContext = createContext<PreloaderContextType | undefined>(
     undefined
 );
 
-export function PreloaderProvider({ children }: { children: ReactNode }) {
+export default function PreloaderProvider({ children }: { children: ReactNode }) {
     const [isPreloaderComplete, setIsPreloaderComplete] = useState(false);
 
     return (

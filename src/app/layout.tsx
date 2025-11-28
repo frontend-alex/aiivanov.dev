@@ -3,13 +3,13 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import ReactLenis from "lenis/react";
-import Navbar from "@/components/navbar";
-import ThemeProvider from "@/contexts/theme-provider";
 
-import CustomCursor from "@/components/ui/cursor";
-import Preloader from "@/components/ui/preloader";
-import { PreloaderProvider } from "@/contexts/preloader-context";
+import { Navbar, Footer } from '@/components/index'
+import { Cursor, Preloader } from '@/components/ui/index';
+import ReactLenis from "lenis/react";
+
+import ThemeProvider from "@/contexts/theme-provider";
+import PreloaderProvider from "@/contexts/preloader-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,10 +44,11 @@ export default function RootLayout({
         <ThemeProvider>
           <PreloaderProvider>
             <ReactLenis root>
-              <CustomCursor />
+              <Cursor />
               <Preloader />
               <Navbar />
               {children}
+              <Footer />
             </ReactLenis>
           </PreloaderProvider>
         </ThemeProvider>

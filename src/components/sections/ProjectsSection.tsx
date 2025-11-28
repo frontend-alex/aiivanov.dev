@@ -17,7 +17,7 @@ const ProjectsSection = () => {
                     <ProjectCard key={index} {...project} />
                 ))}
             </div>
-            <HoverSlideButton emoji={<MoveRight />} className="mx-auto w-max">See All</HoverSlideButton>
+            <HoverSlideButton href="#" emoji={<MoveRight />} className="mx-auto w-max">See All</HoverSlideButton>
         </section>
     );
 };

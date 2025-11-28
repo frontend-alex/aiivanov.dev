@@ -5,6 +5,7 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Menu, X } from "lucide-react";
+import { footerLinks } from "@/constants/data";
 
 const MobileMenu = () => {
     const tl = useRef<gsap.core.Timeline | null>(null);
@@ -71,7 +72,7 @@ const MobileMenu = () => {
 
             {/* Menu Overlay */}
             <div
-                className="menu-overlay fixed top-0 left-0 w-screen h-screen py-5 px-10 bg-primary z-[60] flex flex-col justify-between [clip-path:polygon(0%_0%,100%_0%,100%_0%,0%_0%)]"
+                className="menu-overlay fixed top-0 left-0 w-screen h-[calc(100dvh)] py-5 px-10 bg-primary z-[60] flex flex-col justify-between [clip-path:polygon(0%_0%,100%_0%,100%_0%,0%_0%)]"
             >
                 {/* Header */}
                 <div className="flex justify-between items-center text-white">
@@ -84,13 +85,15 @@ const MobileMenu = () => {
                 {/* Links / Content */}
                 <div className="flex flex-col gap-8 justify-center flex-1 p-4">
                     {/* Replicating navbar.tsx content */}
-                    <div className="menu-link-item overflow-hidden">
-                        <div className="menu-link-item-holder relative">
-                            <Link href="/" className="text-[12vw] leading-[0.9] font-medium text-white block" onClick={toggleMenu}>
-                                Home
-                            </Link>
-                        </div>
-                    </div>
+                    {footerLinks.slice(0, 1).map((link) => (
+                        link.links.map((subLink, subIdx) => (
+                            <div key={subIdx} className="menu-link-item overflow-hidden">
+                                <div className="menu-link-item-holder relative">
+                                    <Link href={subLink.href} className="text-3xl font-medium" onClick={toggleMenu}>{subLink.name}</Link>
+                                </div>
+                            </div>
+                        ))
+                    ))}
 
                     <div className="menu-link-item overflow-hidden">
                         <div className="menu-link-item-holder relative">

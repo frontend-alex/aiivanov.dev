@@ -130,7 +130,7 @@ const ProjectCard = ({ title, image, icon, year, type, videoUrl, technologiesTex
             <div className="absolute -bottom-5 left-0 w-full p-6 z-30 bg-gradient-to-t from-black/80 to-transparent flex flex-col gap-3">
 
                 {/* Title and Metadata */}
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col gap-3 lg:flex-row lg:items-center justify-between">
                     <div className="flex items-center gap-3">
                         <span className="bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center p-2 backdrop-blur-md border border-white/10">
                             {icon}

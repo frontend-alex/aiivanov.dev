@@ -31,7 +31,7 @@ const Navbar = () => {
                 </div>
             </div>
 
-            <HoverSlideButton className="hidden md:flex">Get in touch</HoverSlideButton>
+            <HoverSlideButton href="mailto:alex@aiivanov.dev" className="hidden md:flex">Get in touch</HoverSlideButton>
 
             <MobileMenu />
         </nav>

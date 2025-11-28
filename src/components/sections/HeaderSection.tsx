@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Player from "@vimeo/player";
+import RevealText from "../ui/reveal-text";
 
 export default function Page() {
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -34,7 +35,6 @@ export default function Page() {
     }
   };
 
-  // === your GSAP code unchanged ===
   useEffect(() => {
     if (typeof window === "undefined" || window.innerWidth < 900) return;
 
@@ -125,6 +125,16 @@ export default function Page() {
       },
     });
 
+    gsap.to(".header-hero", {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: ".header-intro",
+        start: "top bottom",
+        end: "top 0%",
+        scrub: true,
+      },
+    });
+
     const handleMouseMove = (e: MouseEvent) => {
       animationState.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
     };
@@ -183,7 +193,13 @@ export default function Page() {
             <p>really</p>
             <p>good</p>
           </div>
-          <h1 className="header-title text-[6vw] xl:text-[8vw] -tracking-[0.05em] font-black uppercase">Software Engineer</h1>
+          <RevealText
+            tagName="h1"
+            className="header-title text-[6.5vw] xl:text-[8vw] -tracking-[0.05em] leading-[1] font-black uppercase"
+            trigger="manual"
+          >
+            Software Engineer
+          </RevealText>
         </div>
 
         <div className="flex items-center justify-between text-lg font-bold">

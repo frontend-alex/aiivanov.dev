@@ -12,7 +12,7 @@ const ProjectsSection = () => {
                 <RevealText tagName="h1" duration={1} delay={0.2} className="font-black text-4xl lg:text-9xl uppercase">Work</RevealText>
                 <RevealText tagName="h1" duration={1} delay={0.5} className="font-black text-4xl lg:text-9xl">'25</RevealText>
             </div>
-            <div className="flex flex-col lg:flex-row gap-5 items-center">
+            <div className="flex flex-col lg:flex-row gap-5 items-center project-section-cards">
                 {projectsData.map((project, index) => (
                     <ProjectCard key={index} {...project} />
                 ))}

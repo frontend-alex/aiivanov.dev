@@ -37,9 +37,9 @@ const AboutSection = () => {
         gsap.to(".about-section", {
             opacity: 0,
             scrollTrigger: {
-                trigger: ".project-section",
+                trigger: ".project-section-cards",
                 start: "top bottom",
-                end: "top 50%",
+                end: "top 0%",
                 scrub: true,
             },
         });
@@ -51,7 +51,7 @@ const AboutSection = () => {
     }, []);
 
     return (
-        <section className="relative min-h-screen flex items-center flex-col gap-10 lg:justify-center lg:flex-row about-section sticky top-20 about-section">
+        <section className=" h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row about-section sticky top-0 about-section">
             <div className="flex flex-col justify-center gap-3">
                 <p className="uppercase">Myself</p>
                 <h1

@@ -45,7 +45,6 @@ export default function RootLayout({
           <PreloaderProvider>
             <ReactLenis root>
               <Cursor />
-              <Preloader />
               <Navbar />
               {children}
               <Footer />

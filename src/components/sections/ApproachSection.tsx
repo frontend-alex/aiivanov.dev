@@ -108,7 +108,7 @@ const ApproachSection = () => {
         <div className="relative w-full h-full bg-white dark:bg-black approach-section" ref={container}>
             {stickyCardsData.map((cardData, index) => (
                 <div
-                    className="sticky-card relative w-full h-screen bg-black dark:bg-white text-white dark:text-black p-6 flex gap-12 will-change-transform
+                    className="sticky-card relative rounded-2xl w-full h-screen bg-black dark:bg-white text-white dark:text-black p-6 flex gap-12 will-change-transform
                      flex-col lg:flex-row lg:gap-12"
                     key={index}
                 >

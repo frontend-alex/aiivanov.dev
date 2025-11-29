@@ -11,13 +11,16 @@ import HoverSlideButton from "@/components/ui/hover-slide-button";
 import { projectsData } from "@/constants/data";
 import { MoveRight } from "lucide-react";
 
-const ProjectsSection = () => {
+const ProjectsSection = ({ triggerElement }: { triggerElement: string }) => {
+
+    //approach-section -> landiong
+    //footer -> about
 
     useEffect(() => {
         gsap.to(".project-section", {
             opacity: 0,
             scrollTrigger: {
-                trigger: ".approach-section",
+                trigger: triggerElement,
                 start: "top bottom",
                 end: "top 0%",
                 scrub: true,

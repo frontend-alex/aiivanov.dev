@@ -58,7 +58,7 @@ const RevealText = ({
                 ease: "power3.out",
                 scrollTrigger: {
                     trigger: elementRef.current,
-                    start: "top 80%",
+                    start: "top 90%", // Start earlier for better mobile experience
                     toggleActions: "play none none reverse",
                 },
             });

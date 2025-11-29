@@ -46,4 +46,56 @@ export const footerLinks = [
             },
         ]
     },
+    {
+        name: "Social",
+        links: [
+            {
+                name: "Instagram",
+                href: "https://www.instagram.com/yourrfavalex"
+            },
+            {
+                name: "GitHub",
+                href: "https://github.com/frontend-alex"
+            },
+            {
+                name: "LinkedIn",
+                href: "https://www.linkedin.com/in/aleksandar-ivanov-0356a8274/"
+            },
+        ]
+    }
 ]
+
+export const stickyCardsData = [
+    {
+        index: "01",
+        title: "Analysis",
+        image: "/sticky-cards/card_1.jpg",
+        subtitle: "User Specifications",
+        description:
+            "I gather and validate requirements stakeholders place on applications, prioritizing specifications based on their business value and documenting them through comprehensive analysis documents validated via acceptance tests.",
+    },
+    {
+        index: "02",
+        title: "Design",
+        image: "/sticky-cards/card_2.jpg",
+        subtitle: "Software & Database Architecture",
+        description:
+            "I create maintainable and secure technical designs using standard notation methods, translating specifications into scalable architecture diagrams, domain models, and database schemas that accommodate future growth.",
+    },
+    {
+        index: "03",
+        title: "Managing",
+        image: "/sticky-cards/card_3.jpg",
+        subtitle: "Version Control & Testing",
+        description:
+            "I employ industry-standard techniques including Git version control, automated testing frameworks, and iterative development processes to continuously improve code quality through incremental changes and comprehensive test coverage.",
+    },
+    {
+        index: "04",
+        title: "Validation",
+        image: "/sticky-cards/card_4.jpg",
+        subtitle: "Quality Assurance & Delivery",
+        description:
+            "I ensure deliverables meet stakeholder expectations through rigorous validation processes, including user acceptance testing, performance benchmarking, and security audits, guaranteeing production-ready solutions that align with business objectives.",
+    },
+];

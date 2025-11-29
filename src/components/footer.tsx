@@ -79,13 +79,13 @@ const Footer = () => {
             </div>
 
 
-            <div className="flex flex-col lg:flex-row items-center justify-between relative z-1 pointer-events-none">
-                <h1 className="footer-animate text-[12vw] pointer-events-auto">AI.</h1>
-                <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-3 text-[3vw] cursor-pointer pointer-events-auto">
+            <div className="flex flex-col lg:flex-row items-center justify-between relative">
+                <h1 className="footer-animate text-[12vw]">AI.</h1>
+                <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="z-[11] flex items-center gap-3 text-[3vw] cursor-pointer">
                     <h1 className="footer-animate text-[5vw]">Back to top</h1>
                     <ArrowUpIcon size={30} />
                 </div>
-                <h1 className="footer-animate text-center text-2xl mt-10 pointer-events-auto">Copyright © 2025 AI.</h1>
+                <h1 className="footer-animate text-center text-2xl mt-10">Copyright © 2025 AI.</h1>
             </div>
         </footer>
     )

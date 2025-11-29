@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { cn } from "@/lib/utils";
 
 interface RevealTextProps {
@@ -26,51 +27,56 @@ const RevealText = ({
     stagger = 0.01,
 }: RevealTextProps) => {
     const elementRef = useRef<HTMLElement>(null);
-    const splitRef = useRef<SplitText | null>(null);
 
-    useEffect(() => {
-        gsap.registerPlugin(SplitText, ScrollTrigger);
+    useGSAP(
+        () => {
+            if (!elementRef.current) return;
 
-        if (!elementRef.current) return;
-
-        // Split text
-        const split = new SplitText(elementRef.current, {
-            type: "chars",
-            charsClass: "char",
-        });
-        splitRef.current = split;
-
-        // Initial state
-        gsap.set(split.chars, {
-            opacity: 0,
-            y: 20,
-            force3D: true,
-        });
-
-        // Animation
-        if (trigger === "scroll") {
-            gsap.to(split.chars, {
-                opacity: 1,
-                y: 0,
-                duration,
-                stagger,
-                delay,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: elementRef.current,
-                    start: "top 90%", // Start earlier for better mobile experience
-                    toggleActions: "play none none reverse",
-                },
+            // Split text
+            const split = new SplitText(elementRef.current, {
+                type: "chars",
+                charsClass: "char",
             });
-        }
 
-        return () => {
-            if (splitRef.current) splitRef.current.revert();
-            // We don't kill all ScrollTriggers here to avoid affecting other components,
-            // but we should kill the specific one created if we stored it.
-            // However, GSAP usually handles cleanup if the element is removed.
-        };
-    }, [children, trigger, delay, duration, stagger]);
+            // Initial state
+            gsap.set(split.chars, {
+                opacity: 0,
+                y: 20,
+                force3D: true,
+                willChange: "opacity, transform",
+            });
+
+            // Animation
+            if (trigger === "scroll") {
+                gsap.to(split.chars, {
+                    opacity: 1,
+                    y: 0,
+                    duration,
+                    stagger,
+                    delay,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: elementRef.current,
+                        start: "top 90%",
+                        toggleActions: "play none none reverse",
+                    },
+                    onComplete: () => {
+                        // Remove will-change after animation completes for better performance
+                        gsap.set(split.chars, { willChange: "auto" });
+                    },
+                });
+            }
+
+            // Cleanup handled automatically by useGSAP context
+            return () => {
+                split.revert();
+            };
+        },
+        {
+            scope: elementRef,
+            dependencies: [children, trigger, delay, duration, stagger],
+        }
+    );
 
     const Tag = tagName;
 

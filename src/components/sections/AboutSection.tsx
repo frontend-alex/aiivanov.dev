@@ -4,11 +4,13 @@ import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 const AboutSection = () => {
+    const container = useRef<HTMLElement>(null);
     const h1Ref = useRef<HTMLHeadingElement>(null);
 
-    useEffect(() => {
+    useGSAP(() => {
         gsap.registerPlugin(SplitText, ScrollTrigger);
 
         if (!h1Ref.current) return;
@@ -34,6 +36,12 @@ const AboutSection = () => {
             },
         });
 
+        return () => {
+            split.revert();
+        };
+    }, { scope: container });
+
+    useEffect(() => {
         gsap.to(".about-section", {
             opacity: 0,
             scrollTrigger: {
@@ -43,15 +51,10 @@ const AboutSection = () => {
                 scrub: true,
             },
         });
-
-        return () => {
-            split.revert();
-            ScrollTrigger.getAll().forEach((t) => t.kill());
-        };
-    }, []);
+    }, [])
 
     return (
-        <section className=" h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row about-section sticky top-0 about-section">
+        <section ref={container} className=" h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row sticky top-0 about-section">
             <div className="flex flex-col justify-center gap-3">
                 <p className="uppercase">Myself</p>
                 <h1

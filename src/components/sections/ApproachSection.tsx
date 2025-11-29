@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -9,12 +9,15 @@ import { stickyCardsData } from "@/constants/data";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const StickyCardsSection = () => {
-    const container = useRef(null);
+const ApproachSection = () => {
+    const container = useRef<HTMLDivElement>(null);
 
     useGSAP(
         () => {
-            const stickyCards = document.querySelectorAll(".sticky-card");
+            if (!container.current) return;
+
+            // Use scoped selector for sticky cards
+            const stickyCards = gsap.utils.toArray<HTMLElement>(".sticky-card", container.current);
 
             stickyCards.forEach((card, index) => {
                 // Pin cards on scroll
@@ -89,8 +92,20 @@ const StickyCardsSection = () => {
         { scope: container }
     );
 
+    useEffect(() => {
+        gsap.to(".approach-section", {
+            opacity: 0,
+            scrollTrigger: {
+                trigger: ".footer",
+                start: "top bottom",
+                end: "top 0%",
+                scrub: true,
+            },
+        });
+    }, []);
+
     return (
-        <div className="relative w-full h-full bg-white dark:bg-black" ref={container}>
+        <div className="relative w-full h-full bg-white dark:bg-black approach-section" ref={container}>
             {stickyCardsData.map((cardData, index) => (
                 <div
                     className="sticky-card relative w-full h-screen bg-black dark:bg-white text-white dark:text-black p-6 flex gap-12 will-change-transform
@@ -147,4 +162,4 @@ const StickyCardsSection = () => {
     );
 };
 
-export default StickyCardsSection;
+export default ApproachSection;

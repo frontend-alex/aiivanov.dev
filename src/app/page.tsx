@@ -1,6 +1,6 @@
 "use client";
 
-import { HeaderSection, AboutSection, ProjectsSection, TechSection, StickyCardsSection } from "@/components/sections/index";
+import { HeaderSection, AboutSection, ProjectsSection, ApproachSection } from "@/components/sections/index";
 
 export default function Page() {
   return (
@@ -10,7 +10,7 @@ export default function Page() {
         <AboutSection />
       </div>
       <ProjectsSection />
-      <StickyCardsSection />
+      <ApproachSection />
       {/* <TechSection /> */}
     </div>
   );

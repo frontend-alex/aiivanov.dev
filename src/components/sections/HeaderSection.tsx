@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Player from "@vimeo/player";
-import RevealText from "../ui/reveal-text";
 
 export default function Page() {
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -203,13 +202,11 @@ export default function Page() {
             <p>really</p>
             <p>good</p>
           </div>
-          <RevealText
-            tagName="h1"
-            className="header-title text-[6.5vw] xl:text-[8vw] -tracking-[0.05em] leading-[1] font-black uppercase"
-            trigger="manual"
+          <h1
+            className="header-title char text-[6.5vw] xl:text-[8vw] -tracking-[0.05em] leading-[1] font-black uppercase"
           >
             Software Engineer
-          </RevealText>
+          </h1>
         </div>
 
         <div className="flex items-center justify-between text-lg font-bold">

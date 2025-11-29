@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
 import { useLenis } from "lenis/react";
 import { usePreloader } from "@/contexts/preloader-context";
 import RevealText from "./reveal-text";
@@ -21,6 +22,8 @@ const Preloader = () => {
     }
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+
+    gsap.registerPlugin(SplitText);
 
     gsap.set(".preloader-revealer", {
       scale: 0,
@@ -121,11 +124,20 @@ const Preloader = () => {
         "-=0.6"
       )
       .add(() => {
-        // The header title is now a RevealText component with trigger="manual"
-        // It sets initial opacity: 0, y: 20. We just need to animate it.
-        const h1Chars = document.querySelectorAll(".header-title .char");
-        if (h1Chars.length > 0) {
-          gsap.to(h1Chars, {
+        // Split and animate header title
+        const headerTitle = document.querySelector(".header-title");
+        if (headerTitle) {
+          const split = new SplitText(headerTitle, {
+            type: "chars",
+            charsClass: "char",
+          });
+
+          gsap.set(split.chars, {
+            opacity: 0,
+            y: 100,
+          });
+
+          gsap.to(split.chars, {
             opacity: 1,
             y: 0,
             duration: 0.8,
@@ -133,7 +145,7 @@ const Preloader = () => {
             ease: "power3.out",
           });
         }
-      }, "-=0.8");
+      }, "-=0.6");
 
     return () => {
       tl.kill();

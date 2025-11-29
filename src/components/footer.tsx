@@ -2,17 +2,19 @@
 
 import gsap from "gsap";
 import Link from "next/link";
+import TransitionLink from "./ui/transition-link";
 import { useEffect, useRef } from "react";
 import { ArrowUpIcon } from "lucide-react";
 import { SplitText } from "gsap/SplitText";
 import { footerLinks } from "@/constants/data";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FallingObjects from "./ui/falling-objects";
+import { useGSAP } from "@gsap/react";
 
 const Footer = () => {
     const footerRef = useRef<HTMLElement>(null);
 
-    useEffect(() => {
+    useGSAP(() => {
         gsap.registerPlugin(ScrollTrigger, SplitText);
 
         if (!footerRef.current) return;
@@ -35,7 +37,7 @@ const Footer = () => {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: footerRef.current,
-                start: "top 60%",
+                start: "top 70%",
                 toggleActions: "play none none reverse",
             }
         });
@@ -54,7 +56,7 @@ const Footer = () => {
                 if (t.trigger === footerRef.current) t.kill();
             });
         };
-    }, []);
+    }, { scope: footerRef });
 
     return (
         <footer ref={footerRef} className="border-t border-neutral-200 px-10 mt-20 relative overflow-hidden min-h-screen flex flex-col justify-between footer">
@@ -70,9 +72,9 @@ const Footer = () => {
                     <div key={idx} className="flex flex-col gap-3 pointer-events-auto">
                         <h1 className="footer-animate font-medium text-2xl">{link.name}</h1>
                         {link.links.map((subLink, subIdx) => (
-                            <Link key={subIdx} href={subLink.href} className="text-2xl text-stone-300 hover:text-stone-400 dark:text-stone-500 dark:hover:text-stone-400 transition-colors duration-300 block w-fit">
+                            <TransitionLink key={subIdx} href={subLink.href} className="text-2xl text-stone-300 hover:text-stone-400 dark:text-stone-500 dark:hover:text-stone-400 transition-colors duration-300 block w-fit">
                                 <span className="footer-animate inline-block">{subLink.name}</span>
-                            </Link>
+                            </TransitionLink>
                         ))}
                     </div>
                 ))}

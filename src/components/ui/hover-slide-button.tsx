@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { ReactNode } from "react";
+import TransitionLink from "./transition-link";
 
 interface HoverEmojiButtonProps {
     children: ReactNode;
@@ -33,7 +34,7 @@ export default function HoverSlideButton({
                 {/* Main button content */}
                 <div className="flex items-center relative px-5 lg:px-6 h-12 lg:h-14 rounded-full bg-black dark:bg-white text-white dark:text-black font-semibold text-base z-10">
                     <div className="overflow-hidden">
-                        <Link href={href || "#"} className="relative inline-block">
+                        <TransitionLink href={href || "#"} className="relative inline-block">
                             {/* Original text that slides out */}
                             <span className="inline-block transition-transform duration-300 ease-out group-hover:-translate-x-full">
                                 {children}
@@ -43,7 +44,7 @@ export default function HoverSlideButton({
                             <span className="absolute left-0 top-0 inline-block translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0">
                                 {children}
                             </span>
-                        </Link>
+                        </TransitionLink>
                     </div>
                 </div>
             </div>

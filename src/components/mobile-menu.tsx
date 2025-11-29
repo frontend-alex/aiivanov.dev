@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import TransitionLink from "./ui/transition-link";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Menu, X } from "lucide-react";
@@ -89,7 +89,7 @@ const MobileMenu = () => {
                         link.links.map((subLink, subIdx) => (
                             <div key={subIdx} className="menu-link-item overflow-hidden">
                                 <div className="menu-link-item-holder relative">
-                                    <Link href={subLink.href} className="text-3xl font-medium" onClick={toggleMenu}>{subLink.name}</Link>
+                                    <TransitionLink href={subLink.href} className="text-3xl font-medium" onClick={toggleMenu}>{subLink.name}</TransitionLink>
                                 </div>
                             </div>
                         ))
@@ -99,7 +99,7 @@ const MobileMenu = () => {
                         <div className="menu-link-item-holder relative">
                             <div className="flex flex-col gap-2">
                                 <p className="text-lg text-white">Building at</p>
-                                <Link href="/" className="text-3xl font-medium text-foreground" onClick={toggleMenu}>@OutSource</Link>
+                                <TransitionLink href="/" className="text-3xl font-medium text-foreground" onClick={toggleMenu}>@OutSource</TransitionLink>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@ const MobileMenu = () => {
                         <div className="menu-link-item-holder relative">
                             <div className="flex flex-col gap-2">
                                 <p className="text-lg text-white">Position</p>
-                                <Link href="/" className="text-3xl font-medium text-foreground" onClick={toggleMenu}>Fullstack Developer</Link>
+                                <TransitionLink href="/" className="text-3xl font-medium text-foreground" onClick={toggleMenu}>Fullstack Developer</TransitionLink>
                             </div>
                         </div>
                     </div>

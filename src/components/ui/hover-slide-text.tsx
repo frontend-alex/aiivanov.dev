@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import TransitionLink from "./transition-link";
 import { ReactNode } from "react";
 
 interface HoverSlideTextProps {
@@ -34,9 +34,9 @@ export default function HoverSlideText({
 
     if (href) {
         return (
-            <Link href={href} className={className} onClick={onClick}>
+            <TransitionLink href={href} className={className} onClick={onClick}>
                 {content}
-            </Link>
+            </TransitionLink>
         );
     }
 

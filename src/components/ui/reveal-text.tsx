@@ -65,6 +65,19 @@ const RevealText = ({
                         gsap.set(split.chars, { willChange: "auto" });
                     },
                 });
+            } else if (trigger === "manual") {
+                // Manual trigger - animate immediately on mount
+                gsap.to(split.chars, {
+                    opacity: 1,
+                    y: 0,
+                    duration,
+                    stagger,
+                    delay,
+                    ease: "power3.out",
+                    onComplete: () => {
+                        gsap.set(split.chars, { willChange: "auto" });
+                    },
+                });
             }
 
             // Cleanup handled automatically by useGSAP context

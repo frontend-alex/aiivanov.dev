@@ -1,10 +1,11 @@
-import Link from "next/link"
+import TransitionLink from "./ui/transition-link";
 import MobileMenu from "./mobile-menu";
 import HoverSlideText from "@/components/ui/hover-slide-text";
 import HoverSlideButton from "@/components/ui/hover-slide-button";
+import Link from "next/link";
 
 const AppLogo = ({ className }: { className?: string }) => {
-    return <Link href={'/'} className={className}>AI.</Link>
+    return <TransitionLink href={'/'} className={className}>AI.</TransitionLink>
 }
 
 const Navbar = () => {
@@ -17,7 +18,6 @@ const Navbar = () => {
                     <p className="text-inverted-stone">Working globally</p>
                 </div>
             </div>
-
             <div className="flex items-center gap-30 hidden md:flex">
                 <div className="flex flex-col">
                     <p>Building at</p>

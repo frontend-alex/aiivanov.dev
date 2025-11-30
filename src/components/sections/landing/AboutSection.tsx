@@ -54,7 +54,7 @@ const AboutSection = () => {
     }, [])
 
     return (
-        <section ref={container} className=" h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row sticky top-0 about-section">
+        <section ref={container} className=" h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row  about-section">
             <div className="flex flex-col justify-center gap-3">
                 <p className="uppercase">Myself</p>
                 <h1

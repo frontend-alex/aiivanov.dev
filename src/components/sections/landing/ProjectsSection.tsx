@@ -124,7 +124,7 @@ const ProjectsSection = ({ triggerElement }: { triggerElement: string }) => {
     }, [triggerElement]);
 
     return (
-        <section className="min-h-screen flex flex-col gap-5 project-section justify-center project-section">
+        <section className="min-h-screen flex flex-col gap-10 project-section justify-center project-section">
             <div className="flex items-center justify-between">
                 <h1 ref={workRef} className="font-black text-4xl lg:text-9xl uppercase">Work</h1>
                 <h1 ref={yearRef} className="font-black text-4xl lg:text-9xl">0'</h1>
@@ -134,9 +134,9 @@ const ProjectsSection = ({ triggerElement }: { triggerElement: string }) => {
                     <ProjectCard key={index} {...project} />
                 ))}
             </div>
-            <HoverSlideButton href="/projects" emoji={<MoveRight />} className="mx-auto w-max">See All</HoverSlideButton>
+            <HoverSlideButton mixBlend={false} href="/projects" emoji={<MoveRight />} className="mx-auto w-max">See All</HoverSlideButton>
         </section>
     );
 };
 
-export default ProjectsSection;
+export default ProjectsSection; 

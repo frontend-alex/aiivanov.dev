@@ -85,7 +85,7 @@ const ProjectCard = ({ title, image, icon, year, type, videoUrl, technologiesTex
             ref={containerRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className="group relative h-[500px] w-full rounded-2xl overflow-hidden cursor-pointer bg-zinc-900"
+            className="group relative h-[500px] lg:h-[800px] w-full rounded-2xl overflow-hidden cursor-pointer bg-zinc-900"
         >
             {/* 1. Background Image (For Parallax and Blur) */}
             <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -94,8 +94,8 @@ const ProjectCard = ({ title, image, icon, year, type, videoUrl, technologiesTex
                         src={image}
                         className="w-full h-full object-cover"
                         alt={title}
-                        width={800}
-                        height={800}
+                        width={1920}
+                        height={1080}
                     />
                 </div>
             </div>
@@ -108,7 +108,7 @@ const ProjectCard = ({ title, image, icon, year, type, videoUrl, technologiesTex
                 {/* Inner Video Container defines size and receives the clip-path animation */}
                 <div
                     ref={videoPopupContentRef}
-                    className="w-[80%] md:w-[60%] aspect-video bg-black relative rounded-lg overflow-hidden"
+                    className="w-[80%] aspect-video bg-black relative rounded-lg overflow-hidden"
                     // Initial clip-path: closed line at the bottom (0% 100%)
                     style={{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" }}
                 >

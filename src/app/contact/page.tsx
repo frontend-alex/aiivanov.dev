@@ -1,9 +1,11 @@
-import { RevealText } from "@/components/ui";
+import { ContactHeaderSection, ContactSection, ProjectsSection } from "@/components/sections/index";
 
 const page = () => {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-black text-white">
-            <RevealText trigger="manual" duration={1} delay={1.3} className="font-black text-[9vw]">Contact Page</RevealText>
+        <div className="px-5 lg:px-10 flex flex-col gap-10">
+            <ContactHeaderSection />
+            <ContactSection />
+            <ProjectsSection triggerElement=".footer" />
         </div>
     );
 }

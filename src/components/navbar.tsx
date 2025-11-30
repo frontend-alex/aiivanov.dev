@@ -31,7 +31,7 @@ const Navbar = () => {
                 </div>
             </div>
 
-            <HoverSlideButton href="mailto:alex@aiivanov.dev" className="hidden md:flex">Get in touch</HoverSlideButton>
+            <HoverSlideButton mixBlend={true} href="mailto:alex@aiivanov.dev" className="hidden md:flex">Get in touch</HoverSlideButton>
 
             <MobileMenu />
         </nav>

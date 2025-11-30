@@ -83,13 +83,13 @@ const MobileMenu = () => {
                 </div>
 
                 {/* Links / Content */}
-                <div className="flex flex-col gap-8 justify-center flex-1 p-4">
+                <div className="flex flex-col gap-8 justify-center flex-1">
                     {/* Replicating navbar.tsx content */}
                     {footerLinks.slice(0, 1).map((link) => (
                         link.links.map((subLink, subIdx) => (
                             <div key={subIdx} className="menu-link-item overflow-hidden">
                                 <div className="menu-link-item-holder relative">
-                                    <TransitionLink href={subLink.href} className="text-3xl font-medium" onClick={toggleMenu}>{subLink.name}</TransitionLink>
+                                    <TransitionLink href={subLink.href} className="text-2xl font-medium" onClick={toggleMenu}>{subLink.name}</TransitionLink>
                                 </div>
                             </div>
                         ))
@@ -98,8 +98,8 @@ const MobileMenu = () => {
                     <div className="menu-link-item overflow-hidden">
                         <div className="menu-link-item-holder relative">
                             <div className="flex flex-col gap-2">
-                                <p className="text-lg text-white">Building at</p>
-                                <TransitionLink href="/" className="text-3xl font-medium text-foreground" onClick={toggleMenu}>@OutSource</TransitionLink>
+                                <p className="text-lg">Building at</p>
+                                <TransitionLink href="/" className="text-2xl font-medium text-white " onClick={toggleMenu}>@OutSource</TransitionLink>
                             </div>
                         </div>
                     </div>
@@ -107,8 +107,8 @@ const MobileMenu = () => {
                     <div className="menu-link-item overflow-hidden">
                         <div className="menu-link-item-holder relative">
                             <div className="flex flex-col gap-2">
-                                <p className="text-lg text-white">Position</p>
-                                <TransitionLink href="/" className="text-3xl font-medium text-foreground" onClick={toggleMenu}>Fullstack Developer</TransitionLink>
+                                <p className="text-lg">Position</p>
+                                <TransitionLink href="/" className="text-2xl font-medium text-white" onClick={toggleMenu}>Fullstack Developer</TransitionLink>
                             </div>
                         </div>
                     </div>

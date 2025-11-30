@@ -119,13 +119,13 @@ const ApproachSection = () => {
                     />
 
                     <div className="flex-[0.5] lg:flex-[2] flex-[1] relative z-10">
-                        <RevealText tagName="h1" className="text-6xl lg:text-8xl font-bold" duration={0.8} delay={0.1}>
+                        <RevealText tagName="h1" className="text-4xl lg:text-9xl font-black" duration={0.8} delay={0.1}>
                             {cardData.index}
                         </RevealText>
                     </div>
                     <div className="flex-[4] pt-6 relative z-10">
                         <div className="w-full lg:w-3/4 flex flex-col gap-6">
-                            <RevealText tagName="h1" className="text-4xl lg:text-6xl font-bold w-full lg:w-3/4" duration={1} delay={0.2}>
+                            <RevealText tagName="h1" className="text-4xl lg:text-7xl w-full lg:w-3/4" duration={1} delay={0.2}>
                                 {cardData.title}
                             </RevealText>
 
@@ -144,12 +144,12 @@ const ApproachSection = () => {
 
                             <div className="flex flex-col lg:flex-row gap-6 lg:gap-6">
                                 <div className="flex-[2]">
-                                    <RevealText tagName="p" className="uppercase font-semibold text-sm lg:text-base" duration={0.6} delay={0.3}>
+                                    <RevealText tagName="p" className="uppercase text-sm lg:text-base" duration={0.6} delay={0.3}>
                                         {cardData.subtitle}
                                     </RevealText>
                                 </div>
                                 <div className="flex-[4]">
-                                    <RevealText tagName="p" className="text-base lg:text-lg leading-relaxed" duration={0.8} delay={0.4}>
+                                    <RevealText tagName="p" className="text-base lg:text-lg" duration={0.8} delay={0.4}>
                                         {cardData.description}
                                     </RevealText>
                                 </div>

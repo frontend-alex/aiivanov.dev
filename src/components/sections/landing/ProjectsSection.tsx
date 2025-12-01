@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import ProjectCard from "@/components/cards/project-card";
 import HoverSlideButton from "@/components/ui/hover-slide-button";
+import { FadeOutSection } from "@/components/ui";
 
 import { projectsData } from "@/constants/data";
 import { MoveRight } from "lucide-react";
@@ -18,17 +19,6 @@ const ProjectsSection = ({ triggerElement }: { triggerElement: string }) => {
 
     useEffect(() => {
         gsap.registerPlugin(SplitText, ScrollTrigger);
-
-        // Fade out animation
-        gsap.to(".project-section", {
-            opacity: 0,
-            scrollTrigger: {
-                trigger: triggerElement,
-                start: "top bottom",
-                end: "top 0%",
-                scrub: true,
-            },
-        });
 
         // Work text animation
         if (workRef.current) {
@@ -116,15 +106,18 @@ const ProjectsSection = ({ triggerElement }: { triggerElement: string }) => {
 
         return () => {
             ScrollTrigger.getAll().forEach((trigger) => {
-                if (trigger.vars.trigger === ".project-section" || trigger.vars.trigger === triggerElement) {
+                if (trigger.vars.trigger === ".project-section") {
                     trigger.kill();
                 }
             });
         };
-    }, [triggerElement]);
+    }, []);
 
     return (
-        <section className="min-h-screen flex flex-col gap-10 project-section justify-center project-section">
+        <FadeOutSection
+            triggerSelector={triggerElement}
+            className="min-h-screen flex flex-col gap-10 project-section justify-center"
+        >
             <div className="flex items-center justify-between">
                 <h1 ref={workRef} className="font-black text-4xl lg:text-9xl uppercase">Work</h1>
                 <h1 ref={yearRef} className="font-black text-4xl lg:text-9xl">0'</h1>
@@ -135,8 +128,8 @@ const ProjectsSection = ({ triggerElement }: { triggerElement: string }) => {
                 ))}
             </div>
             <HoverSlideButton mixBlend={false} href="/projects" emoji={<MoveRight />} className="mx-auto w-max">See All</HoverSlideButton>
-        </section>
+        </FadeOutSection>
     );
 };
 
-export default ProjectsSection; 
+export default ProjectsSection;

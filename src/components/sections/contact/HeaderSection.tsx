@@ -1,26 +1,13 @@
 'use client'
 
-import gsap from "gsap";
-
-import { useEffect } from "react";
-import { RevealText } from "@/components/ui";
+import { RevealText, FadeOutSection } from "@/components/ui";
 
 const HeaderSection = () => {
-
-    useEffect(() => {
-        gsap.to(".header-contact-section", {
-            opacity: 0,
-            scrollTrigger: {
-                trigger: ".contact-section",
-                start: "top bottom",
-                end: "top 0%",
-                scrub: true,
-            },
-        });
-    }, [])
-
     return (
-        <section className="min-h-screen header-contact-section border-b border-accent">
+        <FadeOutSection
+            triggerSelector=".contact-section"
+            className="min-h-screen header-contact-section border-b border-accent"
+        >
             <div className="flex flex-col justify-evenly h-[calc(100vh-5rem)]">
                 <RevealText trigger="manual" duration={1} delay={1.3} className="font-black text-[15vw] uppercase">AIVANOV</RevealText>
                 <div className="flex flex-col lg:flex-row gap-10 flex items-end justify-between">
@@ -35,7 +22,7 @@ const HeaderSection = () => {
                     <RevealText trigger="manual" duration={1} delay={2.5} className="text-xl">(Scroll)</RevealText>
                 </div>
             </div>
-        </section>
+        </FadeOutSection>
     );
 }
 

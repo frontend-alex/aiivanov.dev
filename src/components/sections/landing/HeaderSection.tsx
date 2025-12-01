@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Player from "@vimeo/player";
+import { FadeOutSection } from "@/components/ui";
 
 export default function Page() {
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -124,25 +125,9 @@ export default function Page() {
       },
     });
 
-    gsap.to(".header-hero", {
-      opacity: 0,
-      scrollTrigger: {
-        trigger: ".header-intro",
-        start: "top bottom",
-        end: "top 0%",
-        scrub: true,
-      },
-    });
 
-    gsap.to(".header-video-preview", {
-      opacity: 0,
-      scrollTrigger: {
-        trigger: ".about-section",
-        start: "top bottom",
-        end: "top 0%",
-        scrub: true,
-      },
-    });
+
+
 
     const handleMouseMove = (e: MouseEvent) => {
       animationState.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -194,7 +179,10 @@ export default function Page() {
 
   return (
     <>
-      <section className="header-section header-hero">
+      <FadeOutSection
+        triggerSelector=".header-intro"
+        className="header-section header-hero"
+      >
         <div />
         <div className="mt-[100px]">
           <div className="flex flex-col md:flex-row md:items-center justify-between uppercase text-xl font-bold">
@@ -220,9 +208,12 @@ export default function Page() {
             <MoveDown />
           </div>
         </div>
-      </section>
+      </FadeOutSection>
 
-      <section className="header-section header-intro">
+      <FadeOutSection
+        triggerSelector=".about-section"
+        className="header-section header-intro"
+      >
         <div
           className="header-video-container-desktop"
           ref={videoContainerRef}
@@ -263,7 +254,7 @@ export default function Page() {
             <p></p>
           </div>
         </div>
-      </section>
+      </FadeOutSection>
     </>
   );
 }

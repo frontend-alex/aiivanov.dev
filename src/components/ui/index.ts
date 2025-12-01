@@ -6,3 +6,4 @@ export { default as HoverSlideButton } from './hover-slide-button';
 
 export { default as RevealText } from './reveal-text';
 export { default as VelocityText } from './velocity-text';
+export { default as FadeOutSection } from './fade-out-section';

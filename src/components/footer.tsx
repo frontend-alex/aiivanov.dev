@@ -3,23 +3,20 @@
 import gsap from "gsap";
 import Link from "next/link";
 import TransitionLink from "./ui/transition-link";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { ArrowUpIcon } from "lucide-react";
 import { SplitText } from "gsap/SplitText";
 import { footerLinks } from "@/constants/data";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FallingObjects from "./ui/falling-objects";
-import { useGSAP } from "@gsap/react";
 
 const Footer = () => {
-    const footerRef = useRef<HTMLElement>(null);
 
-    useGSAP(() => {
+    useEffect(() => {
         gsap.registerPlugin(ScrollTrigger, SplitText);
 
-        if (!footerRef.current) return;
 
-        const texts = footerRef.current.querySelectorAll(".footer-animate");
+        const texts = document.querySelectorAll(".footer-animate");
 
         if (texts.length === 0) return;
 
@@ -36,7 +33,7 @@ const Footer = () => {
 
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: footerRef.current,
+                trigger: ".footer",
                 start: "top 70%",
                 toggleActions: "play none none reverse",
             }
@@ -52,14 +49,15 @@ const Footer = () => {
 
         return () => {
             split.revert();
+            const footerElement = document.querySelector(".footer");
             ScrollTrigger.getAll().forEach(t => {
-                if (t.trigger === footerRef.current) t.kill();
+                if (t.trigger === footerElement) t.kill();
             });
         };
-    }, { scope: footerRef });
+    }, []);
 
     return (
-        <footer ref={footerRef} className="border-t border-neutral-200 px-10 mt-20 relative overflow-hidden min-h-screen flex flex-col justify-between footer">
+        <footer className="border-t border-neutral-200 mt-20 relative overflow-hidden min-h-screen flex flex-col justify-between footer">
             <FallingObjects />
 
             <div className="flex flex-col lg:flex-row justify-between lg:gap-10 border-b border-neutral-200 py-10 lg:py-20 relative z-10 pointer-events-none">

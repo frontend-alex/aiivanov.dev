@@ -57,7 +57,7 @@ const AboutSection = () => {
         <section ref={container} className=" h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row  about-section">
             <div className="flex flex-col justify-center gap-3">
                 <p className="uppercase">Myself</p>
-                <h1
+                <h2
                     ref={h1Ref}
                     className="text-2xl lg:text-5xl max-w-4xl leading-[1.1]"
                 >
@@ -65,7 +65,7 @@ const AboutSection = () => {
                     interactive experiences with purpose. With a focus on motion,
                     performance, and detail, I help bring digital products to life for
                     forward-thinking brands around the world.
-                </h1>
+                </h2>
             </div>
             <div className="aspect-[16/9] w-full lg:w-[600px]  rounded-4xl">
                 <iframe

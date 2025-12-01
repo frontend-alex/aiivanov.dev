@@ -23,14 +23,78 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI",
-  description: "AI Ivanov is a software engineer and entrepreneur. He is the founder of AI Ivanov and the CEO of AI Ivanov.",
+  metadataBase: new URL("https://aiivanov.dev"),
+  title: {
+    default: "AI Ivanov | Creative Software Engineer",
+    template: "%s | AI Ivanov",
+  },
+  description:
+    "AI Ivanov is a Creative Software Engineer specializing in building immersive digital experiences, high-performance web applications, and interactive user interfaces.",
+  keywords: [
+    "Software Engineer",
+    "Creative Developer",
+    "Web Developer",
+    "Frontend Engineer",
+    "React Developer",
+    "Next.js Developer",
+    "AI Ivanov",
+    "Portfolio",
+    "Creative Coding",
+    "Interactive Web Design",
+    "Backend Developer",
+    "Fullstack Developer",
+    "AI Ivanov",
+    "Aleksandar Ivanov"
+  ],
+  authors: [{ name: "AI Ivanov", url: "https://aiivanov.dev" }],
+  creator: "AI Ivanov",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://aiivanov.dev",
+    title: "AI Ivanov | Creative Software Engineer",
+    description:
+      "AI Ivanov is a Creative Software Engineer specializing in building immersive digital experiences, high-performance web applications, and interactive user interfaces.",
+    siteName: "AI Ivanov",
+    images: [
+      {
+        url: "/images/og-image.png", // Assuming an OG image exists or will be added
+        width: 1200,
+        height: 630,
+        alt: "AI Ivanov Portfolio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Ivanov | Creative Software Engineer",
+    description:
+      "AI Ivanov is a Creative Software Engineer specializing in building immersive digital experiences, high-performance web applications, and interactive user interfaces.",
+    creator: "@aiivanov", // Placeholder, update if known
+    images: ["/images/og-image.png"],
+  },
   icons: {
     icon: "/images/icon.png",
     shortcut: "/images/icon.png",
     apple: "/images/icon.png",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "https://aiivanov.dev",
+  },
 };
+
+import JsonLd from "@/components/seo/json-ld";
 
 export default function RootLayout({
   children,
@@ -42,6 +106,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <JsonLd />
         <ThemeProvider>
           <PreloaderProvider>
             <ViewTransitions>

@@ -27,7 +27,7 @@ const ContactSection = () => {
             </div>
             <div className="flex flex-col">
                 <RevealText delay={0.6} duration={1} className="text-4xl lg:text-7xl">Aleksandar Ivanov</RevealText>
-                <RevealText delay={0.8} duration={1} className="text-4xl lg:text-7xl text-underline">alex@aiivanov.dev</RevealText>
+                <RevealText delay={0.8} duration={1} className="text-4xl lg:text-7xl text-underline">hello@aiivanov.dev</RevealText>
             </div>
         </section>
     );

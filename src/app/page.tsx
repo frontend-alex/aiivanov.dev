@@ -1,6 +1,7 @@
 "use client";
 
 import { Preloader } from "@/components/ui";
+import { Footer } from "@/components/index";
 import { HeaderSection, AboutSection, ProjectsSection, ApproachSection } from "@/components/sections/index";
 
 export default function Page() {
@@ -14,6 +15,7 @@ export default function Page() {
       <ProjectsSection triggerElement=".approach-section" />
       <ApproachSection />
       {/* <TechSection /> */}
+      <Footer />
     </div>
   );
 }

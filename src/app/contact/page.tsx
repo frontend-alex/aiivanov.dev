@@ -1,3 +1,4 @@
+import { Footer } from "@/components/index";
 import { ContactHeaderSection, ContactSection, ProjectsSection } from "@/components/sections/index";
 
 const page = () => {
@@ -6,6 +7,7 @@ const page = () => {
             <ContactHeaderSection />
             <ContactSection />
             <ProjectsSection triggerElement=".footer" />
+            <Footer />
         </div>
     );
 }

@@ -114,7 +114,6 @@ export default function RootLayout({
                 <Cursor />
                 <Navbar />
                 {children}
-                <Footer />
               </ReactLenis>
             </ViewTransitions>
           </PreloaderProvider>

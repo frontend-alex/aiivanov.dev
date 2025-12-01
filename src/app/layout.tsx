@@ -7,6 +7,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { Navbar, Footer } from '@/components/index'
 import { Cursor, Preloader } from '@/components/ui/index';
+import GSAPCleanup from '@/components/gsap-cleanup';
 import ReactLenis from "lenis/react";
 
 import ThemeProvider from "@/contexts/theme-provider";
@@ -111,6 +112,7 @@ export default function RootLayout({
           <PreloaderProvider>
             <ViewTransitions>
               <ReactLenis root>
+                <GSAPCleanup />
                 <Cursor />
                 <Navbar />
                 {children}

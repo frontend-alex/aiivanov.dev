@@ -33,20 +33,43 @@ const FadeOutSection = ({
 
         gsap.registerPlugin(ScrollTrigger);
 
-        const animation = gsap.to(sectionRef.current, {
-            y: yOffset,
-            scale: scale,
-            filter: `blur(${blur}px)`,
-            scrollTrigger: {
-                trigger: triggerSelector,
-                start: triggerStart,
-                end: triggerEnd,
-                scrub: true,
-            },
-        });
+        // Wait for trigger element to exist in DOM
+        const checkTrigger = () => {
+            const triggerElement = document.querySelector(triggerSelector);
+
+            if (!triggerElement) {
+                console.warn(`FadeOutSection: Trigger element "${triggerSelector}" not found`);
+                return null;
+            }
+
+            const animation = gsap.to(sectionRef.current, {
+                y: yOffset,
+                scale: scale,
+                filter: `blur(${blur}px)`,
+                scrollTrigger: {
+                    trigger: triggerSelector,
+                    start: triggerStart,
+                    end: triggerEnd,
+                    scrub: true,
+                },
+            });
+
+            return animation;
+        };
+
+        // Small delay to ensure DOM is ready
+        const timeoutId = setTimeout(() => {
+            const animation = checkTrigger();
+
+            return () => {
+                if (animation) {
+                    animation.kill();
+                }
+            };
+        }, 100);
 
         return () => {
-            animation.kill();
+            clearTimeout(timeoutId);
         };
     }, [triggerSelector, triggerStart, triggerEnd, yOffset, scale, blur]);
 

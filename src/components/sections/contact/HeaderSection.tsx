@@ -19,7 +19,7 @@ const HeaderSection = () => {
                             I specialize in building modern web applications with a focus on performance, design, and user experience. From concept to deployment, I bring ideas to life through clean code and thoughtful design.
                         </RevealText>
                     </div>
-                    <RevealText trigger="manual" duration={1} delay={2.5} className="text-xl">(Scroll)</RevealText>
+                    <RevealText trigger="manual" duration={1} delay={2.5} className="text-2xl ">(Scroll)</RevealText>
                 </div>
             </div>
         </FadeOutSection>

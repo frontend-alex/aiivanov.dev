@@ -185,7 +185,7 @@ export default function Page() {
       >
         <div />
         <div className="mt-[100px]">
-          <div className="flex flex-col md:flex-row md:items-center justify-between uppercase text-xl font-bold">
+          <div className="flex flex-col md:flex-row md:items-center justify-between uppercase text-2xl font-bold">
             <p>a</p>
             <p>really</p>
             <p>good</p>

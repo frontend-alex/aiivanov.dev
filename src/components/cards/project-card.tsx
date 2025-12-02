@@ -8,7 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { type ProjectCard as ProjectCardType } from "@/types/types";
 
 
-const ProjectCard = ({ title, image, icon, year, type, videoUrl, technologiesText }: ProjectCardType) => {
+const ProjectCard = ({ title, image, icon: Icon, year, type, videoUrl, technologiesText }: ProjectCardType) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
     const videoPopupWrapperRef = useRef<HTMLDivElement>(null);
@@ -132,9 +132,7 @@ const ProjectCard = ({ title, image, icon, year, type, videoUrl, technologiesTex
                 {/* Title and Metadata */}
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <span className="bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center p-2 backdrop-blur-md border border-white/10">
-                            {icon}
-                        </span>
+                        <Icon className="bg-primary text-white rounded-full w-10 h-10 p-2 backdrop-blur-md border border-white/10" />
                         <span className="text-white text-2xl font-medium tracking-tight">{title}</span>
                     </div>
                     <div className="flex items-center gap-3 text-zinc-300 text-sm font-medium uppercase tracking-wider">

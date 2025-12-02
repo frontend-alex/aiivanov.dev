@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import RevealText from "@/components/ui/reveal-text";
+import RevealText from "@/components/ui/text-animation/reveal-text";
 import { stickyCardsData } from "@/constants/data";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -43,12 +43,13 @@ const ApproachSection = () => {
                         onUpdate: (self) => {
                             const progress = self.progress;
                             const scale = 1 - progress * 0.25;
-                            const rotation = (index % 2 === 0 ? 5 : -5) * progress;
+                            // const rotation = (index % 2 === 0 ? 5 : -5) * progress;
                             const afterOpacity = progress;
 
                             gsap.set(card, {
                                 scale: scale,
-                                rotation: rotation,
+                                opacity: scale
+                                // rotation: rotation,
                             });
 
                             if (overlay) {
@@ -105,21 +106,21 @@ const ApproachSection = () => {
     }, []);
 
     return (
-        <div className="relative w-full h-full bg-white dark:bg-black approach-section" ref={container}>
+        <div className="relative w-full h-full approach-section" ref={container}>
             {stickyCardsData.map((cardData, index) => (
                 <div
-                    className="sticky-card relative rounded-2xl w-full h-screen bg-black dark:bg-white text-white dark:text-black p-6 flex gap-12 will-change-transform
+                    className="sticky-card relative rounded-2xl w-full h-screen bg-background p-6 flex gap-12 will-change-transform
                      flex-col lg:flex-row lg:gap-12"
                     key={index}
                 >
                     {/* Overlay */}
                     <div
-                        className="card-overlay absolute top-0 left-0 w-full h-full bg-black/50 dark:bg-white/50 transition-opacity duration-100 pointer-events-none z-[2]"
+                        className="card-overlay absolute top-0 left-0 w-full h-full transition-opacity duration-100 pointer-events-none z-[2]"
                         style={{ opacity: 0 }}
                     />
 
                     <div className="flex-[0.5] lg:flex-[2] flex-[1] relative z-10">
-                        <RevealText tagName="h1" className="text-4xl lg:text-9xl font-black" duration={0.8} delay={0.1}>
+                        <RevealText tagName="h1" className="text-[20vw] font-black" duration={0.8} delay={0.1}>
                             {cardData.index}
                         </RevealText>
                     </div>
@@ -131,7 +132,7 @@ const ApproachSection = () => {
 
                             <div className="w-full overflow-hidden rounded-lg">
                                 <div
-                                    className="image-wrapper w-full aspect-[5/3] overflow-hidden"
+                                    className="image-wrapper w-full h-full aspect-[5/3] overflow-hidden"
                                     style={{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" }}
                                 >
                                     <img

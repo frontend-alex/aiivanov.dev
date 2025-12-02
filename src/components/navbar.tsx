@@ -1,7 +1,7 @@
-import TransitionLink from "./ui/transition-link";
+import TransitionLink from "./ui/text-animation/transition-link";
 import MobileMenu from "./mobile-menu";
-import HoverSlideText from "@/components/ui/hover-slide-text";
-import HoverSlideButton from "@/components/ui/hover-slide-button";
+import HoverSlideText from "@/components/ui/text-animation/hover-slide-text";
+import HoverSlideButton from "@/components/ui/button";
 import Link from "next/link";
 
 const AppLogo = ({ className }: { className?: string }) => {

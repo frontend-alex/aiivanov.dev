@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useLenis } from "lenis/react";
 import { usePreloader } from "@/contexts/preloader-context";
-import RevealText from "./reveal-text";
+import RevealText from "./text-animation/reveal-text";
 
 const Preloader = () => {
   const lenis = useLenis();

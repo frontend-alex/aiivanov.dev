@@ -6,13 +6,13 @@ import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import ProjectCard from "@/components/cards/project-card";
-import HoverSlideButton from "@/components/ui/hover-slide-button";
+import HoverSlideButton from "@/components/ui/button";
 import { FadeOutSection } from "@/components/ui";
 
 import { projectsData } from "@/constants/data";
 import { MoveRight } from "lucide-react";
 
-const ProjectsSection = ({ triggerElement }: { triggerElement: string }) => {
+const ProjectsSection = () => {
     const yearRef = useRef<HTMLHeadingElement>(null);
     const workRef = useRef<HTMLHeadingElement>(null);
     const counterRef = useRef({ value: 0 });
@@ -115,7 +115,7 @@ const ProjectsSection = ({ triggerElement }: { triggerElement: string }) => {
 
     return (
         <FadeOutSection
-            triggerSelector={triggerElement}
+            triggerSelector=".approach-section"
             className="min-h-screen flex flex-col gap-10 project-section justify-center"
         >
             <div className="flex items-center justify-between">

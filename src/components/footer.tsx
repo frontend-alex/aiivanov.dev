@@ -2,7 +2,7 @@
 
 import gsap from "gsap";
 import Link from "next/link";
-import TransitionLink from "./ui/transition-link";
+import TransitionLink from "./ui/text-animation/transition-link";
 import { useEffect } from "react";
 import { ArrowUpIcon } from "lucide-react";
 import { SplitText } from "gsap/SplitText";

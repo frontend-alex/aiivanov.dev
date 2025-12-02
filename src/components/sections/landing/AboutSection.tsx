@@ -1,64 +1,27 @@
 "use client";
 
-import gsap from "gsap";
-import { useRef } from "react";
-import { SplitText } from "gsap/SplitText";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import { FadeOutSection } from "@/components/ui";
+import { FadeOutSection, WordFadeText } from "@/components/ui";
 
 const AboutSection = () => {
-    const container = useRef<HTMLElement>(null);
-    const h1Ref = useRef<HTMLHeadingElement>(null);
-
-    useGSAP(() => {
-        gsap.registerPlugin(SplitText, ScrollTrigger);
-
-        if (!h1Ref.current) return;
-
-        const split = new SplitText(h1Ref.current, {
-            type: "words",
-        });
-
-        gsap.set(split.words, {
-            opacity: 0.1,
-        });
-
-        gsap.to(split.words, {
-            opacity: 1,
-            duration: 1,
-            stagger: 0.1,
-            ease: "none",
-            scrollTrigger: {
-                trigger: h1Ref.current,
-                start: "top 90%",
-                end: "bottom 60%",
-                scrub: true,
-            },
-        });
-
-        return () => {
-            split.revert();
-        };
-    }, { scope: container });
-
     return (
         <FadeOutSection
             triggerSelector=".project-section-cards"
             className="h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row about-section"
         >
-            <section ref={container} className="h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row">
+            <div className="h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row">
                 <div className="flex flex-col justify-center gap-3">
                     <p className="uppercase">Myself</p>
-                    <h2
-                        ref={h1Ref}
+
+                    <WordFadeText
+                        tagName="h2"
                         className="text-2xl lg:text-5xl max-w-4xl leading-[1.1]"
                     >
                         Passionate about merging design and engineering, I craft smooth,
                         interactive experiences with purpose. With a focus on motion,
                         performance, and detail, I help bring digital products to life for
                         forward-thinking brands around the world.
-                    </h2>
+                    </WordFadeText>
+
                 </div>
                 <div className="aspect-[16/9] w-full lg:w-[600px]  rounded-4xl">
                     <iframe
@@ -69,7 +32,7 @@ const AboutSection = () => {
                         className="w-full h-full rounded-4xl"
                     />
                 </div>
-            </section>
+            </div>
         </FadeOutSection>
     );
 };

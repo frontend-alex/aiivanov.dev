@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { ReactNode } from "react";
-import TransitionLink from "./transition-link";
+import TransitionLink from "./text-animation/transition-link";
 
 interface HoverEmojiButtonProps {
     children: ReactNode;

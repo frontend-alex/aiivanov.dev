@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import TransitionLink from "./ui/transition-link";
+import TransitionLink from "./ui/text-animation/transition-link";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Menu, X } from "lucide-react";

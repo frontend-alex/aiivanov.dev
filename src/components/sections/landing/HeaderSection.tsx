@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Player from "@vimeo/player";
-import { FadeOutSection } from "@/components/ui";
+
 
 export default function Page() {
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -179,8 +179,7 @@ export default function Page() {
 
   return (
     <>
-      <FadeOutSection
-        triggerSelector=".header-intro"
+      <div
         className="header-section header-hero"
       >
         <div />
@@ -208,10 +207,9 @@ export default function Page() {
             <MoveDown />
           </div>
         </div>
-      </FadeOutSection>
+      </div>
 
-      <FadeOutSection
-        triggerSelector=".about-section"
+      <div
         className="header-section header-intro"
       >
         <div
@@ -254,7 +252,7 @@ export default function Page() {
             <p></p>
           </div>
         </div>
-      </FadeOutSection>
+      </div>
     </>
   );
 }

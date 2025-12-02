@@ -1,11 +1,11 @@
 'use client'
 
-import { RevealText, FadeOutSection } from "@/components/ui";
+import { RevealText } from "@/components/ui";
 
 const HeaderSection = () => {
     return (
-        <FadeOutSection
-            triggerSelector=".contact-section"
+        <div
+
             className="min-h-screen header-contact-section border-b border-accent"
         >
             <div className="flex flex-col justify-evenly h-[calc(100vh-5rem)]">
@@ -22,7 +22,7 @@ const HeaderSection = () => {
                     <RevealText trigger="manual" duration={1} delay={2.5} className="text-2xl ">(Scroll)</RevealText>
                 </div>
             </div>
-        </FadeOutSection>
+        </div>
     );
 }
 

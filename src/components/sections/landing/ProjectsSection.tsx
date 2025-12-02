@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import ProjectCard from "@/components/cards/project-card";
 import HoverSlideButton from "@/components/ui/button";
-import { FadeOutSection } from "@/components/ui";
+
 
 import { projectsData } from "@/constants/data";
 import { MoveRight } from "lucide-react";
@@ -114,8 +114,8 @@ const ProjectsSection = () => {
     }, []);
 
     return (
-        <FadeOutSection
-            triggerSelector=".approach-section"
+        <div
+
             className="min-h-screen flex flex-col gap-10 project-section justify-center"
         >
             <div className="flex items-center justify-between">
@@ -128,7 +128,7 @@ const ProjectsSection = () => {
                 ))}
             </div>
             <HoverSlideButton mixBlend={false} href="/projects" emoji={<MoveRight />} className="mx-auto w-max">See All</HoverSlideButton>
-        </FadeOutSection>
+        </div>
     );
 };
 

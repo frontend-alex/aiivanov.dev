@@ -1,11 +1,11 @@
 "use client";
 
-import { FadeOutSection, WordFadeText } from "@/components/ui";
+import { WordFadeText } from "@/components/ui";
 
 const AboutSection = () => {
     return (
-        <FadeOutSection
-            triggerSelector=".project-section-cards"
+        <div
+
             className="h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row about-section"
         >
             <div className="h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row">
@@ -33,7 +33,7 @@ const AboutSection = () => {
                     />
                 </div>
             </div>
-        </FadeOutSection>
+        </div>
     );
 };
 

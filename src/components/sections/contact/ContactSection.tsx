@@ -1,11 +1,11 @@
 'use client'
 
-import { RevealText, FadeOutSection } from "@/components/ui";
+import { RevealText } from "@/components/ui";
 
 const ContactSection = () => {
     return (
-        <FadeOutSection
-            triggerSelector=".project-section"
+        <div
+
             className="min-h-[50dvh] flex flex-col lg:flex-row gap-10 contact-section border-b border-accent"
         >
             <div className="flex flex-col gap-10 lg:w-[33%]">
@@ -15,7 +15,7 @@ const ContactSection = () => {
                 <RevealText delay={0.6} duration={1} className="text-4xl lg:text-7xl">Aleksandar Ivanov</RevealText>
                 <RevealText delay={0.8} duration={1} className="text-4xl lg:text-7xl text-underline">hello@aiivanov.dev</RevealText>
             </div>
-        </FadeOutSection>
+        </div>
     );
 };
 

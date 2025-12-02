@@ -10,4 +10,4 @@ export { default as ContactSection } from './contact/ContactSection';
 export { default as ApproachSection } from "./approach/ApproachSection";
 
 
-export { default as FadeOutSection } from "./fade-out-section";
+

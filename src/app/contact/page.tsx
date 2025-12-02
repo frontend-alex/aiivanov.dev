@@ -6,7 +6,7 @@ const page = () => {
         <div className="px-5 lg:px-10 flex flex-col gap-10">
             <ContactHeaderSection />
             <ContactSection />
-            <ProjectsSection triggerElement=".footer" />
+            <ProjectsSection />
             <Footer />
         </div>
     );

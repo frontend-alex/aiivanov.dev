@@ -1,19 +1,25 @@
 "use client";
 
-import { MoveDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
 import Player from "@vimeo/player";
-
+import { useLenis } from "lenis/react";
 
 export default function Page() {
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const videoTitleRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
+  // Preloader refs
+  const preloaderRef = useRef<HTMLDivElement>(null);
+  const preloaderTextRef = useRef<HTMLHeadingElement>(null);
+
   const [isMuted, setIsMuted] = useState(true);
   const [player, setPlayer] = useState<any>(null);
+
+  const lenis = useLenis();
 
   useEffect(() => {
     if (iframeRef.current) {
@@ -35,6 +41,158 @@ export default function Page() {
     }
   };
 
+  // PRELOADER + HEADER ANIMATION PIPELINE
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    // LOCK SCROLL
+    lenis?.stop();
+    document.body.style.overflow = "hidden";
+
+    const preloaderText = preloaderTextRef.current;
+    if (!preloaderText) return;
+
+    const headerTitle = document.querySelector(".header-title");
+
+    let headerSplit: SplitText | null = null;
+
+    if (headerTitle) {
+      headerSplit = new SplitText(headerTitle, { type: "chars", charsClass: "char" });
+      gsap.set(headerSplit.chars, { opacity: 0, y: 100 });
+    }
+
+    const split = new SplitText(preloaderText, { type: "chars" });
+    const chars = split.chars;
+
+    // SAFE LETTER SELECTION
+    const charA = chars.find(c => c.textContent === "A");
+    const charI = chars.find(c => c.textContent === "I");
+
+    const otherChars = chars.filter(c => c !== charA && c !== charI);
+
+    gsap.set(chars, { opacity: 0, y: 20 });
+    gsap.set(".navbar-logo", { opacity: 0 });
+
+    const tl = gsap.timeline({
+      paused: true,
+      defaults: { duration: 0.8, ease: "power3.out" }
+    });
+
+    // Reveal characters
+    tl.to(chars, { opacity: 1, y: 0, stagger: 0.04 })
+
+      // Hide all except A + I
+      .to(otherChars, { opacity: 0, duration: 0.5 }, "+=0.2")
+
+      // Merge A + I toward center
+      .add(() => {
+        requestAnimationFrame(() => {
+          const r = preloaderText.getBoundingClientRect();
+          const centerX = r.width / 2;
+
+          if (charA && charI) {
+            const rectA = charA.getBoundingClientRect();
+            const rectI = charI.getBoundingClientRect();
+
+            gsap.to(charA, {
+              x: centerX - rectA.width - (rectA.left - r.left),
+              duration: 0.8,
+              ease: "expo.inOut"
+            });
+
+            gsap.to(charI, {
+              x: centerX + 2 - (rectI.left - r.left),
+              duration: 0.8,
+              ease: "expo.inOut"
+            });
+          }
+        });
+      })
+
+      // Move merged text to navbar WITH ROTATION
+      .add(() => {
+        requestAnimationFrame(() => {
+          const navbarLogo = document.querySelector(".navbar-logo");
+          if (!navbarLogo) return;
+
+          const logoRect = navbarLogo.getBoundingClientRect();
+          const textRect = preloaderText.getBoundingClientRect();
+
+          // Calculate exact position including padding
+          const dx = logoRect.left - textRect.left + logoRect.width / 2 - textRect.width / 2;
+          const dy = logoRect.top - textRect.top + logoRect.height / 2 - textRect.height / 2;
+
+          const scale =
+            parseFloat(getComputedStyle(navbarLogo).fontSize) /
+            parseFloat(getComputedStyle(preloaderText).fontSize);
+
+          gsap.to(preloaderText, {
+            x: dx,
+            y: dy,
+            scale,
+            rotation: 360,
+            duration: 1.2,
+            ease: "power3.inOut",
+            onComplete: () => {
+              // Small delay before showing navbar logo for smooth handoff
+              gsap.delayedCall(0.1, () => {
+                gsap.set(".navbar-logo", { opacity: 1 });
+                gsap.to(preloaderRef.current, {
+                  opacity: 0,
+                  duration: 0.3,
+                  onComplete: () => {
+                    gsap.set(preloaderRef.current, { display: "none" });
+
+                    lenis?.start();
+                    document.body.style.overflow = "";
+                  }
+                });
+              });
+            }
+          });
+        });
+      })
+
+      // Animate header text with enhanced effects
+      .add(() => {
+        if (headerSplit) {
+          // Set initial state with blur and scale
+          gsap.set(headerSplit.chars, {
+            opacity: 0,
+            y: 100,
+            scale: 0.5,
+            filter: "blur(20px)",
+            rotationX: -90
+          });
+
+          // Animate to final state
+          gsap.to(headerSplit.chars, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            rotationX: 0,
+            duration: 1.4,
+            stagger: 0.03,
+            ease: "power3.out"
+          });
+        }
+      }, "-=0.4");
+
+    // START TIMELINE AFTER DOM PAINT
+    requestAnimationFrame(() => tl.play());
+
+    return () => {
+      document.body.style.overflow = "";
+      headerSplit?.revert();
+      split.revert();
+      tl.kill();
+    };
+  }, [lenis]);
+
+  // VIDEO SCROLL & MOUSE-FOLLOW ANIMATION (ORIGINAL VERSION)
   useEffect(() => {
     if (typeof window === "undefined" || window.innerWidth < 900) return;
 
@@ -105,7 +263,7 @@ export default function Page() {
           );
           animationState.scale = gsap.utils.interpolate(
             0.25,
-            1,
+            0.95,
             animationState.scrollProgress
           );
           animationState.gap = gsap.utils.interpolate(
@@ -124,10 +282,6 @@ export default function Page() {
         },
       },
     });
-
-
-
-
 
     const handleMouseMove = (e: MouseEvent) => {
       animationState.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -177,11 +331,54 @@ export default function Page() {
     };
   }, []);
 
+  // HEADER TITLE SCROLL ANIMATION (VUCKO-STYLE)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const headerTitle = document.querySelector(".header-title");
+    if (!headerTitle) return;
+
+    // Set transform origin for better scaling
+    gsap.set(headerTitle, { transformOrigin: "center center" });
+
+    gsap.to(headerTitle, {
+      scrollTrigger: {
+        trigger: ".header-hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+      },
+      filter: "blur(10px)",
+      opacity: 0,
+      scale: 0.95,
+      ease: "none"
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (trigger.vars.trigger === ".header-hero") {
+          trigger.kill();
+        }
+      });
+    };
+  }, []);
+
   return (
     <>
+      {/* Preloader */}
       <div
-        className="header-section header-hero"
+        ref={preloaderRef}
+        className="fixed inset-0 z-[9999] flex items-center justify-center bg-background"
       >
+        <h1 ref={preloaderTextRef} className="text-6xl md:text-8xl font-black uppercase tracking-tight">
+          Aleksandar Ivanov
+        </h1>
+      </div>
+
+      {/* HEADER */}
+      <div className="header-section header-hero">
         <div />
         <div className="mt-[100px]">
           <div className="flex flex-col md:flex-row md:items-center justify-between uppercase text-2xl font-bold">
@@ -189,29 +386,19 @@ export default function Page() {
             <p>really</p>
             <p>good</p>
           </div>
-          <h1
-            className="header-title char text-[6.5vw] xl:text-[8vw] -tracking-[0.05em] leading-[1] font-black uppercase"
-          >
+
+          <h1 className="header-title char text-[6.5vw] xl:text-[8vw] -tracking-[0.05em] leading-[1] font-black uppercase">
             Software Engineer
           </h1>
         </div>
 
-        <div className="flex items-center justify-between text-lg font-bold">
-          <div className="flex items-center gap-1">
-            <p>Scroll for</p>
-            <MoveDown />
-          </div>
-
-          <div className="flex items-center">
-            <p>cool sh*t</p>
-            <MoveDown />
-          </div>
+        <div className="flex items-center justify-end text-lg font-bold">
+          <h2 className="text-2xl">(Scroll)</h2>
         </div>
       </div>
 
-      <div
-        className="header-section header-intro"
-      >
+      {/* INTRO */}
+      <div className="header-section header-intro">
         <div
           className="header-video-container-desktop"
           ref={videoContainerRef}
@@ -235,6 +422,7 @@ export default function Page() {
           </div>
         </div>
 
+        {/* MOBILE VIDEO */}
         <div className="header-video-container-mobile" onClick={toggleMute}>
           <div className="header-video-preview">
             <div className="header-video-wrapper">

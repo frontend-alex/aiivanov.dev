@@ -1,5 +1,4 @@
 export { default as Cursor } from './cursor';
-export { default as Preloader } from './preloader';
 
 export { default as HoverSlideText } from './text-animation/hover-slide-text';
 export { default as HoverSlideButton } from './button';

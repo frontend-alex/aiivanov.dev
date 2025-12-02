@@ -8,7 +8,6 @@ import { HeaderSection, AboutSection, ProjectsSection, ServicesHoverSection } fr
 export default function Page() {
   return (
     <div className="px-5 lg:px-10 flex flex-col gap-52">
-      {/* <Preloader /> */}
       <HeaderSection />
       <div className="min-h-1/2 flex items-center justify-center lg:mt-52">
         <AboutSection />

@@ -5,7 +5,7 @@ import HoverSlideButton from "@/components/ui/button";
 import Link from "next/link";
 
 const AppLogo = ({ className }: { className?: string }) => {
-    return <TransitionLink href={'/'} className={className}>AI.</TransitionLink>
+    return <TransitionLink href={'/'} className={`${className} navbar-logo opacity-0`}>AI.</TransitionLink>
 }
 
 const Navbar = () => {

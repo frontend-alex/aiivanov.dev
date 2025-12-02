@@ -86,7 +86,7 @@ const ServicesHoverSection = ({ className }: { className?: string }) => {
         <section ref={containerRef} className={cn("w-full flex flex-col gap-20", className)}>
             <div className="flex justify-between flex-col lg:flex-row gap-10">
                 <RevealText tagName="h1" className="text-2xl font-medium">(Approach)</RevealText>
-                <p className="text-lg lg:text-xl max-w-md hidden lg:flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, rerum.</p>
+                <p className="text-lg lg:text-2xl max-w-md hidden lg:flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, rerum.</p>
                 <HoverSlideButton emoji={<ArrowRight />} mixBlend={false} href="/approach" className="hidden lg:flex">Learn About my approach</HoverSlideButton>
             </div>
 
@@ -139,7 +139,7 @@ const ServicesHoverSection = ({ className }: { className?: string }) => {
                                         key={service.id}
                                         ref={(el) => { descriptionRefs.current[index] = el; }}
                                         className={cn(
-                                            "absolute inset-0 text-lg lg:text-xl leading-relaxed",
+                                            "absolute inset-0 text-lg lg:text-2xl leading-relaxed max-w-md",
                                             activeIndex === index ? "z-10" : "z-0 opacity-0 pointer-events-none"
                                         )}
                                     >

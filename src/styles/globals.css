@@ -183,3 +183,30 @@
   z-index: 1;
   animation: none !important;
 }
+
+.logo-hover {
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                letter-spacing 0.25s ease;
+}
+
+.logo-hover:hover {
+    transform: translateY(-2px) scale(1.1);
+    letter-spacing: 0.06em; /* subtle expansion */
+}
+
+/* Optional tactile "snap" when mouse leaves */
+.logo-hover:active {
+    transform: scale(0.96);
+}
+
+.navbar-active::after{
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    margin: auto;
+    background-color: white;
+    transition: opacity 0.3s ease-in-out;
+}
+

@@ -14,7 +14,7 @@ export default function Page() {
       </div>
       <ProjectsSection />
 
-      <WordFadeText tagName="h1" className="text-[9vw] font-black uppercase leading-[0.75] px-5">Passinate about making the web a better place, one line of code at a time.</WordFadeText>
+      <WordFadeText tagName="h1" className="text-6xl lg:text-[9vw] font-black uppercase leading-[0.75] px-5">Passinate about making the web a better place, one line of code at a time.</WordFadeText>
 
       <ServicesHoverSection />
       <Footer />

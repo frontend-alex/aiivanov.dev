@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Menu, X } from "lucide-react";
 import { footerLinks } from "@/constants/data";
+import { AppLogo } from "./navbar";
 
 const MobileMenu = () => {
     const tl = useRef<gsap.core.Timeline | null>(null);
@@ -72,11 +73,11 @@ const MobileMenu = () => {
 
             {/* Menu Overlay */}
             <div
-                className="menu-overlay fixed top-0 left-0 w-screen h-[calc(100dvh)] py-5 px-10 bg-primary z-[60] flex flex-col justify-between [clip-path:polygon(0%_0%,100%_0%,100%_0%,0%_0%)]"
+                className="menu-overlay fixed top-0 left-0 w-screen h-full w-full py-5 px-10 bg-primary z-[60] flex flex-col justify-between [clip-path:polygon(0%_0%,100%_0%,100%_0%,0%_0%)]"
             >
                 {/* Header */}
                 <div className="flex justify-between items-center text-white">
-                    <div className="text-2xl font-bold">AI.</div>
+                    <AppLogo />
                     <div className="cursor-pointer" onClick={toggleMenu}>
                         <X size={24} />
                     </div>
@@ -95,7 +96,7 @@ const MobileMenu = () => {
                         ))
                     ))}
 
-                    <div className="menu-link-item overflow-hidden">
+                    {/* <div className="menu-link-item overflow-hidden">
                         <div className="menu-link-item-holder relative">
                             <div className="flex flex-col gap-2">
                                 <p className="text-lg">Building at</p>
@@ -111,7 +112,7 @@ const MobileMenu = () => {
                                 <TransitionLink href="/" className="text-2xl font-medium text-white" onClick={toggleMenu}>Fullstack Developer</TransitionLink>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Footer / Button */}

@@ -67,13 +67,15 @@ const Footer = () => {
 
             <div className="flex flex-col lg:flex-row justify-start gap-10 py-20 relative z-10 pointer-events-none">
                 {footerLinks.map((link, idx) => (
-                    <div key={idx} className="flex flex-col gap-3 pointer-events-auto">
+                    <div key={idx} className="flex flex-col gap-10 pointer-events-auto">
                         <h1 className="footer-animate font-medium text-2xl">{link.name}</h1>
-                        {link.links.map((subLink, subIdx) => (
-                            <TransitionLink key={subIdx} href={subLink.href} className="text-2xl text-stone-300 hover:text-stone-400 dark:text-stone-500 dark:hover:text-stone-400 transition-colors duration-300 block w-fit">
-                                <span className="footer-animate inline-block">{subLink.name}</span>
-                            </TransitionLink>
-                        ))}
+                        <div className="flex flex-col gap-3">
+                            {link.links.map((subLink, subIdx) => (
+                                <TransitionLink key={subIdx} href={subLink.href} className="text-2xl text-stone-300 hover:text-stone-400 dark:text-stone-500 dark:hover:text-stone-400 transition-colors duration-300 block w-fit cursor-target">
+                                    <span className="footer-animate inline-block">{subLink.name}</span>
+                                </TransitionLink>
+                            ))}
+                        </div>
                     </div>
                 ))}
             </div>

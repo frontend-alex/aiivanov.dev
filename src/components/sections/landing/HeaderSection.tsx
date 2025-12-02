@@ -31,14 +31,8 @@ export default function Page() {
 
   const toggleMute = () => {
     if (!player) return;
-    if (isMuted) {
-      player.setMuted(false);
-      player.setVolume(1);
-      setIsMuted(false);
-    } else {
-      player.setMuted(true);
-      setIsMuted(true);
-    }
+    player.setMuted(!isMuted);
+    setIsMuted(!isMuted);
   };
 
   // PRELOADER + HEADER ANIMATION PIPELINE
@@ -55,7 +49,6 @@ export default function Page() {
     if (!preloaderText) return;
 
     const headerTitle = document.querySelector(".header-title");
-
     let headerSplit: SplitText | null = null;
 
     if (headerTitle) {
@@ -66,13 +59,16 @@ export default function Page() {
     const split = new SplitText(preloaderText, { type: "chars" });
     const chars = split.chars;
 
+    // reveal text NOW (still hidden until animation starts)
+    gsap.set(preloaderText, { visibility: "visible" });
+
     // SAFE LETTER SELECTION
     const charA = chars.find(c => c.textContent === "A");
     const charI = chars.find(c => c.textContent === "I");
 
     const otherChars = chars.filter(c => c !== charA && c !== charI);
 
-    gsap.set(chars, { opacity: 0, y: 20 });
+    gsap.set(chars, { opacity: 0, y: 40 });
     gsap.set(".navbar-logo", { opacity: 0 });
 
     const tl = gsap.timeline({
@@ -80,13 +76,23 @@ export default function Page() {
       defaults: { duration: 0.8, ease: "power3.out" }
     });
 
-    // Reveal characters
-    tl.to(chars, { opacity: 1, y: 0, stagger: 0.04 })
+    // CHARACTER REVEAL — no flash, no delay
+    tl.fromTo(
+      chars,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        stagger: 0.035,
+        duration: 0.8,
+        ease: "power3.out"
+      }
+    )
 
-      // Hide all except A + I
-      .to(otherChars, { opacity: 0, duration: 0.5 }, "+=0.2")
+      // Fade out all except A + I
+      .to(otherChars, { opacity: 0, duration: 0.45 }, "+=0.2")
 
-      // Merge A + I toward center
+      // Merge A + I into center
       .add(() => {
         requestAnimationFrame(() => {
           const r = preloaderText.getBoundingClientRect();
@@ -111,7 +117,7 @@ export default function Page() {
         });
       })
 
-      // Move merged text to navbar WITH ROTATION
+      // Move merged AI to navbar + rotation effect
       .add(() => {
         requestAnimationFrame(() => {
           const navbarLogo = document.querySelector(".navbar-logo");
@@ -120,9 +126,17 @@ export default function Page() {
           const logoRect = navbarLogo.getBoundingClientRect();
           const textRect = preloaderText.getBoundingClientRect();
 
-          // Calculate exact position including padding
-          const dx = logoRect.left - textRect.left + logoRect.width / 2 - textRect.width / 2;
-          const dy = logoRect.top - textRect.top + logoRect.height / 2 - textRect.height / 2;
+          const dx =
+            logoRect.left -
+            textRect.left +
+            logoRect.width / 2 -
+            textRect.width / 2;
+
+          const dy =
+            logoRect.top -
+            textRect.top +
+            logoRect.height / 2 -
+            textRect.height / 2;
 
           const scale =
             parseFloat(getComputedStyle(navbarLogo).fontSize) /
@@ -136,7 +150,6 @@ export default function Page() {
             duration: 1.2,
             ease: "power3.inOut",
             onComplete: () => {
-              // Small delay before showing navbar logo for smooth handoff
               gsap.delayedCall(0.1, () => {
                 gsap.set(".navbar-logo", { opacity: 1 });
                 gsap.to(preloaderRef.current, {
@@ -144,7 +157,6 @@ export default function Page() {
                   duration: 0.3,
                   onComplete: () => {
                     gsap.set(preloaderRef.current, { display: "none" });
-
                     lenis?.start();
                     document.body.style.overflow = "";
                   }
@@ -155,20 +167,20 @@ export default function Page() {
         });
       })
 
-      // Animate header text with enhanced effects
+      // HEADER TEXT ENTRY
       .add(() => {
-        if (headerSplit) {
-          // Set initial state with blur and scale
-          gsap.set(headerSplit.chars, {
+        if (!headerSplit) return;
+
+        gsap.fromTo(
+          headerSplit.chars,
+          {
             opacity: 0,
             y: 100,
             scale: 0.5,
             filter: "blur(20px)",
             rotationX: -90
-          });
-
-          // Animate to final state
-          gsap.to(headerSplit.chars, {
+          },
+          {
             opacity: 1,
             y: 0,
             scale: 1,
@@ -177,11 +189,11 @@ export default function Page() {
             duration: 1.4,
             stagger: 0.03,
             ease: "power3.out"
-          });
-        }
+          }
+        );
       }, "-=0.4");
 
-    // START TIMELINE AFTER DOM PAINT
+    // START TIMELINE
     requestAnimationFrame(() => tl.play());
 
     return () => {
@@ -192,7 +204,28 @@ export default function Page() {
     };
   }, [lenis]);
 
-  // VIDEO SCROLL & MOUSE-FOLLOW ANIMATION (ORIGINAL VERSION)
+  // GLOBAL TEXT BLUR ON SCROLL
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const textElements = document.querySelectorAll(".blur-on-scroll");
+
+    gsap.to(textElements, {
+      scrollTrigger: {
+        trigger: ".header-hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1
+      },
+      filter: "blur(10px)",
+      opacity: 0,
+      ease: "none"
+    });
+
+    return () => ScrollTrigger.getAll().forEach(t => t.kill());
+  }, []);
+
+  // VIDEO ANIMATION (unchanged)
   useEffect(() => {
     if (typeof window === "undefined" || window.innerWidth < 900) return;
 
@@ -331,48 +364,17 @@ export default function Page() {
     };
   }, []);
 
-  // HEADER TITLE SCROLL ANIMATION (VUCKO-STYLE)
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    const headerTitle = document.querySelector(".header-title");
-    if (!headerTitle) return;
-
-    // Set transform origin for better scaling
-    gsap.set(headerTitle, { transformOrigin: "center center" });
-
-    gsap.to(headerTitle, {
-      scrollTrigger: {
-        trigger: ".header-hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-      },
-      filter: "blur(10px)",
-      opacity: 0,
-      scale: 0.95,
-      ease: "none"
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === ".header-hero") {
-          trigger.kill();
-        }
-      });
-    };
-  }, []);
-
   return (
-    <>
+    <div className="flex flex-col gap-10">
       {/* Preloader */}
       <div
         ref={preloaderRef}
         className="fixed inset-0 z-[9999] flex items-center justify-center bg-background"
       >
-        <h1 ref={preloaderTextRef} className="text-6xl md:text-8xl font-black uppercase tracking-tight">
+        <h1
+          ref={preloaderTextRef}
+          className="preloader-text text-3xl md:text-8xl font-black uppercase tracking-tight"
+        >
           Aleksandar Ivanov
         </h1>
       </div>
@@ -380,19 +382,19 @@ export default function Page() {
       {/* HEADER */}
       <div className="header-section header-hero">
         <div />
-        <div className="mt-[100px]">
+        <div className="mt-[100px] blur-on-scroll">
           <div className="flex flex-col md:flex-row md:items-center justify-between uppercase text-2xl font-bold">
             <p>a</p>
             <p>really</p>
             <p>good</p>
           </div>
 
-          <h1 className="header-title char text-[6.5vw] xl:text-[8vw] -tracking-[0.05em] leading-[1] font-black uppercase">
+          <h1 className="header-title char text-[15vw] xl:text-[8vw] -tracking-[0.05em] leading-[1] font-black uppercase">
             Software Engineer
           </h1>
         </div>
 
-        <div className="flex items-center justify-end text-lg font-bold">
+        <div className="flex items-center justify-end text-lg font-bold blur-on-scroll">
           <h2 className="text-2xl">(Scroll)</h2>
         </div>
       </div>
@@ -422,7 +424,6 @@ export default function Page() {
           </div>
         </div>
 
-        {/* MOBILE VIDEO */}
         <div className="header-video-container-mobile" onClick={toggleMute}>
           <div className="header-video-preview">
             <div className="header-video-wrapper">
@@ -441,6 +442,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

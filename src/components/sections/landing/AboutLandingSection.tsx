@@ -23,22 +23,20 @@ const AboutLandingSection = () => {
                     </WordFadeText>
 
                 </div>
-                <div className="aspect-[16/9] w-full lg:w-[600px]  rounded-4xl">
-                    <VimeoPlayer
-                        videoId="1140981207"
-                        autoplay={true}
-                        loop={true}
-                        background={true}
-                        muted={true}
-                        controls={true}
-                        title="Portfolio Showreel"
-                        className="w-full h-full rounded-4xl"
-                        wrapperClassName="aspect-[16/9] w-full lg:w-[600px]  rounded-4x"
-                        onPlayerReady={(player) => {
-                            player.play();
-                        }}
-                    />
-                </div>
+                <VimeoPlayer
+                    videoId=""
+                    autoplay={true}
+                    loop={true}
+                    background={true}
+                    muted={true}
+                    controls={true}
+                    title="Portfolio Showreel"
+                    className="w-full h-full rounded-3xl"
+                    wrapperClassName="aspect-[16/9] w-full lg:w-[600px] rounded-3xl"
+                    onPlayerReady={(player) => {
+                        player.play();
+                    }}
+                />
             </div>
         </div>
     );

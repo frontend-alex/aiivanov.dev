@@ -1,5 +1,5 @@
 import { Footer } from "@/components";
-import { ApproachHeaderSection, ApproachHorizontalScrollSection } from "@/components/sections";
+import { ApproachHeaderSection, ApproachHorizontalScrollSection, ApproachStickySection } from "@/components/sections";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -17,6 +17,7 @@ const page = () => {
         <div className="flex flex-col gap-20">
             <ApproachHeaderSection />
             <ApproachHorizontalScrollSection />
+            <ApproachStickySection />
             <div className="px-5 lg:px-10">
                 <Footer />
             </div>

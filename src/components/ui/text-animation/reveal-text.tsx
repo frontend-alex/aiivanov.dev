@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { cn } from "@/lib/utils";
 
@@ -32,9 +31,9 @@ const RevealText = ({
         () => {
             if (!elementRef.current) return;
 
-            // Split text
             const split = new SplitText(elementRef.current, {
-                type: "chars",
+                type: "words,chars",
+                wordsClass: "word",
                 charsClass: "char",
             });
 

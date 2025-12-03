@@ -108,7 +108,7 @@ const ServicesHoverLandingSection = ({ className }: { className?: string }) => {
             {/* pc */}
             <div className="hidden lg:flex gap-10 items-start">
                 {/* Left Side - Video and Description */}
-                <div className="w-full lg:w-1/3">
+                <div className="w-1/3">
                     <div className="relative h-[60vh] w-full">
                         <div
                             ref={videoWrapperRef}
@@ -148,7 +148,7 @@ const ServicesHoverLandingSection = ({ className }: { className?: string }) => {
                                         key={service.id}
                                         ref={(el) => (descriptionRefs.current[index] = el) as any}
                                         className={cn(
-                                            "absolute inset-0 text-lg lg:text-2xl leading-relaxed max-w-md",
+                                            "absolute inset-0 text-2xl leading-relaxed max-w-md",
                                             activeIndex === index ? "z-10" : "z-0 opacity-0 pointer-events-none"
                                         )}
                                     >

@@ -5,7 +5,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import RevealText from "@/components/ui/text-animation/reveal-text";
-import { stickyCardsData } from "@/constants/data";
+import { approach, stickyCardsData } from "@/constants/data";
+import { VimeoPlayer } from "@/components/ui";
 
 
 
@@ -51,8 +52,6 @@ const ApproachSection = () => {
 
                             gsap.set(card, {
                                 scale: scale,
-                                opacity: scale
-                                // rotation: rotation,
                             });
 
                             if (overlay) {
@@ -110,7 +109,7 @@ const ApproachSection = () => {
 
     return (
         <div className="relative w-full h-full approach-section" ref={container}>
-            {stickyCardsData.map((cardData, index) => (
+            {approach.map((cardData, index) => (
                 <div
                     className="sticky-card relative rounded-2xl w-full h-screen bg-background p-6 flex gap-12 will-change-transform
                      flex-col lg:flex-row lg:gap-12"
@@ -133,27 +132,31 @@ const ApproachSection = () => {
                                 {cardData.title}
                             </RevealText>
 
-                            <div className="w-full overflow-hidden rounded-lg">
+                            <div className="w-full overflow-hidden rounded-lg h-64 lg:h-96">
                                 <div
-                                    className="image-wrapper w-full h-full aspect-[5/3] overflow-hidden"
+                                    className="image-wrapper w-full h-full"
                                     style={{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" }}
                                 >
-                                    <img
-                                        src={cardData.image}
-                                        alt={cardData.title}
-                                        className="w-full h-full object-cover"
+                                    <VimeoPlayer
+                                        videoId={cardData.videoUrl}
+                                        autoplay={false}
+                                        loop={true}
+                                        muted={true}
+                                        controls={false}
+                                        className="w-full h-full overflow-hidden"
+                                        wrapperClassName="w-full h-full"
                                     />
                                 </div>
                             </div>
 
                             <div className="flex flex-col lg:flex-row gap-6 lg:gap-6">
                                 <div className="flex-[2]">
-                                    <RevealText tagName="p" className="uppercase text-sm lg:text-base" duration={0.6} delay={0.3}>
+                                    <RevealText tagName="p" className="uppercase text-xl lg:text-2xl" duration={0.6} delay={0.3}>
                                         {cardData.subtitle}
                                     </RevealText>
                                 </div>
                                 <div className="flex-[4]">
-                                    <RevealText tagName="p" className="text-base lg:text-lg" duration={0.8} delay={0.4}>
+                                    <RevealText tagName="p" className="text-xl lg:text-2xl" duration={0.8} delay={0.4}>
                                         {cardData.description}
                                     </RevealText>
                                 </div>

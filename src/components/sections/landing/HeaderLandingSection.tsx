@@ -414,18 +414,17 @@ const HeaderLandingSection = () => {
           onClick={toggleMute}
         >
           <div className="header-video-preview">
-            <div className="header-video-wrapper">
-              <VimeoPlayer
-                ref={vimeoPlayerRef}
-                videoId="1140981207"
-                autoplay
-                loop
-                background
-                muted
-                title="Portfolio Showreel"
-                loading="lazy"
-              />
-            </div>
+            <VimeoPlayer
+              ref={vimeoPlayerRef}
+              videoId=""
+              autoplay
+              loop
+              background
+              muted
+              wrapperClassName="header-video-wrapper"
+              title="Portfolio Showreel"
+              loading="lazy"
+            />
           </div>
 
           <div className="header-video-title" ref={videoTitleRef}>

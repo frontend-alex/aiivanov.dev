@@ -104,22 +104,28 @@ export const stickyCardsData = [
 export const approach = [
     {
         id: "analysis",
+        index: "1",
         title: "Analysis",
+        subtitle: "User Specifications",
         // videoUrl: "https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov",
         videoUrl: "",
         description: "I gather and validate requirements stakeholders place on applications, prioritizing specifications based on their business value and documenting them through comprehensive analysis documents validated via acceptance tests."
     },
     {
         id: "design",
+        index: "2",
         title: "Design",
         videoUrl: "",
+        subtitle: "Software Architecture",
         // videoUrl: "https://player.vimeo.com/video/1141438425?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov",
         description: "I create maintainable and secure technical designs using standard notation methods, translating specifications into scalable architecture diagrams, domain models, and database schemas that accommodate future growth."
     },
     {
         id: "validation",
+        index: "3",
         title: "Validation",
         videoUrl: "",
+         subtitle: "Quality Assurance & Delivery",
         // videoUrl: "https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov",
         description: "I ensure deliverables meet stakeholder expectations through rigorous validation processes, including user acceptance testing, performance benchmarking, and security audits, guaranteeing production-ready solutions that align with business objectives."
     }

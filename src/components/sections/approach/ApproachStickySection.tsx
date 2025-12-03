@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import RevealText from "@/components/ui/text-animation/reveal-text";
-import { approach, stickyCardsData } from "@/constants/data";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { approach } from "@/constants/data";
 import { VimeoPlayer } from "@/components/ui";
-
-
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const ApproachSection = () => {
     const container = useRef<HTMLDivElement>(null);
@@ -94,18 +93,6 @@ const ApproachSection = () => {
         },
         { scope: container }
     );
-
-    useEffect(() => {
-        gsap.to(".approach-section", {
-            opacity: 0,
-            scrollTrigger: {
-                trigger: ".footer",
-                start: "top bottom",
-                end: "top 0%",
-                scrub: true,
-            },
-        });
-    }, []);
 
     return (
         <div className="relative w-full h-full approach-section" ref={container}>

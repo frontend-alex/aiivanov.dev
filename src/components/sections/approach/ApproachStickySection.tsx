@@ -7,13 +7,16 @@ import { useGSAP } from "@gsap/react";
 import RevealText from "@/components/ui/text-animation/reveal-text";
 import { stickyCardsData } from "@/constants/data";
 
-gsap.registerPlugin(ScrollTrigger);
+
 
 const ApproachSection = () => {
     const container = useRef<HTMLDivElement>(null);
 
     useGSAP(
         () => {
+
+            gsap.registerPlugin(ScrollTrigger);
+
             if (!container.current) return;
 
             // Use scoped selector for sticky cards

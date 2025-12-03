@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { type ProjectCard as ProjectCardType } from "@/types/types";
+import { VimeoPlayer } from "../ui";
 
 
 const ProjectCard = ({ title, image, icon: Icon, year, type, videoUrl, technologiesText }: ProjectCardType) => {
@@ -112,7 +113,7 @@ const ProjectCard = ({ title, image, icon: Icon, year, type, videoUrl, technolog
                     // Initial clip-path: closed line at the bottom (0% 100%)
                     style={{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" }}
                 >
-                    <iframe
+                    {/* <iframe
                         src={videoUrl}
                         className="w-full h-full object-cover"
                         allow="autoplay; fullscreen; picture-in-picture"
@@ -122,6 +123,21 @@ const ProjectCard = ({ title, image, icon: Icon, year, type, videoUrl, technolog
                             border: 'none'
                         }}
                         title={title}
+                    /> */}
+
+                    <VimeoPlayer
+                        videoId={videoUrl}
+                        autoplay={true}
+                        loop={true}
+                        background={true}
+                        muted={true}
+                        controls={true}
+                        title={title}
+                        className="w-full h-full object-cover"
+                        wrapperClassName="absolute inset-0"
+                        onPlayerReady={(player) => {
+                            player.play();
+                        }}
                     />
                 </div>
             </div>

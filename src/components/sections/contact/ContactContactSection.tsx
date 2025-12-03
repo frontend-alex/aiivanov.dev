@@ -2,11 +2,11 @@
 
 import { RevealText } from "@/components/ui";
 
-const ContactSection = () => {
+const ContactContactSection = () => {
     return (
         <div
 
-            className="min-h-[50dvh] flex flex-col lg:flex-row gap-10 contact-section border-b border-accent"
+            className="min-h-[40dvh] flex flex-col lg:flex-row gap-10 contact-section border-b border-accent"
         >
             <div className="flex flex-col gap-10 lg:w-[33%]">
                 <RevealText delay={0.4} duration={1} className="text-2xl font-medium">(New Businesses)</RevealText>
@@ -19,4 +19,4 @@ const ContactSection = () => {
     );
 };
 
-export default ContactSection;
+export default ContactContactSection;

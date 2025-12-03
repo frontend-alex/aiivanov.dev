@@ -1,16 +1,13 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TransitionLink from "./ui/text-animation/transition-link";
 import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
 import { Menu, X } from "lucide-react";
 import { footerLinks } from "@/constants/data";
-import { AppLogo } from "./navbar";
 
 const MobileMenu = () => {
     const tl = useRef<gsap.core.Timeline | null>(null);
-    const container = useRef<HTMLDivElement>(null);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -18,7 +15,7 @@ const MobileMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    useGSAP(
+    useEffect(
         () => {
             gsap.set(".menu-link-item-holder", { y: 75 });
             tl.current = gsap
@@ -36,7 +33,7 @@ const MobileMenu = () => {
                     delay: -0.75,
                 });
         },
-        { scope: container }
+        []
     );
 
     useEffect(() => {
@@ -62,39 +59,43 @@ const MobileMenu = () => {
         };
     }, [isMenuOpen]);
     return (
-        <div className="md:hidden" ref={container}>
+        <div className="md:hidden">
             {/* Toggle Button */}
             <div
                 className="cursor-pointer z-50 relative"
                 onClick={toggleMenu}
             >
                 <Menu size={24} />
-            </div>
+            </div >
 
             {/* Menu Overlay */}
-            <div
+            < div
                 className="menu-overlay fixed top-0 left-0 w-screen h-full w-full py-5 px-10 bg-primary z-[60] flex flex-col justify-between [clip-path:polygon(0%_0%,100%_0%,100%_0%,0%_0%)]"
             >
                 {/* Header */}
-                <div className="flex justify-between items-center text-white">
-                    <AppLogo />
+                < div className="flex justify-between items-center text-white" >
+                    <TransitionLink href="/" onClick={toggleMenu}>
+                        <h1>AI.</h1>
+                    </TransitionLink>
                     <div className="cursor-pointer" onClick={toggleMenu}>
                         <X size={24} />
                     </div>
-                </div>
+                </div >
 
                 {/* Links / Content */}
-                <div className="flex flex-col gap-8 justify-center flex-1">
+                < div className="flex flex-col gap-8 justify-center flex-1" >
                     {/* Replicating navbar.tsx content */}
-                    {footerLinks.slice(0, 1).map((link) => (
-                        link.links.map((subLink, subIdx) => (
-                            <div key={subIdx} className="menu-link-item overflow-hidden">
-                                <div className="menu-link-item-holder relative">
-                                    <TransitionLink href={subLink.href} className="text-2xl font-medium" onClick={toggleMenu}>{subLink.name}</TransitionLink>
+                    {
+                        footerLinks.slice(0, 1).map((link) => (
+                            link.links.map((subLink, subIdx) => (
+                                <div key={subIdx} className="menu-link-item overflow-hidden">
+                                    <div className="menu-link-item-holder relative">
+                                        <TransitionLink href={subLink.href} className="text-2xl font-medium" onClick={toggleMenu}>{subLink.name}</TransitionLink>
+                                    </div>
                                 </div>
-                            </div>
+                            ))
                         ))
-                    ))}
+                    }
 
                     {/* <div className="menu-link-item overflow-hidden">
                         <div className="menu-link-item-holder relative">
@@ -113,17 +114,17 @@ const MobileMenu = () => {
                             </div>
                         </div>
                     </div> */}
-                </div>
+                </div >
 
                 {/* Footer / Button */}
-                <div className="w-full">
+                < div className="w-full" >
                     <button className="w-full py-4 bg-foreground text-background text-xl rounded-full font-medium">
                         Get in touch
                     </button>
-                </div>
+                </div >
 
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 

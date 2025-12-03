@@ -4,35 +4,27 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import Player from "@vimeo/player";
 import { useLenis } from "lenis/react";
+import VimeoPlayer, { VimeoPlayerRef } from "@/components/ui/VimeoPlayer";
 
-export default function Page() {
+const HeaderLandingSection = () => {
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const videoTitleRef = useRef<HTMLDivElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const vimeoPlayerRef = useRef<VimeoPlayerRef>(null);
 
   // Preloader refs
   const preloaderRef = useRef<HTMLDivElement>(null);
   const preloaderTextRef = useRef<HTMLHeadingElement>(null);
 
   const [isMuted, setIsMuted] = useState(true);
-  const [player, setPlayer] = useState<any>(null);
 
   const lenis = useLenis();
 
-  useEffect(() => {
-    if (iframeRef.current) {
-      const p = new Player(iframeRef.current);
-      p.setMuted(true);
-      setPlayer(p);
-    }
-  }, []);
-
-  const toggleMute = () => {
-    if (!player) return;
-    player.setMuted(!isMuted);
-    setIsMuted(!isMuted);
+  const toggleMute = async () => {
+    if (!vimeoPlayerRef.current) return;
+    const newMutedState = !isMuted;
+    await vimeoPlayerRef.current.setMuted(newMutedState);
+    setIsMuted(newMutedState);
   };
 
   // PRELOADER + HEADER ANIMATION PIPELINE
@@ -65,8 +57,9 @@ export default function Page() {
     // SAFE LETTER SELECTION
     const charA = chars.find(c => c.textContent === "A");
     const charI = chars.find(c => c.textContent === "I");
+    const charPeriod = chars.find(c => c.textContent === ".");
 
-    const otherChars = chars.filter(c => c !== charA && c !== charI);
+    const otherChars = chars.filter(c => c !== charA && c !== charI && c !== charPeriod);
 
     gsap.set(chars, { opacity: 0, y: 40 });
     gsap.set(".navbar-logo", { opacity: 0 });
@@ -92,26 +85,40 @@ export default function Page() {
       // Fade out all except A + I
       .to(otherChars, { opacity: 0, duration: 0.45 }, "+=0.2")
 
-      // Merge A + I into center
+      // Merge A + I + . into center
       .add(() => {
         requestAnimationFrame(() => {
           const r = preloaderText.getBoundingClientRect();
           const centerX = r.width / 2;
 
-          if (charA && charI) {
+          if (charA && charI && charPeriod) {
             const rectA = charA.getBoundingClientRect();
             const rectI = charI.getBoundingClientRect();
+            const rectPeriod = charPeriod.getBoundingClientRect();
 
+            // Calculate total width of "A I ."
+            const spacing = 4; // spacing between characters
+            const totalWidth = rectA.width + spacing + rectI.width + spacing + rectPeriod.width;
+
+            // Position A
             gsap.to(charA, {
-              x: centerX - rectA.width - (rectA.left - r.left),
+              x: centerX - totalWidth / 2 - (rectA.left - r.left),
               duration: 0.8,
-              ease: "expo.inOut"
+              ease: "power3.inOut"
             });
 
+            // Position I
             gsap.to(charI, {
-              x: centerX + 2 - (rectI.left - r.left),
+              x: centerX - totalWidth / 2 + rectA.width + spacing - (rectI.left - r.left),
               duration: 0.8,
-              ease: "expo.inOut"
+              ease: "power3.inOut"
+            });
+
+            // Position .
+            gsap.to(charPeriod, {
+              x: centerX - totalWidth / 2 + rectA.width + spacing + rectI.width + spacing - (rectPeriod.left - r.left),
+              duration: 0.8,
+              ease: "power3.inOut"
             });
           }
         });
@@ -373,9 +380,9 @@ export default function Page() {
       >
         <h1
           ref={preloaderTextRef}
-          className="preloader-text text-3xl md:text-8xl font-black uppercase tracking-tight"
+          className="preloader-text text-3xl md:text-8xl font-bold uppercase tracking-tight"
         >
-          Aleksandar Ivanov
+          Aleksandar Ivanov.
         </h1>
       </div>
 
@@ -408,10 +415,13 @@ export default function Page() {
         >
           <div className="header-video-preview">
             <div className="header-video-wrapper">
-              <iframe
-                ref={iframeRef}
-                src="https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov"
-                allow="autoplay; fullscreen"
+              <VimeoPlayer
+                ref={vimeoPlayerRef}
+                videoId="1140981207"
+                autoplay
+                loop
+                background
+                muted
                 title="Portfolio Showreel"
                 loading="lazy"
               />
@@ -427,9 +437,12 @@ export default function Page() {
         <div className="header-video-container-mobile" onClick={toggleMute}>
           <div className="header-video-preview">
             <div className="header-video-wrapper">
-              <iframe
-                src="https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov"
-                allow="autoplay; fullscreen"
+              <VimeoPlayer
+                videoId="1140981207"
+                autoplay
+                loop
+                background
+                muted
                 title="Portfolio Showreel"
                 loading="lazy"
               />
@@ -445,3 +458,5 @@ export default function Page() {
     </div>
   );
 }
+
+export default HeaderLandingSection;

@@ -6,3 +6,6 @@ export { default as HoverSlideButton } from './button';
 export { default as RevealText } from './text-animation/reveal-text';
 
 export { default as WordFadeText } from './text-animation/word-fade-text';
+
+export { default as VimeoPlayer } from './VimeoPlayer';
+export type { VimeoPlayerProps, VimeoPlayerRef } from './VimeoPlayer';

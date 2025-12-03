@@ -1,13 +1,13 @@
-export { default as HeaderSection } from './landing/HeaderSection';
-export { default as AboutSection } from './landing/AboutSection';
-export { default as ProjectsSection } from './landing/ProjectsSection';
-export { default as ServicesHoverSection } from "./landing/ServicesHoverSection";
+export { default as HeaderLandingSection } from './landing/HeaderLandingSection';
+export { default as AboutLandingSection } from './landing/AboutLandingSection';
+export { default as ProjectsLandingSection } from './landing/ProjectsLandingSection';
+export { default as ServicesHoverLandingSection } from "./landing/ServicesHoverLandingSection";
 
-export { default as ContactHeaderSection } from './contact/HeaderSection';
-export { default as ContactSection } from './contact/ContactSection';
-
-
-export { default as ApproachSection } from "./approach/ApproachSection";
+export { default as ContactHeaderContactSection } from './contact/HeaderContactSection';
+export { default as ContactContactSection } from './contact/ContactContactSection';
 
 
-
+export { default as ApproachStickySection } from "./approach/ApproachStickySection";
+export { default as ApproachHeaderSection } from "./approach/ApproachHeaderSection";
+export { default as ApproachHorizontalScrollSection } from "./approach/ApproachHorizontalScrollSection";
+    

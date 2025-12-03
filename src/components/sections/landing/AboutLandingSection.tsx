@@ -1,8 +1,8 @@
 "use client";
 
-import { WordFadeText } from "@/components/ui";
+import { VimeoPlayer, WordFadeText } from "@/components/ui";
 
-const AboutSection = () => {
+const AboutLandingSection = () => {
     return (
         <div
 
@@ -24,12 +24,19 @@ const AboutSection = () => {
 
                 </div>
                 <div className="aspect-[16/9] w-full lg:w-[600px]  rounded-4xl">
-                    <iframe
-                        src="https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov"
-                        allow="autoplay; fullscreen"
+                    <VimeoPlayer
+                        videoId="1140981207"
+                        autoplay={true}
+                        loop={true}
+                        background={true}
+                        muted={true}
+                        controls={true}
                         title="Portfolio Showreel"
-                        loading="lazy"
                         className="w-full h-full rounded-4xl"
+                        wrapperClassName="aspect-[16/9] w-full lg:w-[600px]  rounded-4x"
+                        onPlayerReady={(player) => {
+                            player.play();
+                        }}
                     />
                 </div>
             </div>
@@ -37,4 +44,4 @@ const AboutSection = () => {
     );
 };
 
-export default AboutSection;
+export default AboutLandingSection;

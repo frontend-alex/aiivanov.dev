@@ -5,7 +5,7 @@ export const projectsData: ProjectCard[] = [
     {
         title: "PeerLearn",
         image: "/images/peerlearn-cover.jpg",
-        videoUrl: "https://player.vimeo.com/video/1141438425?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov",
+        videoUrl: "",
         type: "Web Application",
         year: "2024",
         technologiesText: "React, Next.js, TypeScript, Tailwind CSS, Framer Motion, Shadcn UI, Prisma, PostgreSQL, Supabase",
@@ -14,7 +14,7 @@ export const projectsData: ProjectCard[] = [
     {
         title: "CGI",
         image: "/images/cgi-cover.jpg",
-        videoUrl: "https://player.vimeo.com/video/1141438425?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov",
+        videoUrl: "",
         type: "Web Application",
         year: "2024",
         technologiesText: "React, Next.js, TypeScript, Tailwind CSS, Framer Motion, Shadcn UI, Prisma, PostgreSQL, Supabase",

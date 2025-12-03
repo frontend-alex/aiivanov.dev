@@ -1,4 +1,5 @@
-import { RevealText } from "@/components/ui";
+import { Footer } from "@/components";
+import { ApproachHeaderSection, ApproachHorizontalScrollSection } from "@/components/sections";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,8 +14,12 @@ export const metadata: Metadata = {
 
 const page = () => {
     return (
-        <div className="min-h-screen flex items-center justify-center">
-            <RevealText trigger="manual" duration={1} delay={1.3} className="font-black  uppercase text-[9vw]">Approach Page</RevealText>
+        <div className="flex flex-col gap-20">
+            <ApproachHeaderSection />
+            <ApproachHorizontalScrollSection />
+            <div className="px-5 lg:px-10">
+                <Footer />
+            </div>
         </div>
     );
 }

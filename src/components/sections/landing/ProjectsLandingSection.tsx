@@ -12,7 +12,7 @@ import HoverSlideButton from "@/components/ui/button";
 import { projectsData } from "@/constants/data";
 import { MoveRight } from "lucide-react";
 
-const ProjectsSection = () => {
+const ProjectsLandingSection = () => {
     const yearRef = useRef<HTMLHeadingElement>(null);
     const workRef = useRef<HTMLHeadingElement>(null);
     const counterRef = useRef({ value: 0 });
@@ -132,4 +132,4 @@ const ProjectsSection = () => {
     );
 };
 
-export default ProjectsSection;
+export default ProjectsLandingSection;

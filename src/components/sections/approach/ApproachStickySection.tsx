@@ -1,27 +1,22 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import RevealText from "@/components/ui/text-animation/reveal-text";
-import { approach, stickyCardsData } from "@/constants/data";
+
+import { useEffect, useRef } from "react";
+import { approach } from "@/constants/data";
 import { VimeoPlayer } from "@/components/ui";
-
-
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const ApproachSection = () => {
-    const container = useRef<HTMLDivElement>(null);
 
-    useGSAP(
+    useEffect(
         () => {
 
             gsap.registerPlugin(ScrollTrigger);
 
-            if (!container.current) return;
-
             // Use scoped selector for sticky cards
-            const stickyCards = gsap.utils.toArray<HTMLElement>(".sticky-card", container.current);
+            const stickyCards = gsap.utils.toArray<HTMLElement>(".sticky-card");
 
             stickyCards.forEach((card, index) => {
                 // Pin cards on scroll
@@ -92,23 +87,11 @@ const ApproachSection = () => {
                 }
             });
         },
-        { scope: container }
+        []
     );
 
-    useEffect(() => {
-        gsap.to(".approach-section", {
-            opacity: 0,
-            scrollTrigger: {
-                trigger: ".footer",
-                start: "top bottom",
-                end: "top 0%",
-                scrub: true,
-            },
-        });
-    }, []);
-
     return (
-        <div className="relative w-full h-full approach-section" ref={container}>
+        <div className="relative w-full h-full">
             {approach.map((cardData, index) => (
                 <div
                     className="sticky-card relative rounded-2xl w-full h-screen bg-background p-6 flex gap-12 will-change-transform

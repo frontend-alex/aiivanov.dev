@@ -3,7 +3,7 @@
 import gsap from "gsap";
 import RevealText from "@/components/ui/text-animation/reveal-text";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { approach } from "@/constants/data";
 import { VimeoPlayer } from "@/components/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

@@ -57,10 +57,10 @@ const Footer = () => {
     }, []);
 
     return (
-        <footer className="border-t border-neutral-200 mt-20 relative overflow-hidden min-h-screen flex flex-col justify-between footer">
+        <footer className="border-t border-accent mt-20 relative overflow-hidden min-h-screen flex flex-col justify-between footer">
             <FallingObjects />
 
-            <div className="flex flex-col lg:flex-row justify-between lg:gap-10 border-b border-neutral-200 py-10 lg:py-20 relative z-10 pointer-events-none">
+            <div className="flex flex-col lg:flex-row justify-between lg:gap-10 border-b border-accent py-10 lg:py-20 relative z-10 pointer-events-none">
                 <h1 className="footer-animate text-4xl lg:text-7xl">Work with me</h1>
                 <Link href="mailto:alex@aiivanov.dev" className="footer-animate text-4xl lg:text-7xl text-underline">alex@aiivanov.dev</Link>
             </div>

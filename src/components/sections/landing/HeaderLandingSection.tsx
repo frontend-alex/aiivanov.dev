@@ -64,7 +64,6 @@ const HeaderLandingSection = () => {
     const otherChars = chars.filter(c => c !== charA && c !== charI && c !== charPeriod);
 
     gsap.set(chars, { opacity: 0, y: 40 });
-    gsap.set(".navbar-logo", { opacity: 0 });
 
     const tl = gsap.timeline({
       paused: true,

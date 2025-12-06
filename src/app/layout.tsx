@@ -26,8 +26,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://aiivanov.dev"),
   title: {
-    default: "AI Ivanov | Creative Software Engineer",
-    template: "%s | AI Ivanov",
+    default: "AI.",
+    template: "%s | AI.",
   },
   description:
     "AI Ivanov is a Creative Software Engineer specializing in building immersive digital experiences, high-performance web applications, and interactive user interfaces.",

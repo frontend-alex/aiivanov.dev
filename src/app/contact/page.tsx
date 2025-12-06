@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: "Contact",
     description: "Explore the portfolio of AI Ivanov, featuring a collection of innovative web applications, creative coding projects, and digital experiences.",
     openGraph: {
-        title: "Contact | AI Ivanov",
+        title: "Contact | AI.",
         description: "Explore the portfolio of AI Ivanov, featuring a collection of innovative web applications, creative coding projects, and digital experiences.",
         url: "https://aiivanov.dev/contact",
     },

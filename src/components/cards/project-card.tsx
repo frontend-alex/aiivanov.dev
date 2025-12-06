@@ -7,9 +7,18 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { type ProjectCard as ProjectCardType } from "@/types/types";
 import { VimeoPlayer } from "../ui";
+import { cn } from "@/lib/utils";
+
+type ProjectCardProps = {
+    card: ProjectCardType;
+    className?: string;
+}
 
 
-const ProjectCard = ({ title, image, icon: Icon, year, type, videoUrl, technologiesText }: ProjectCardType) => {
+const ProjectCard = ({ card, className }: ProjectCardProps) => {
+
+    const { title, image, icon: Icon, year, type, technologiesText, videoUrl } = card;
+
     const containerRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
     const videoPopupWrapperRef = useRef<HTMLDivElement>(null);
@@ -55,13 +64,15 @@ const ProjectCard = ({ title, image, icon: Icon, year, type, videoUrl, technolog
         gsap.to(imageRef.current, {
             filter: "blur(10px) brightness(0.6) grayscale(1)",
             duration: 0.5,
-            ease: "power4.out"
+            ease: "power4.out",
+            overwrite: true
         });
 
         gsap.to(videoPopupContentRef.current, {
             clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
             duration: 0.8,
-            ease: "power3.inOut"
+            ease: "power3.inOut",
+            overwrite: true
         });
     });
 
@@ -70,14 +81,16 @@ const ProjectCard = ({ title, image, icon: Icon, year, type, videoUrl, technolog
         gsap.to(imageRef.current, {
             filter: "blur(0px) brightness(1) grayscale(0)",
             duration: 0.5,
-            ease: "power4.out"
+            ease: "power4.out",
+            overwrite: true
         });
 
         // Bottom-to-Top Wipe Close
         gsap.to(videoPopupContentRef.current, {
             clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
             duration: 0.5,
-            ease: "power3.inOut"
+            ease: "power3.inOut",
+            overwrite: true
         });
     });
 
@@ -86,7 +99,7 @@ const ProjectCard = ({ title, image, icon: Icon, year, type, videoUrl, technolog
             ref={containerRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className="group relative h-[500px] lg:h-[800px] w-full rounded-2xl overflow-hidden cursor-pointer bg-zinc-900"
+            className={cn("group relative h-[500px] lg:h-[800px] w-full rounded-2xl overflow-hidden cursor-pointer bg-zinc-900", className)}
         >
             {/* 1. Background Image (For Parallax and Blur) */}
             <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -148,12 +161,12 @@ const ProjectCard = ({ title, image, icon: Icon, year, type, videoUrl, technolog
                 {/* Title and Metadata */}
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <Icon className="bg-primary text-white rounded-full w-10 h-10 p-2 backdrop-blur-md border border-white/10" />
+                        {Icon && <Icon className="bg-primary text-white rounded-full w-10 h-10 p-2 backdrop-blur-md border border-white/10" />}
                         <span className="text-white text-2xl font-medium tracking-tight">{title}</span>
                     </div>
                     <div className="flex items-center gap-3 text-zinc-300 text-sm font-medium uppercase tracking-wider">
                         <span>{type}</span>
-                        <span className="w-1 h-1 rounded-full bg-zinc-400"></span>
+                        {year && <span className="w-1 h-1 rounded-full bg-zinc-400"></span>}
                         <span>{year}</span>
                     </div>
                 </div>

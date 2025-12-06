@@ -111,7 +111,7 @@ const ApproachSection = () => {
                     </div>
                     <div className="flex-[4] pt-6 relative z-10">
                         <div className="w-full lg:w-3/4 flex flex-col gap-6">
-                            <RevealText tagName="h1" className="text-4xl lg:text-7xl w-full lg:w-3/4" duration={1} delay={0.2}>
+                            <RevealText tagName="h1" className="text-4xl lg:text-7xl w-full lg:w-3/4" delay={0.2}>
                                 {cardData.title}
                             </RevealText>
 

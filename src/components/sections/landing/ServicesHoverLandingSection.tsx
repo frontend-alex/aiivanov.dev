@@ -82,7 +82,7 @@ const ServicesHoverLandingSection = ({ className }: { className?: string }) => {
                         duration: 0.4,
                         delay: 0.1,
                         ease: "power2.out",
-                        overwrite: "auto",
+                        overwrite: true,
                     }
                 );
             } else {
@@ -91,7 +91,7 @@ const ServicesHoverLandingSection = ({ className }: { className?: string }) => {
                     y: -10,
                     duration: 0.2,
                     ease: "power2.out",
-                    overwrite: "auto",
+                    overwrite: true,
                 });
             }
         });
@@ -184,7 +184,7 @@ const ServicesHoverLandingSection = ({ className }: { className?: string }) => {
             <div className="flex lg:hidden flex-col gap-10">
                 {approach.map((service, index) => (
                     <div className="border-b border-accent flex flex-col gap-10 pb-5" key={service.id}>
-                        <RevealText delay={index * 0.2} duration={1} className="text-4xl font-black">
+                        <RevealText delay={index * 0.2} className="text-4xl font-black">
                             {service.title}
                         </RevealText>
                         <VimeoPlayer
@@ -199,7 +199,7 @@ const ServicesHoverLandingSection = ({ className }: { className?: string }) => {
                             wrapperClassName="w-full h-[200px] overflow-hidden rounded-lg"
                             onPlayerReady={(player) => player.play()}
                         />
-                        <RevealText delay={index * 0.2} duration={1} className="text-xl">
+                        <RevealText delay={index * 0.2} className="text-xl">
                             {service.description}
                         </RevealText>
                     </div>

@@ -4,9 +4,10 @@ import { ForwardRefExoticComponent, RefAttributes } from "react";
 export type ProjectCard = {
     title: string;
     image: string;
-    icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
+    icon?: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
     year: string;
     type: string;
-    technologiesText: string;
+    technologiesText?: string;
     videoUrl: string;
+    
 }

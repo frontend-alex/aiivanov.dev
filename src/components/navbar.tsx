@@ -22,7 +22,7 @@ export const AppLogo = ({ className }: { className?: string }) => {
 };
 const Navbar = () => {
     return (
-        <nav className="fixed top-5 w-full px-10 flex items-center justify-between text-lg z-50 md:mix-blend-difference md:text-white">
+        <nav className="fixed top-5 w-full px-5 flex items-center justify-between text-lg z-50 md:mix-blend-difference md:text-white">
             <div className="flex items-center gap-10 ">
                 <AppLogo className="text-2xl font-bold" />
                 <div className="flex flex-col hidden lg:flex text-xl">

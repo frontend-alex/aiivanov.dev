@@ -123,8 +123,8 @@ const ProjectsLandingSection = () => {
                 <h1 ref={yearRef} className="font-black text-4xl lg:text-9xl">0'</h1>
             </div>
             <div className="flex flex-col lg:flex-row gap-5 items-center project-section-cards">
-                {projectsData.map((project, index) => (
-                    <ProjectCard key={index} {...project} />
+                {projectsData.slice(0, 2).map((project, index) => (
+                    <ProjectCard key={index} card={project} />
                 ))}
             </div>
             <HoverSlideButton mixBlend={false} href="/projects" emoji={<MoveRight />} className="mx-auto w-max">See All</HoverSlideButton>

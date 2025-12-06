@@ -33,6 +33,8 @@ const HeaderLandingSection = () => {
 
     gsap.registerPlugin(ScrollTrigger, SplitText);
 
+
+
     // LOCK SCROLL
     lenis?.stop();
     document.body.style.overflow = "hidden";
@@ -172,7 +174,7 @@ const HeaderLandingSection = () => {
             }
           });
         });
-      })
+      }, "+=1")
 
       // HEADER TEXT ENTRY
       .add(() => {
@@ -416,14 +418,14 @@ const HeaderLandingSection = () => {
           <div className="header-video-preview">
             <VimeoPlayer
               ref={vimeoPlayerRef}
-              videoId=""
+              videoId="1140981207"
               autoplay
               loop
               background
               muted
               wrapperClassName="header-video-wrapper"
               title="Portfolio Showreel"
-              loading="lazy"
+              loading="eager"
             />
           </div>
 
@@ -443,7 +445,7 @@ const HeaderLandingSection = () => {
                 background
                 muted
                 title="Portfolio Showreel"
-                loading="lazy"
+                loading="eager"
               />
             </div>
           </div>

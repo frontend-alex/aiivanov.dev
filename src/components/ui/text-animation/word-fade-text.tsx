@@ -1,10 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import { cn } from "@/lib/utils";
 
 interface WordFadeTextProps {
@@ -38,12 +37,12 @@ const WordFadeText = ({
 }: WordFadeTextProps) => {
     const elementRef = useRef<HTMLElement>(null);
 
-    useGSAP(
-        () => {
-            if (!elementRef.current) return;
+    useEffect(() => {
+        if (!elementRef.current) return;
 
-            gsap.registerPlugin(SplitText, ScrollTrigger);
+        gsap.registerPlugin(SplitText, ScrollTrigger);
 
+        const ctx = gsap.context(() => {
             const split = new SplitText(elementRef.current, {
                 type: "words",
             });
@@ -64,13 +63,12 @@ const WordFadeText = ({
                     scrub: true,
                 },
             });
+        }, elementRef);
 
-            return () => {
-                split.revert();
-            };
-        },
-        { scope: elementRef }
-    );
+        return () => {
+            ctx.revert();
+        };
+    }, [initialOpacity, finalOpacity, duration, stagger, triggerStart, triggerEnd, children]);
 
     const Tag = tagName;
 

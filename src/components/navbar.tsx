@@ -25,7 +25,7 @@ const Navbar = () => {
         <nav className="fixed top-5 w-full px-10 flex items-center justify-between text-lg z-50 md:mix-blend-difference md:text-white">
             <div className="flex items-center gap-10 ">
                 <AppLogo className="text-2xl font-bold" />
-                <div className="flex flex-col hidden md:flex text-xl">
+                <div className="flex flex-col hidden lg:flex text-xl">
                     <p>Netherlands Based</p>
                     <p className="text-inverted-stone">Working globally</p>
                 </div>

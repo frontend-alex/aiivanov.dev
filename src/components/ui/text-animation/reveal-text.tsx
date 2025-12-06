@@ -1,9 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
-import { useGSAP } from "@gsap/react";
 import { cn } from "@/lib/utils";
 
 interface RevealTextProps {
@@ -27,10 +26,12 @@ const RevealText = ({
 }: RevealTextProps) => {
     const elementRef = useRef<HTMLElement>(null);
 
-    useGSAP(
-        () => {
-            if (!elementRef.current) return;
+    useEffect(() => {
+        if (!elementRef.current) return;
 
+        gsap.registerPlugin(SplitText);
+
+        const ctx = gsap.context(() => {
             const split = new SplitText(elementRef.current, {
                 type: "words,chars",
                 wordsClass: "word",
@@ -60,11 +61,10 @@ const RevealText = ({
                         toggleActions: "play none none reverse",
                     },
                     onComplete: () => {
-                        // Remove will-change after animation completes for better performance
                         gsap.set(split.chars, { willChange: "auto" });
                     },
                 });
-            } else if (trigger === "manual") {
+            } else {
                 // Manual trigger - animate immediately on mount
                 gsap.to(split.chars, {
                     opacity: 1,
@@ -78,17 +78,12 @@ const RevealText = ({
                     },
                 });
             }
+        }, elementRef);
 
-            // Cleanup handled automatically by useGSAP context
-            return () => {
-                split.revert();
-            };
-        },
-        {
-            scope: elementRef,
-            dependencies: [children, trigger, delay, duration, stagger],
-        }
-    );
+        return () => {
+            ctx.revert();
+        };
+    }, [trigger, delay, duration, stagger, children]);
 
     const Tag = tagName;
 

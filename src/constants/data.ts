@@ -144,28 +144,27 @@ export const approach = [
         id: "analysis",
         index: "1",
         title: "Analysis",
-        subtitle: "User Specifications",
-        // videoUrl: "https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov",
+        subtitle: "User & Business Requirements",
         videoUrl: "",
-        description: "I gather and validate requirements stakeholders place on applications, prioritizing specifications based on their business value and documenting them through comprehensive analysis documents validated via acceptance tests."
+        description:
+            "I start by translating user and business needs into clear, actionable requirements. This phase prioritizes real value—defining what matters most, validating assumptions, and shaping a foundation that aligns technical direction with strategic objectives."
     },
     {
         id: "design",
         index: "2",
         title: "Design",
+        subtitle: "Technical Architecture",
         videoUrl: "",
-        subtitle: "Software Architecture",
-        // videoUrl: "https://player.vimeo.com/video/1141438425?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov",
-        description: "I create maintainable and secure technical designs using standard notation methods, translating specifications into scalable architecture diagrams, domain models, and database schemas that accommodate future growth."
+        description:
+            "I design scalable, maintainable system architectures that bridge design intent with engineering rigor. This includes crafting domain models, interaction flows, and data structures that support long-term growth while keeping the codebase clean and resilient."
     },
     {
         id: "validation",
         index: "3",
         title: "Validation",
+        subtitle: "Quality Assurance & Delivery",
         videoUrl: "",
-         subtitle: "Quality Assurance & Delivery",
-        // videoUrl: "https://player.vimeo.com/video/1140981207?background=1&autoplay=1&loop=1&dnt=1&app_id=aiivanov",
-        description: "I ensure deliverables meet stakeholder expectations through rigorous validation processes, including user acceptance testing, performance benchmarking, and security audits, guaranteeing production-ready solutions that align with business objectives."
+        description:
+            "I validate every solution through performance checks, usability reviews, and quality gates to ensure it meets expectations in both function and feel. The result is a production-ready deliverable aligned with user goals and business outcomes."
     }
 ];
-

@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | AI.",
   },
   description:
-    "AI Ivanov is a Creative Software Engineer specializing in building immersive digital experiences, high-performance web applications, and interactive user interfaces.",
+    "AI is a Creative Software Engineer specializing in building immersive digital experiences, high-performance web applications, and interactive user interfaces.",
   keywords: [
     "Software Engineer",
     "Creative Developer",
@@ -38,39 +38,39 @@ export const metadata: Metadata = {
     "Frontend Engineer",
     "React Developer",
     "Next.js Developer",
-    "AI Ivanov",
+    "AI",
     "Portfolio",
     "Creative Coding",
     "Interactive Web Design",
     "Backend Developer",
     "Fullstack Developer",
-    "AI Ivanov",
+    "AI",
     "Aleksandar Ivanov"
   ],
-  authors: [{ name: "AI Ivanov", url: "https://aiivanov.dev" }],
-  creator: "AI Ivanov",
+  authors: [{ name: "AI", url: "https://aiivanov.dev" }],
+  creator: "AI",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://aiivanov.dev",
-    title: "AI Ivanov | Creative Software Engineer",
+    title: "AI | Creative Software Engineer",
     description:
-      "AI Ivanov is a Creative Software Engineer specializing in building immersive digital experiences, high-performance web applications, and interactive user interfaces.",
-    siteName: "AI Ivanov",
+      "AI is a Creative Software Engineer specializing in building immersive digital experiences, high-performance web applications, and interactive user interfaces.",
+    siteName: "AI",
     images: [
       {
         url: "/images/og-image.png", // Assuming an OG image exists or will be added
         width: 1200,
         height: 630,
-        alt: "AI Ivanov Portfolio",
+        alt: "AI Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Ivanov | Creative Software Engineer",
+    title: "AI | Creative Software Engineer",
     description:
-      "AI Ivanov is a Creative Software Engineer specializing in building immersive digital experiences, high-performance web applications, and interactive user interfaces.",
+      "AI is a Creative Software Engineer specializing in building immersive digital experiences, high-performance web applications, and interactive user interfaces.",
     creator: "@aiivanov", // Placeholder, update if known
     images: ["/images/og-image.png"],
   },

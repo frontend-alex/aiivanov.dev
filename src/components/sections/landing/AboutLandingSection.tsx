@@ -16,10 +16,7 @@ const AboutLandingSection = () => {
                         tagName="h2"
                         className="text-2xl lg:text-5xl max-w-4xl leading-[1.1]"
                     >
-                        Passionate about merging design and engineering, I craft smooth,
-                        interactive experiences with purpose. With a focus on motion,
-                        performance, and detail, I help bring digital products to life for
-                        forward-thinking brands around the world.
+                        Focused on the intersection of design and engineering, I craft seamless, interactive experiences built for purpose. With an emphasis on motion, performance, and detail, I help forward-thinking brands bring polished digital products to market.
                     </WordFadeText>
 
                 </div>

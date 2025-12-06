@@ -15,7 +15,9 @@ export const metadata: Metadata = {
 const page = () => {
     return (
         <div className="flex flex-col gap-20">
-            <ApproachHeaderSection />
+            <div className="px-5 lg:px-10">
+                <ApproachHeaderSection />
+            </div>
             <ApproachHorizontalScrollSection />
             <ApproachStickySection />
             <div className="px-5 lg:px-10">

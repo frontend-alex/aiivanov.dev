@@ -75,10 +75,10 @@ const MobileMenu = () => {
                 {/* Header */}
                 < div className="flex justify-between items-center text-white" >
                     <TransitionLink href="/" onClick={toggleMenu}>
-                        <h1 className="text-2xl font-bold">AI.</h1>
+                        <h1 className="text-2xl font-bold text-white dark:text-black">AI.</h1>
                     </TransitionLink>
                     <div className="cursor-pointer" onClick={toggleMenu}>
-                        <h1 className="text-xl font-bold">Close</h1>
+                        <h1 className="text-xl font-bold text-white dark:text-black">Close</h1>
                     </div>
                 </div >
 
@@ -118,7 +118,7 @@ const MobileMenu = () => {
 
                 {/* Footer / Button */}
                 < div className="w-full" >
-                    <button className="w-full py-4 bg-foreground text-background text-xl rounded-full font-medium">
+                    <button className="w-full py-4 bg-white dark:bg-black text-black dark:text-white text-xl rounded-full font-medium">
                         Get in touch
                     </button>
                 </div >

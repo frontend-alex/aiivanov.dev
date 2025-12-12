@@ -57,7 +57,7 @@ const Footer = () => {
     }, []);
 
     return (
-        <footer className="border-t border-accent mt-20 relative overflow-hidden min-h-screen flex flex-col justify-between footer">
+        <footer className="border-t border-accent mt-20 relative overflow-hidden min-h-screen flex flex-col justify-between footer px-10">
             <FallingObjects />
 
             <div className="flex flex-col lg:flex-row justify-between lg:gap-10 border-b border-accent py-10 lg:py-20 relative z-10 pointer-events-none">

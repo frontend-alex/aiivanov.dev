@@ -32,7 +32,7 @@ const ApproachHeaderSection = () => {
                             delay={2.3}
                             className="text-2xl lg:text-3xl font-light max-w-3xl text-stone-400"
                         >
-                            Every project begins with a grounded understanding of user needs and evolves through intentional motion, detail, and performance-focused development—all geared toward building a better web, one line at a time.
+                            Every project begins with a grounded understanding of user needs and evolves through intentional motion, detail, and performance-focused development all geared toward building a better web, one line at a time.
                         </RevealText>
                     </div>
 

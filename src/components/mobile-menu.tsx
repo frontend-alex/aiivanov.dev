@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import TransitionLink from "./ui/text-animation/transition-link";
 import { gsap } from "gsap";
-import { Menu, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
 import { footerLinks } from "@/constants/data";
+import TransitionLink from "./ui/text-animation/transition-link";
 
 const MobileMenu = () => {
     const tl = useRef<gsap.core.Timeline | null>(null);

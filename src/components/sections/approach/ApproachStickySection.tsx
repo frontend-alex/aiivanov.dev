@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { approach } from "@/constants/data";
 import { VimeoPlayer } from "@/components/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { closedClip, openClip } from "@/constants/consts";
 
 const ApproachSection = () => {
 
@@ -62,7 +63,7 @@ const ApproachSection = () => {
                 const imageWrapper = card.querySelector(".image-wrapper");
                 if (imageWrapper) {
                     gsap.set(imageWrapper, {
-                        clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
+                        clipPath: closedClip,
                     });
 
                     ScrollTrigger.create({
@@ -71,14 +72,14 @@ const ApproachSection = () => {
                         end: "top 20%",
                         onEnter: () => {
                             gsap.to(imageWrapper, {
-                                clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+                                clipPath: openClip,
                                 duration: 0.8,
                                 ease: "power3.inOut",
                             });
                         },
                         onLeaveBack: () => {
                             gsap.to(imageWrapper, {
-                                clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
+                                clipPath: closedClip,
                                 duration: 0.5,
                                 ease: "power3.inOut",
                             });
@@ -110,15 +111,15 @@ const ApproachSection = () => {
                         </RevealText>
                     </div>
                     <div className="flex-[4] pt-6 relative z-10">
-                        <div className="w-full lg:w-3/4 flex flex-col gap-6">
+                        <div className="w-full lg:w-3/4 flex flex-col gap-10">
                             <RevealText tagName="h1" className="text-4xl lg:text-7xl w-full lg:w-3/4" delay={0.2}>
                                 {cardData.title}
                             </RevealText>
 
-                            <div className="w-full overflow-hidden rounded-lg h-64 lg:h-96">
+                            <div className="w-full overflow-hidden rounded-lg aspect-[16/9]">
                                 <div
                                     className="image-wrapper w-full h-full"
-                                    style={{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" }}
+                                    style={{ clipPath: closedClip }}
                                 >
                                     <VimeoPlayer
                                         videoId={cardData.videoUrl}
@@ -126,7 +127,7 @@ const ApproachSection = () => {
                                         loop={true}
                                         muted={true}
                                         controls={false}
-                                        className="w-full h-full overflow-hidden"
+                                        className="w-full h-full overflow-hidden "
                                         wrapperClassName="w-full h-full"
                                     />
                                 </div>

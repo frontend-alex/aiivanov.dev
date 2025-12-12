@@ -1,7 +1,17 @@
 "use client";
 
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import {
+    forwardRef,
+    memo,
+    useEffect,
+    useImperativeHandle,
+    useMemo,
+    useRef,
+} from "react";
 import Player from "@vimeo/player";
+import { useOnceInView } from "@/hooks/use-inview";
+
+/* ----------------------------- types ----------------------------- */
 
 export interface VimeoPlayerProps {
     videoId: string;
@@ -20,12 +30,13 @@ export interface VimeoPlayerProps {
 
 export interface VimeoPlayerRef {
     player: Player | null;
-    setMuted: (muted: boolean) => Promise<void>;
-    play: () => Promise<void>;
-    pause: () => Promise<void>;
+    play: () => Promise<void> | undefined;
+    pause: () => Promise<void> | undefined;
+    setMuted: (muted: boolean) => Promise<boolean> | undefined;
     getMuted: () => Promise<boolean>;
     getPlaying: () => Promise<boolean>;
 }
+/* ---------------------------- component --------------------------- */
 
 const VimeoPlayer = forwardRef<VimeoPlayerRef, VimeoPlayerProps>(
     (
@@ -45,95 +56,109 @@ const VimeoPlayer = forwardRef<VimeoPlayerRef, VimeoPlayerProps>(
         },
         ref
     ) => {
-        const iframeRef = useRef<HTMLIFrameElement>(null);
-        const [player, setPlayer] = useState<Player | null>(null);
 
-        // Build Vimeo URL with parameters
-        const buildVimeoUrl = () => {
+        const wrapperRef = useRef<HTMLDivElement>(null);
+        const iframeRef = useRef<HTMLIFrameElement>(null);
+        const playerRef = useRef<Player | null>(null);
+
+        const inView = useOnceInView(wrapperRef);
+
+        /* ----------------------- memoized src ------------------------ */
+
+        const src = useMemo(() => {
+            if (!videoId) return "";
+
             const params = new URLSearchParams({
                 ...(background && { background: "1" }),
                 ...(autoplay && { autoplay: "1" }),
                 ...(loop && { loop: "1" }),
+                ...(muted && { muted: "1" }),
+                ...(controls === false && { controls: "0" }),
                 dnt: "1",
-                app_id: "aiivanov",
             });
 
             return `https://player.vimeo.com/video/${videoId}?${params.toString()}`;
-        };
+        }, [videoId, autoplay, loop, background, muted, controls]);
 
-        // Initialize Vimeo Player
+        /* --------------------- player creation ----------------------- */
+
         useEffect(() => {
-            if (!iframeRef.current) return;
+            if (!iframeRef.current || playerRef.current || !inView) return;
 
-            const vimeoPlayer = new Player(iframeRef.current);
-            vimeoPlayer.setMuted(muted);
-            setPlayer(vimeoPlayer);
+            const player = new Player(iframeRef.current);
+            playerRef.current = player;
 
-            if (onPlayerReady) {
-                onPlayerReady(vimeoPlayer);
-            }
+            onPlayerReady?.(player);
 
             return () => {
-                vimeoPlayer.destroy();
+                player.destroy();
+                playerRef.current = null;
             };
-        }, [videoId, muted, onPlayerReady]);
+        }, [inView, onPlayerReady]);
 
-        // Expose player methods via ref
+        /* -------------------- prop synchronization ------------------- */
+
+        useEffect(() => {
+            playerRef.current?.setMuted(muted);
+        }, [muted]);
+
+        useEffect(() => {
+            playerRef.current?.setLoop(loop);
+        }, [loop]);
+
+        /* --------------------- imperative API ------------------------ */
+
         useImperativeHandle(ref, () => ({
-            player,
-            setMuted: async (muted: boolean) => {
-                if (player) {
-                    await player.setMuted(muted);
-                }
-            },
-            play: async () => {
-                if (player) {
-                    await player.play();
-                }
-            },
-            pause: async () => {
-                if (player) {
-                    await player.pause();
-                }
-            },
-            getMuted: async () => {
-                if (player) {
-                    return await player.getMuted();
-                }
-                return true;
-            },
-            getPlaying: async () => {
-                if (player) {
-                    const paused = await player.getPaused();
-                    return !paused;
-                }
-                return false;
-            },
+            player: playerRef.current,
+
+            play: () => playerRef.current?.play(),
+            pause: () => playerRef.current?.pause(),
+            setMuted: (m) => playerRef.current?.setMuted(m),
+
+            getMuted: async () =>
+                playerRef.current ? playerRef.current.getMuted() : true,
+
+            getPlaying: async () =>
+                playerRef.current
+                    ? !(await playerRef.current.getPaused())
+                    : false,
         }));
+
+        /* --------------------- unavailable state --------------------- */
 
         if (!videoId) {
             return (
-                <div className={wrapperClassName} onClick={onClick}>
-                    <div className="bg-stone-400 w-full h-full" />
+                <div ref={wrapperRef} className={wrapperClassName}>
+                    <div className="w-full h-full rounded-2xl bg-stone-400 flex items-center justify-center">
+                        <h1 className="text-4xl font-black">Unavailable</h1>
+                    </div>
                 </div>
             );
         }
 
+        /* ---------------------------- render -------------------------- */
+
         return (
-            <div className={wrapperClassName} onClick={onClick}>
-                <iframe
-                    ref={iframeRef}
-                    src={buildVimeoUrl()}
-                    allow="autoplay; fullscreen"
-                    title={title}
-                    loading={loading}
-                    className={className}
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                        border: "none",
-                    }}
-                />
+            <div
+                ref={wrapperRef}
+                className={wrapperClassName}
+                {...(onClick && { onClick })}
+            >
+                {inView && (
+                    <iframe
+                        ref={iframeRef}
+                        src={src}
+                        title={title}
+                        loading={loading}
+                        allow="autoplay; fullscreen"
+                        className={className}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            border: "none",
+                        }}
+                    />
+                )}
             </div>
         );
     }
@@ -141,4 +166,4 @@ const VimeoPlayer = forwardRef<VimeoPlayerRef, VimeoPlayerProps>(
 
 VimeoPlayer.displayName = "VimeoPlayer";
 
-export default VimeoPlayer;
+export default memo(VimeoPlayer);

@@ -1,3 +1,5 @@
+import { closedClip, openClip } from "@/constants/consts";
+
 export function slideInOut() {
   document.documentElement.animate(
     [
@@ -21,10 +23,10 @@ export function slideInOut() {
   document.documentElement.animate(
     [
       {
-        clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
+        clipPath: closedClip,
       },
       {
-        clipPath: "polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)",
+        clipPath: openClip,
       },
     ],
     {

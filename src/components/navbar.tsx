@@ -1,9 +1,12 @@
+'use client'
+
 import { footerLinks } from "@/constants/data";
 
 import MobileMenu from "./mobile-menu";
 import HoverSlideButton from "@/components/ui/button";
 import TransitionLink from "./ui/text-animation/transition-link";
 import HoverSlideText from "@/components/ui/text-animation/hover-slide-text";
+import { useEffect, useState } from "react";
 
 export const AppLogo = ({ className }: { className?: string }) => {
     return (
@@ -11,7 +14,7 @@ export const AppLogo = ({ className }: { className?: string }) => {
             href="/"
             className={`
                 ${className}
-                navbar-logo opacity-0
+                navbar-logo 
                 relative inline-block
                 logo-hover
             `}
@@ -20,9 +23,37 @@ export const AppLogo = ({ className }: { className?: string }) => {
         </TransitionLink>
     );
 };
+
 const Navbar = () => {
+    const [hidden, setHidden] = useState(false);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > lastScrollY && currentScrollY > 1) {
+                setHidden(true);
+            } else {
+                setHidden(false);
+            }
+
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [lastScrollY]);
+
     return (
-        <nav className="fixed top-5 w-full px-5 flex items-center justify-between text-lg z-50 md:mix-blend-difference md:text-white">
+        <nav
+            className={`
+                fixed top-5 w-full px-10 flex items-center justify-between text-lg
+                z-50 md:mix-blend-difference md:text-white
+                transition-transform duration-300 ease-out
+                ${hidden ? "-translate-y-[150%]" : ""}
+            `}
+        >
             <div className="flex items-center gap-10 ">
                 <AppLogo className="text-2xl font-bold" />
                 <div className="flex flex-col hidden lg:flex text-xl">
@@ -31,10 +62,6 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="flex items-center gap-30 hidden md:flex">
-                {/* <div className="flex flex-col text-xl">
-                    <p>Building at</p>
-                    <HoverSlideText href={'/'} className="cursor-special text-inverted-stone">@OutSource</HoverSlideText>
-                </div> */}
                 <ul className="flex  items-center gap-3">
                     {footerLinks.slice(0, 1).map((link) => (
                         link.links.map((subLink, subIdx) => (
@@ -50,7 +77,7 @@ const Navbar = () => {
 
             <MobileMenu />
         </nav>
-    )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;

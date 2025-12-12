@@ -9,8 +9,8 @@ const AboutLandingSection = () => {
             className="h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row about-section"
         >
             <div className="h-full flex items-center flex-col gap-10 lg:justify-center lg:flex-row">
-                <div className="flex flex-col justify-center gap-3">
-                    <p className="uppercase">Myself</p>
+                <div className="flex flex-col justify-center gap-10">
+                    <p className="text-2xl font-medium">(Me)</p>
 
                     <WordFadeText
                         tagName="h2"
@@ -28,8 +28,7 @@ const AboutLandingSection = () => {
                     muted={true}
                     controls={true}
                     title="Portfolio Showreel"
-                    className="w-full h-full rounded-3xl"
-                    wrapperClassName="aspect-[16/9] w-full lg:w-[600px] rounded-3xl"
+                    wrapperClassName="aspect-video w-full xl:w-[900px] rounded-3xl"
                     onPlayerReady={(player) => {
                         player.play();
                     }}

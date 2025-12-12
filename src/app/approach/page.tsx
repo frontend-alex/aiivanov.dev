@@ -14,15 +14,13 @@ export const metadata: Metadata = {
 
 const page = () => {
     return (
-        <div className="flex flex-col gap-20">
+        <div className="flex flex-col gap-20 lg:gap-52">
             <div className="px-5 lg:px-10">
                 <ApproachHeaderSection />
             </div>
             <ApproachHorizontalScrollSection />
             <ApproachStickySection />
-            <div className="px-5 lg:px-10">
-                <Footer />
-            </div>
+            <Footer />
         </div>
     );
 }

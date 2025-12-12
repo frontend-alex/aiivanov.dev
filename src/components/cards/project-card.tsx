@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { type ProjectCard as ProjectCardType } from "@/types/types";
 import { VimeoPlayer } from "../ui";
 import { cn } from "@/lib/utils";
+import { closedClip, openClip } from "@/constants/consts";
 
 type ProjectCardProps = {
     card: ProjectCardType;
@@ -69,7 +70,7 @@ const ProjectCard = ({ card, className }: ProjectCardProps) => {
         });
 
         gsap.to(videoPopupContentRef.current, {
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+            clipPath: openClip,
             duration: 0.8,
             ease: "power3.inOut",
             overwrite: true
@@ -87,7 +88,7 @@ const ProjectCard = ({ card, className }: ProjectCardProps) => {
 
         // Bottom-to-Top Wipe Close
         gsap.to(videoPopupContentRef.current, {
-            clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
+            clipPath: closedClip,
             duration: 0.5,
             ease: "power3.inOut",
             overwrite: true
@@ -124,7 +125,7 @@ const ProjectCard = ({ card, className }: ProjectCardProps) => {
                     ref={videoPopupContentRef}
                     className="w-[80%] aspect-video bg-black relative rounded-lg overflow-hidden"
                     // Initial clip-path: closed line at the bottom (0% 100%)
-                    style={{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" }}
+                    style={{ clipPath: closedClip }}
                 >
                     {/* <iframe
                         src={videoUrl}

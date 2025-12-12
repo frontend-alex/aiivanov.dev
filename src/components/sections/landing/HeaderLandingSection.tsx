@@ -304,7 +304,7 @@ const HeaderLandingSection = () => {
           );
           animationState.scale = gsap.utils.interpolate(
             0.25,
-            0.95,
+            0.90,
             animationState.scrollProgress
           );
           animationState.gap = gsap.utils.interpolate(
@@ -403,7 +403,7 @@ const HeaderLandingSection = () => {
         </div>
 
         <div className="flex items-center justify-end text-lg font-bold blur-on-scroll">
-          <h2 className="text-2xl">(Scroll)</h2>
+          <h2 className="text-2xl font-medium">(Scroll)</h2>
         </div>
       </div>
 

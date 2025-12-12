@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { approach } from "@/constants/data";
 import { HoverSlideButton, RevealText, VimeoPlayer } from "@/components/ui";
 import { ArrowRight } from "lucide-react";
+import { closedClip, openClip } from "@/constants/consts";
 
 const ServicesHoverLandingSection = ({ className }: { className?: string }) => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -16,10 +17,6 @@ const ServicesHoverLandingSection = ({ className }: { className?: string }) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const { contextSafe } = useGSAP({ scope: containerRef });
-
-    // Shared states
-    const closedClip = "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)";
-    const openClip = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
 
     const handleTitleMouseEnter = contextSafe((index: number) => {
         setActiveIndex(index);
@@ -98,10 +95,10 @@ const ServicesHoverLandingSection = ({ className }: { className?: string }) => {
     });
 
     return (
-        <section ref={containerRef} className={cn("w-full flex flex-col gap-20", className)}>
+        <section ref={containerRef} className={cn("w-full flex flex-col gap-10 lg:gap-40", className)}>
             <div className="flex justify-between flex-col lg:flex-row gap-10">
                 <h1 className="text-2xl font-medium">(Approach)</h1>
-                <p className="text-lg lg:text-2xl max-w-md hidden lg:flex">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, rerum.</p>
+                <p className="text-lg lg:text-2xl max-w-md hidden lg:flex">Clarity first. Structure second. Validation always. Built for real production systems.</p>
                 <HoverSlideButton emoji={<ArrowRight />} mixBlend={false} href="/approach" className="hidden lg:flex">Learn About my approach</HoverSlideButton>
             </div>
 
@@ -152,7 +149,7 @@ const ServicesHoverLandingSection = ({ className }: { className?: string }) => {
                                             activeIndex === index ? "z-10" : "z-0 opacity-0 pointer-events-none"
                                         )}
                                     >
-                                        {service.description.slice(0, 100) + "..."}
+                                        {service.smallDescription}
                                     </p>
                                 ))}
                             </div>
@@ -200,7 +197,7 @@ const ServicesHoverLandingSection = ({ className }: { className?: string }) => {
                             onPlayerReady={(player) => player.play()}
                         />
                         <RevealText delay={index * 0.2} className="text-xl">
-                            {service.description}
+                            {service.smallDescription}
                         </RevealText>
                     </div>
                 ))}

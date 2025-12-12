@@ -1,9 +1,10 @@
 import "@/styles/globals.css";
+
+import { Analytics } from "@vercel/analytics/next"
 import { ViewTransitions } from "next-view-transitions";
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-
 
 import { Navbar } from '@/components/index'
 import { Cursor } from '@/components/ui/index';
@@ -119,6 +120,7 @@ export default function RootLayout({
             </ViewTransitions>
           </PreloaderProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

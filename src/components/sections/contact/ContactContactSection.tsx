@@ -1,5 +1,6 @@
 'use client'
 
+import CopyToClipboard from "@/components/copy";
 import { RevealText } from "@/components/ui";
 
 const ContactContactSection = () => {
@@ -13,7 +14,9 @@ const ContactContactSection = () => {
             </div>
             <div className="flex flex-col">
                 <RevealText delay={0.6} className="text-4xl lg:text-7xl">Aleksandar Ivanov</RevealText>
-                <RevealText delay={0.8} className="text-4xl lg:text-7xl text-underline">hello@aiivanov.dev</RevealText>
+                <CopyToClipboard value="hello@aiivanov.dev">
+                    <RevealText delay={0.8} className="text-4xl lg:text-7xl text-underline">hello@aiivanov.dev</RevealText>
+                </CopyToClipboard>
             </div>
         </div>
     );

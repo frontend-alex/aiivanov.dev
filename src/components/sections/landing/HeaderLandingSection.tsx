@@ -403,7 +403,7 @@ const HeaderLandingSection = () => {
         </div>
 
         <div className="flex items-center justify-end text-lg font-bold blur-on-scroll">
-          <h2 className="text-2xl font-medium">(Scroll)</h2>
+          <h2 className="hidden lg:flex text-2xl font-medium">(Scroll)</h2>
         </div>
       </div>
 

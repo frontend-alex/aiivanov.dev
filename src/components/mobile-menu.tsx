@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { footerLinks } from "@/constants/data";
 import TransitionLink from "./ui/text-animation/transition-link";
+import Link from "next/link";
 
 const MobileMenu = () => {
     const tl = useRef<gsap.core.Timeline | null>(null);
@@ -21,7 +22,7 @@ const MobileMenu = () => {
             tl.current = gsap
                 .timeline({ paused: true })
                 .to(".menu-overlay", {
-                    duration: 1.25,
+                    duration: 1,
                     clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
                     ease: "power4.inOut",
                 })
@@ -30,7 +31,7 @@ const MobileMenu = () => {
                     duration: 1,
                     stagger: 0.1,
                     ease: "power4.out",
-                    delay: -0.75,
+                    delay: -1,
                 });
         },
         []
@@ -45,17 +46,25 @@ const MobileMenu = () => {
             }
         }
 
+        const preventTouch = (e: TouchEvent) => e.preventDefault();
+
         if (isMenuOpen) {
             document.body.style.overflow = "hidden";
             document.documentElement.style.overflow = "hidden";
+
+            // iOS / mobile fix
+            document.addEventListener("touchmove", preventTouch, { passive: false });
         } else {
             document.body.style.overflow = "";
             document.documentElement.style.overflow = "";
+
+            document.removeEventListener("touchmove", preventTouch);
         }
 
         return () => {
             document.body.style.overflow = "";
             document.documentElement.style.overflow = "";
+            document.removeEventListener("touchmove", preventTouch);
         };
     }, [isMenuOpen]);
     return (
@@ -96,32 +105,14 @@ const MobileMenu = () => {
                             ))
                         ))
                     }
-
-                    {/* <div className="menu-link-item overflow-hidden">
-                        <div className="menu-link-item-holder relative">
-                            <div className="flex flex-col gap-2">
-                                <p className="text-lg">Building at</p>
-                                <TransitionLink href="/" className="text-2xl font-medium text-white " onClick={toggleMenu}>@OutSource</TransitionLink>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="menu-link-item overflow-hidden">
-                        <div className="menu-link-item-holder relative">
-                            <div className="flex flex-col gap-2">
-                                <p className="text-lg">Position</p>
-                                <TransitionLink href="/" className="text-2xl font-medium text-white" onClick={toggleMenu}>Fullstack Developer</TransitionLink>
-                            </div>
-                        </div>
-                    </div> */}
                 </div >
 
                 {/* Footer / Button */}
-                < div className="w-full" >
+                <Link href="mailto:alex@aiivanov.dev" className="w-full">
                     <button className="w-full py-4 bg-white dark:bg-black text-black dark:text-white text-xl rounded-full font-medium">
                         Get in touch
                     </button>
-                </div >
+                </Link >
 
             </div >
         </div >

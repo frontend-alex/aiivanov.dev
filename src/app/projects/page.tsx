@@ -113,7 +113,7 @@ export default function ProjectsPage() {
     }, []);
 
     return (
-        <main className="min-h-screen flex flex-col lg:fixed lg:inset-0 lg:overflow-hidden">
+        <main className="flex flex-col lg:fixed lg:inset-0 lg:overflow-hidden">
             {/* Header */}
             <div className="lg:absolute bottom-10 left-0 w-full px-5 flex flex-col lg:flex-row gap-5 lg:items-center justify-between mt-20 pointer-events-none z-10">
                 <RevealText

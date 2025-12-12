@@ -10,11 +10,11 @@ const ApproachHorizontalScrollSection = () => {
     return (
         <div className="flex w-full flex-col items-center justify-center overflow-hidden py-8">
             <ScrollVelocityContainer className="w-full">
-                <ScrollVelocityRow baseVelocity={1} direction={1} className="py-4">
+                <ScrollVelocityRow baseVelocity={2} direction={1} className="py-4">
                     {Array.from({ length: 10 }).map((_, idx) => (
                         <div
                             key={idx}
-                            className="mx-4 inline-block w-[400px] h-[400px] lg:w-[700px] lg:h-[700px] rounded-lg overflow-hidden pointer-events-auto"
+                            className="mx-4 inline-block w-[300px] h-[300px] lg:w-[700px] lg:h-[700px] rounded-lg overflow-hidden pointer-events-auto"
                         >
                             <VimeoPlayer
                                 videoId=""

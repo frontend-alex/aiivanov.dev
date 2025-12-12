@@ -9,6 +9,7 @@ import { SplitText } from "gsap/SplitText";
 import { footerLinks } from "@/constants/data";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FallingObjects from "./ui/falling-objects";
+import CopyToClipboard from "./copy";
 
 const Footer = () => {
 
@@ -57,12 +58,14 @@ const Footer = () => {
     }, []);
 
     return (
-        <footer className="border-t border-accent mt-20 relative overflow-hidden min-h-screen flex flex-col justify-between footer px-10">
+        <footer className="border-t border-accent mt-20 relative overflow-hidden min-h-screen flex flex-col justify-between footer px-5 lg:px-10">
             <FallingObjects />
 
-            <div className="flex flex-col lg:flex-row justify-between lg:gap-10 border-b border-accent py-10 lg:py-20 relative z-10 pointer-events-none">
+            <div className="flex flex-col lg:flex-row justify-between lg:gap-10 border-b border-accent py-10 lg:py-20 relative z-10">
                 <h1 className="footer-animate text-4xl lg:text-7xl">Work with me</h1>
-                <Link href="mailto:alex@aiivanov.dev" className="footer-animate text-4xl lg:text-7xl text-underline">alex@aiivanov.dev</Link>
+                <CopyToClipboard value="alex@aiivanov.dev">
+                    <Link href="mailto:alex@aiivanov.dev" className="footer-animate text-4xl lg:text-7xl text-underline">alex@aiivanov.dev</Link>
+                </CopyToClipboard>
             </div>
 
             <div className="flex flex-col lg:flex-row justify-start gap-10 py-20 relative z-10">

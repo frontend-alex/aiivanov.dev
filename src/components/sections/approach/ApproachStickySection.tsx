@@ -95,7 +95,7 @@ const ApproachSection = () => {
         <div className="relative w-full h-full">
             {approach.map((cardData, index) => (
                 <div
-                    className="sticky-card relative rounded-2xl w-full h-screen bg-background p-6 flex gap-12 will-change-transform
+                    className="sticky-card relative rounded-2xl w-full h-screen bg-background p-6 flex will-change-transform
                      flex-col lg:flex-row lg:gap-12"
                     key={index}
                 >
@@ -140,7 +140,7 @@ const ApproachSection = () => {
                                     </RevealText>
                                 </div>
                                 <div className="flex-[4]">
-                                    <RevealText tagName="p" className="text-xl lg:text-2xl" duration={0.8} delay={0.4}>
+                                    <RevealText tagName="p" className="text-xl text-stone-400 lg:text-2xl" duration={0.8} delay={0.4}>
                                         {cardData.description}
                                     </RevealText>
                                 </div>

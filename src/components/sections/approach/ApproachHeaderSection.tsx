@@ -17,7 +17,6 @@ const ApproachHeaderSection = () => {
                 <div className="flex flex-col lg:flex-row gap-10 items-end justify-between">
                     <div className="flex flex-col gap-10">
 
-                        {/* NEW: Aligned with your design-engineering positioning */}
                         <RevealText
                             trigger="manual"
                             delay={1.8}
@@ -26,11 +25,10 @@ const ApproachHeaderSection = () => {
                             My approach blends design clarity with engineering precision to shape digital experiences that perform, engage, and scale.
                         </RevealText>
 
-                        {/* NEW: Purpose-driven + user-centered without the generic phrasing */}
                         <RevealText
                             trigger="manual"
                             delay={2.3}
-                            className="text-2xl lg:text-3xl font-light max-w-3xl text-stone-400"
+                            className="text-xl lg:text-2xl font-medium max-w-3xl text-stone-400"
                         >
                             Every project begins with a grounded understanding of user needs and evolves through intentional motion, detail, and performance-focused development all geared toward building a better web, one line at a time.
                         </RevealText>

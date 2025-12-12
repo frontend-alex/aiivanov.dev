@@ -30,7 +30,7 @@ const HeaderContactSection = () => {
                         <RevealText
                             trigger="manual"
                             delay={2.3}
-                            className="text-2xl lg:text-3xl font-light max-w-3xl text-stone-400"
+                            className="text-xl lg:text-2xl font-medium max-w-3xl text-stone-400"
                         >
                             Driven to make the web a better place, one line of code at a time. I build modern digital products with an emphasis on motion, performance, and detail transforming ideas into polished, production-ready experiences.
                         </RevealText>

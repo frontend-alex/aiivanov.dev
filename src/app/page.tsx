@@ -7,14 +7,14 @@ import { HeaderLandingSection, AboutLandingSection, ProjectsLandingSection, Serv
 export default function Page() {
   return (
     <div className="flex flex-col gap-20 lg:gap-52">
-      <div className="px-5 lg:px-10 flex flex-col gap-20 lg:gap-52">
+      <div className="px-5 lg:px-10 flex flex-col gap-52">
         <HeaderLandingSection />
         <div className="min-h-1/2 flex items-center justify-center lg:mt-52">
           <AboutLandingSection />
         </div>
         <ProjectsLandingSection />
 
-        <WordFadeText tagName="h1" className="text-6xl lg:text-[9vw] font-black uppercase leading-[0.75] px-5">Driven to make the web a better place, one line of code at a time.</WordFadeText>
+        <WordFadeText tagName="h1" className="hidden lg:flextext-6xl lg:text-[9vw] font-black uppercase leading-[0.75] px-5">Driven to make the web a better place, one line of code at a time.</WordFadeText>
 
         <ServicesHoverLandingSection />
       </div >

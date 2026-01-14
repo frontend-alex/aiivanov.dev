@@ -159,6 +159,28 @@
     background-color: var(--foreground);
 }
 
+
+::-webkit-scrollbar {
+  width: 12px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--foreground);
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--background) transparent;
+}
+
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none !important;

@@ -14,86 +14,13 @@ export const projectsData: ProjectCard[] = [
     {
         title: "CGI",
         image: "/images/cgi-cover.jpg",
-        videoUrl: "",
+        videoUrl: "1035212551",
         type: "Web Application",
         year: "2024",
         technologiesText: "React, Next.js, TypeScript, Tailwind CSS, Framer Motion, Shadcn UI, Prisma, PostgreSQL, Supabase",
         icon: BookOpen,
     },
-    {
-        title: "",
-        image: "",
-        videoUrl: "",
-        type: "",
-        year: "",
-        technologiesText: "",
-    },
-     {
-        title: "",
-        image: "",
-        videoUrl: "",
-        type: "",
-        year: "",
-        technologiesText: "",
-    },
-     {
-        title: "",
-        image: "",
-        videoUrl: "",
-        type: "",
-        year: "",
-        technologiesText: "",
-    },
-     {
-        title: "",
-        image: "",
-        videoUrl: "",
-        type: "",
-        year: "",
-        technologiesText: "",
-    },
-     {
-        title: "",
-        image: "",
-        videoUrl: "",
-        type: "",
-        year: "",
-        technologiesText: "",
-    },
-     {
-        title: "",
-        image: "",
-        videoUrl: "",
-        type: "",
-        year: "",
-        technologiesText: "",
-    },
-     {
-        title: "",
-        image: "",
-        videoUrl: "",
-        type: "",
-        year: "",
-        technologiesText: "",
-    },
-     {
-        title: "",
-        image: "",
-        videoUrl: "",
-        type: "",
-        year: "",
-        technologiesText: "",
-    },
-     {
-        title: "",
-        image: "",
-        videoUrl: "",
-        type: "",
-        year: "",
-        technologiesText: "",
-    },
-    
-]
+];
 
 
 

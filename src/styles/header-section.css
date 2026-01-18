@@ -42,7 +42,6 @@
     font-weight: 500;
     line-height: 1;
     margin: 0;
-    color: #1a1a1a;
     text-transform: none;
     white-space: nowrap;
 }
@@ -95,14 +94,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e3e3db;
-    color: #1a1a1a;
 }
 
 .header-outro p {
     font-size: 20px;
     font-weight: 500;
-    color: #1a1a1a;
     text-transform: none;
 }
 
@@ -135,7 +131,6 @@
     .header-video-title p {
         font-size: 1.2rem;
         font-weight: 500;
-        color: #1a1a1a;
         text-transform: none;
     }
 }

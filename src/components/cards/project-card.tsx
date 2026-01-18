@@ -3,10 +3,10 @@
 import gsap from "gsap";
 import Image from "next/image";
 
-import { useRef } from "react";
+import { useRef, memo } from "react";
 import { useGSAP } from "@gsap/react";
 import { type ProjectCard as ProjectCardType } from "@/types/types";
-import { VimeoPlayer } from "../ui";
+import { VimeoPlayer, type VimeoPlayerRef } from "../ui";
 import { cn } from "@/lib/utils";
 import { closedClip, openClip } from "@/constants/consts";
 
@@ -16,7 +16,7 @@ type ProjectCardProps = {
 }
 
 
-const ProjectCard = ({ card, className }: ProjectCardProps) => {
+const ProjectCard = memo(({ card, className }: ProjectCardProps) => {
 
     const { title, image, icon: Icon, year, type, technologiesText, videoUrl } = card;
 
@@ -27,6 +27,7 @@ const ProjectCard = ({ card, className }: ProjectCardProps) => {
 
     const velocityText1Ref = useRef<HTMLDivElement>(null);
     const velocityText2Ref = useRef<HTMLDivElement>(null);
+    const playerRef = useRef<VimeoPlayerRef>(null);
 
     const { contextSafe } = useGSAP({ scope: containerRef });
 
@@ -62,6 +63,8 @@ const ProjectCard = ({ card, className }: ProjectCardProps) => {
     }, { scope: containerRef });
 
     const handleMouseEnter = contextSafe(() => {
+        playerRef.current?.play();
+
         gsap.to(imageRef.current, {
             filter: "blur(10px) brightness(0.6) grayscale(1)",
             duration: 0.5,
@@ -78,6 +81,8 @@ const ProjectCard = ({ card, className }: ProjectCardProps) => {
     });
 
     const handleMouseLeave = contextSafe(() => {
+        playerRef.current?.pause();
+
         // Unblur background and remove grayscale
         gsap.to(imageRef.current, {
             filter: "blur(0px) brightness(1) grayscale(0)",
@@ -100,7 +105,7 @@ const ProjectCard = ({ card, className }: ProjectCardProps) => {
             ref={containerRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={cn("group relative h-[500px] lg:h-[800px] w-full rounded-2xl overflow-hidden cursor-pointer bg-zinc-900", className)}
+            className={cn("group relative h-[500px] lg:h-[800px] w-full rounded-2xl overflow-hidden cursor-pointer", className)}
         >
             {/* 1. Background Image (For Parallax and Blur) */}
             <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -127,31 +132,17 @@ const ProjectCard = ({ card, className }: ProjectCardProps) => {
                     // Initial clip-path: closed line at the bottom (0% 100%)
                     style={{ clipPath: closedClip }}
                 >
-                    {/* <iframe
-                        src={videoUrl}
-                        className="w-full h-full object-cover"
-                        allow="autoplay; fullscreen; picture-in-picture"
-
-                        style={{
-                            transformOrigin: 'top left',
-                            border: 'none'
-                        }}
-                        title={title}
-                    /> */}
-
                     <VimeoPlayer
+                        ref={playerRef}
                         videoId={videoUrl}
-                        autoplay={true}
+                        autoplay={false}
                         loop={true}
-                        background={true}
+                        background={false}
                         muted={true}
-                        controls={true}
+                        controls={false}
                         title={title}
                         className="w-full h-full object-cover"
                         wrapperClassName="absolute inset-0"
-                        onPlayerReady={(player) => {
-                            player.play();
-                        }}
                     />
                 </div>
             </div>
@@ -194,6 +185,8 @@ const ProjectCard = ({ card, className }: ProjectCardProps) => {
             </div>
         </div>
     );
-}
+});
+
+ProjectCard.displayName = "ProjectCard";
 
 export default ProjectCard;

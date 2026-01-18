@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface PreloaderContextType {
     isPreloaderComplete: boolean;
@@ -12,7 +12,21 @@ const PreloaderContext = createContext<PreloaderContextType | undefined>(
 );
 
 export default function PreloaderProvider({ children }: { children: ReactNode }) {
-    const [isPreloaderComplete, setIsPreloaderComplete] = useState(false);
+    const [isPreloaderComplete, setIsPreloaderCompleteState] = useState(false);
+
+    useEffect(() => {
+        const stored = sessionStorage.getItem("isPreloaderComplete");
+        if (stored === "true") {
+            setIsPreloaderCompleteState(true);
+        }
+    }, []);
+
+    const setIsPreloaderComplete = (value: boolean) => {
+        setIsPreloaderCompleteState(value);
+        if (value) {
+            sessionStorage.setItem("isPreloaderComplete", "true");
+        }
+    };
 
     return (
         <PreloaderContext.Provider

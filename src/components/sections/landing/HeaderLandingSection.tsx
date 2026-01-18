@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { useLenis } from "lenis/react";
 import VimeoPlayer, { VimeoPlayerRef } from "@/components/ui/VimeoPlayer";
+import { usePreloader } from "@/contexts/preloader-context";
 
 const HeaderLandingSection = () => {
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -27,197 +28,185 @@ const HeaderLandingSection = () => {
     setIsMuted(newMutedState);
   };
 
+  const { isPreloaderComplete, setIsPreloaderComplete } = usePreloader();
+
   // PRELOADER + HEADER ANIMATION PIPELINE
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     gsap.registerPlugin(ScrollTrigger, SplitText);
 
-
-
-    // LOCK SCROLL
-    lenis?.stop();
-    document.body.style.overflow = "hidden";
-
-    const preloaderText = preloaderTextRef.current;
-    if (!preloaderText) return;
-
+    // Common setup
     const headerTitle = document.querySelector(".header-title");
     let headerSplit: SplitText | null = null;
-
     if (headerTitle) {
       headerSplit = new SplitText(headerTitle, { type: "chars", charsClass: "char" });
-      gsap.set(headerSplit.chars, { opacity: 0, y: 100 });
     }
 
-    const split = new SplitText(preloaderText, { type: "chars" });
-    const chars = split.chars;
+    // --- CASE 1: INITIAL LOAD (Long Animation) ---
+    if (!isPreloaderComplete) {
+      // LOCK SCROLL
+      lenis?.stop();
+      document.body.style.overflow = "hidden";
 
-    // reveal text NOW (still hidden until animation starts)
-    gsap.set(preloaderText, { visibility: "visible" });
+      const preloaderText = preloaderTextRef.current;
+      if (!preloaderText) return;
 
-    // SAFE LETTER SELECTION
-    const charA = chars.find(c => c.textContent === "A");
-    const charI = chars.find(c => c.textContent === "I");
-    const charPeriod = chars.find(c => c.textContent === ".");
-
-    const otherChars = chars.filter(c => c !== charA && c !== charI && c !== charPeriod);
-
-    gsap.set(chars, { opacity: 0, y: 40 });
-
-    const tl = gsap.timeline({
-      paused: true,
-      defaults: { duration: 0.8, ease: "power3.out" }
-    });
-
-    // CHARACTER REVEAL — no flash, no delay
-    tl.fromTo(
-      chars,
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1,
-        y: 0,
-        stagger: 0.035,
-        duration: 0.8,
-        ease: "power3.out"
+      // Ensure header text is hidden initially
+      if (headerSplit) {
+        gsap.set(headerSplit.chars, { opacity: 0 });
       }
-    )
 
-      // Fade out all except A + I
-      .to(otherChars, { opacity: 0, duration: 0.45 }, "+=0.2")
+      const split = new SplitText(preloaderText, { type: "chars" });
+      const chars = split.chars;
 
-      // Merge A + I + . into center
-      .add(() => {
-        requestAnimationFrame(() => {
-          const r = preloaderText.getBoundingClientRect();
-          const centerX = r.width / 2;
+      // reveal text NOW (still hidden until animation starts)
+      gsap.set(preloaderText, { visibility: "visible" });
 
-          if (charA && charI && charPeriod) {
-            const rectA = charA.getBoundingClientRect();
-            const rectI = charI.getBoundingClientRect();
-            const rectPeriod = charPeriod.getBoundingClientRect();
+      // SAFE LETTER SELECTION
+      const charA = chars.find(c => c.textContent === "A");
+      const charI = chars.find(c => c.textContent === "I");
+      const charPeriod = chars.find(c => c.textContent === ".");
 
-            // Calculate total width of "A I ."
-            const spacing = 4; // spacing between characters
-            const totalWidth = rectA.width + spacing + rectI.width + spacing + rectPeriod.width;
+      const otherChars = chars.filter(c => c !== charA && c !== charI && c !== charPeriod);
 
-            // Position A
-            gsap.to(charA, {
-              x: centerX - totalWidth / 2 - (rectA.left - r.left),
-              duration: 0.8,
-              ease: "power3.inOut"
-            });
+      gsap.set(chars, { opacity: 0, y: 40 });
 
-            // Position I
-            gsap.to(charI, {
-              x: centerX - totalWidth / 2 + rectA.width + spacing - (rectI.left - r.left),
-              duration: 0.8,
-              ease: "power3.inOut"
-            });
+      const tl = gsap.timeline({
+        defaults: { duration: 0.8, ease: "power3.out" }
+      });
 
-            // Position .
-            gsap.to(charPeriod, {
-              x: centerX - totalWidth / 2 + rectA.width + spacing + rectI.width + spacing - (rectPeriod.left - r.left),
-              duration: 0.8,
-              ease: "power3.inOut"
-            });
-          }
-        });
-      })
+      // CHARACTER REVEAL
+      tl.fromTo(
+        chars,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.035,
+          duration: 0.8,
+          ease: "power3.out"
+        }
+      )
+        // Fade out all except A + I
+        .to(otherChars, { opacity: 0, duration: 0.45 }, "+=0.2")
 
-      // Move merged AI to navbar + rotation effect
-      .add(() => {
-        requestAnimationFrame(() => {
-          const navbarLogo = document.querySelector(".navbar-logo");
-          if (!navbarLogo) return;
+        // Merge A + I + . into center
+        .add(() => {
+          requestAnimationFrame(() => {
+            const r = preloaderText.getBoundingClientRect();
+            const centerX = r.width / 2;
 
-          const logoRect = navbarLogo.getBoundingClientRect();
-          const textRect = preloaderText.getBoundingClientRect();
+            if (charA && charI && charPeriod) {
+              const rectA = charA.getBoundingClientRect();
+              const rectI = charI.getBoundingClientRect();
+              const rectPeriod = charPeriod.getBoundingClientRect();
 
-          const dx =
-            logoRect.left -
-            textRect.left +
-            logoRect.width / 2 -
-            textRect.width / 2;
+              const spacing = 4; // spacing between characters
+              const totalWidth = rectA.width + spacing + rectI.width + spacing + rectPeriod.width;
 
-          const dy =
-            logoRect.top -
-            textRect.top +
-            logoRect.height / 2 -
-            textRect.height / 2;
-
-          const scale =
-            parseFloat(getComputedStyle(navbarLogo).fontSize) /
-            parseFloat(getComputedStyle(preloaderText).fontSize);
-
-          gsap.to(preloaderText, {
-            x: dx,
-            y: dy,
-            scale,
-            rotation: 360,
-            duration: 1.2,
-            ease: "power3.inOut",
-            onComplete: () => {
-              gsap.delayedCall(0.1, () => {
-                gsap.set(".navbar-logo", { opacity: 1 });
-                gsap.to(preloaderRef.current, {
-                  opacity: 0,
-                  duration: 0.3,
-                  onComplete: () => {
-                    gsap.set(preloaderRef.current, { display: "none" });
-                    lenis?.start();
-                    document.body.style.overflow = "";
-                  }
-                });
+              gsap.to(charA, {
+                x: centerX - totalWidth / 2 - (rectA.left - r.left),
+                duration: 0.8,
+                ease: "power3.inOut"
+              });
+              gsap.to(charI, {
+                x: centerX - totalWidth / 2 + rectA.width + spacing - (rectI.left - r.left),
+                duration: 0.8,
+                ease: "power3.inOut"
+              });
+              gsap.to(charPeriod, {
+                x: centerX - totalWidth / 2 + rectA.width + spacing + rectI.width + spacing - (rectPeriod.left - r.left),
+                duration: 0.8,
+                ease: "power3.inOut"
               });
             }
           });
-        });
-      }, "+=1")
+        })
 
-      // HEADER TEXT ENTRY
-      .add(() => {
-        if (!headerSplit) return;
+        // Move merged AI to navbar + rotation effect
+        .add(() => {
+          requestAnimationFrame(() => {
+            const navbarLogo = document.querySelector(".navbar-logo");
+            if (!navbarLogo) return;
 
-        gsap.fromTo(
-          headerSplit.chars,
-          {
-            opacity: 0,
-            y: 100,
-            scale: 0.5,
-            filter: "blur(20px)",
-            rotationX: -90
-          },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            filter: "blur(0px)",
-            rotationX: 0,
-            duration: 1.4,
-            stagger: 0.03,
-            ease: "power3.out"
-          }
-        );
-      }, "-=0.4");
+            const logoRect = navbarLogo.getBoundingClientRect();
+            const textRect = preloaderText.getBoundingClientRect();
 
-    // START TIMELINE
-    requestAnimationFrame(() => tl.play());
+            const dx = logoRect.left - textRect.left + logoRect.width / 2 - textRect.width / 2;
+            const dy = logoRect.top - textRect.top + logoRect.height / 2 - textRect.height / 2;
 
-    return () => {
-      document.body.style.overflow = "";
-      headerSplit?.revert();
-      split.revert();
-      tl.kill();
-    };
-  }, [lenis]);
+            const scale = parseFloat(getComputedStyle(navbarLogo).fontSize) / parseFloat(getComputedStyle(preloaderText).fontSize);
+
+            gsap.to(preloaderText, {
+              x: dx,
+              y: dy,
+              scale,
+              rotation: 360,
+              duration: 1.2,
+              ease: "power3.inOut",
+              onComplete: () => {
+                gsap.delayedCall(0.1, () => {
+                  gsap.set(".navbar-logo", { opacity: 1 });
+                  gsap.to(preloaderRef.current, {
+                    opacity: 0,
+                    duration: 0.3,
+                    onComplete: () => {
+                      gsap.set(preloaderRef.current, { display: "none" });
+                      lenis?.start();
+                      document.body.style.overflow = "";
+
+                      // Just reveal header title simply. 
+                      if (headerSplit) {
+                        gsap.to(headerSplit.chars, { opacity: 1, duration: 0.5, stagger: 0.02 });
+                      }
+
+                      // Mark complete
+                      setIsPreloaderComplete(true);
+                    }
+                  });
+                });
+              }
+            });
+          });
+        }, "+=1");
+
+      return () => {
+        document.body.style.overflow = "";
+        headerSplit?.revert();
+        split.revert();
+        tl.kill();
+      };
+
+    } else {
+      // --- CASE 2: NAVIGATION / SUBSEQUENT LOAD (No Animation) ---
+
+      // Hide Long Preloader Immediately
+      if (preloaderRef.current) {
+        gsap.set(preloaderRef.current, { display: "none" });
+      }
+
+      // Ensure Navbar Logo is visible
+      const navbarLogo = document.querySelector(".navbar-logo");
+      if (navbarLogo) {
+        gsap.set(navbarLogo, { opacity: 1, rotation: 0 });
+      }
+
+      // Ensure Header Text is visible
+      if (headerSplit) {
+        gsap.set(headerSplit.chars, { opacity: 1, y: 0, scale: 1, filter: "none", rotationX: 0 });
+      }
+
+      return () => {
+        headerSplit?.revert();
+      };
+    }
+  }, [lenis, isPreloaderComplete]);
 
   // GLOBAL TEXT BLUR ON SCROLL
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
     const textElements = document.querySelectorAll(".blur-on-scroll");
-
     gsap.to(textElements, {
       scrollTrigger: {
         trigger: ".header-hero",
@@ -229,11 +218,10 @@ const HeaderLandingSection = () => {
       opacity: 0,
       ease: "none"
     });
-
     return () => ScrollTrigger.getAll().forEach(t => t.kill());
   }, []);
 
-  // VIDEO ANIMATION (unchanged)
+  // VIDEO ANIMATION
   useEffect(() => {
     if (typeof window === "undefined" || window.innerWidth < 900) return;
 
@@ -263,7 +251,6 @@ const HeaderLandingSection = () => {
     };
 
     const initialValues = getInitialValues();
-
     const animationState = {
       scrollProgress: 0,
       initialTranslateY: initialValues.translateY,
@@ -280,7 +267,6 @@ const HeaderLandingSection = () => {
       const newValues = getInitialValues();
       animationState.initialTranslateY = newValues.translateY;
       animationState.movementMultiplier = newValues.movementMultiplier;
-
       if (animationState.scrollProgress === 0) {
         animationState.currentTranslateY = newValues.translateY;
       }
@@ -377,7 +363,7 @@ const HeaderLandingSection = () => {
       {/* Preloader */}
       <div
         ref={preloaderRef}
-        className="fixed inset-0 z-[9999] flex items-center justify-center bg-background"
+        className="fixed inset-0 z-[9999] flex flex-col gap-3 items-center justify-center bg-background"
       >
         <h1
           ref={preloaderTextRef}
@@ -385,6 +371,7 @@ const HeaderLandingSection = () => {
         >
           Aleksandar Ivanov.
         </h1>
+        <p className="text-stone-400 text-sm">in development...</p>
       </div>
 
       {/* HEADER */}

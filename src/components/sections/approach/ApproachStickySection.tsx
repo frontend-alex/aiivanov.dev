@@ -95,8 +95,8 @@ const ApproachSection = () => {
         <div className="relative w-full h-full">
             {approach.map((cardData, index) => (
                 <div
-                    className="sticky-card relative rounded-2xl w-full h-screen bg-background p-6 flex will-change-transform
-                     flex-col lg:flex-row lg:gap-12"
+                    className={`sticky-card relative w-full h-screen bg-background p-6 ${index > 0 ? "[box-shadow:0_-60px_60px_-60px_rgba(0,0,0,0.1)]" : ""} flex will-change-transform
+                     flex-col lg:flex-row lg:gap-12`}
                     key={index}
                 >
                     {/* Overlay */}

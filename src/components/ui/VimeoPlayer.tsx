@@ -129,7 +129,7 @@ const VimeoPlayer = forwardRef<VimeoPlayerRef, VimeoPlayerProps>(
         if (!videoId) {
             return (
                 <div ref={wrapperRef} className={wrapperClassName}>
-                    <div className="w-full h-full rounded-md flex items-center justify-center">
+                    <div className="w-full h-full rounded-md flex items-center bg-neutral-100 dark:bg-neutral-900 justify-center">
                         <h1 className="text-4xl font-black">Unavailable</h1>
                     </div>
                 </div>

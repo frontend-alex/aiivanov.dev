@@ -34,7 +34,7 @@ export default function HoverSlideButton({
                 </div>
 
                 {/* Main button content */}
-                <div className={`flex items-center relative px-5 ${mixBlend ? "bg-white" : "bg-black dark:bg-white dark:bg-white"} lg:px-6 h-12 lg:h-14 rounded-full  font-semibold text-base z-10`}>
+                <div className={`flex items-center relative px-5 ${mixBlend ? "bg-white" : "bg-black dark:bg-white"} lg:px-6 h-12 lg:h-14 rounded-full  font-semibold text-base z-10`}>
                     <div className="overflow-hidden">
                         <TransitionLink href={href || "#"} className="relative inline-block">
                             {/* Original text that slides out */}

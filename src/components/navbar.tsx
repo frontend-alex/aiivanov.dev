@@ -7,16 +7,20 @@ import HoverSlideButton from "@/components/ui/button";
 import TransitionLink from "./ui/text-animation/transition-link";
 import HoverSlideText from "@/components/ui/text-animation/hover-slide-text";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export const AppLogo = ({ className }: { className?: string }) => {
+
+    const pathname = usePathname();
+    const isHome = pathname === "/";
+
     return (
         <TransitionLink
-            href="/"
+            href={isHome ? "#" : "/"} 
             className={`
                 ${className}
                 navbar-logo 
                 relative inline-block
-                logo-hover
             `}
         >
             AI.
@@ -55,18 +59,18 @@ const Navbar = () => {
             `}
         >
             <div className="flex items-center gap-10 ">
-                <AppLogo className="text-2xl font-bold" />
-                <div className="flex flex-col hidden lg:flex text-xl">
+                <AppLogo className="text-2xl" />
+                <div className="hidden lg:flex flex-col  text-xl">
                     <p>Netherlands Based</p>
                     <p className="text-inverted-stone">Working globally</p>
                 </div>
             </div>
-            <div className="flex items-center gap-30 hidden md:flex">
+            <div className="items-center gap-30 hidden md:flex">
                 <ul className="flex  items-center gap-3">
                     {footerLinks.slice(0, 1).map((link) => (
                         link.links.map((subLink, subIdx) => (
                             <li key={subIdx}>
-                                <HoverSlideText href={subLink.href} className="text-2xl cursor-target">{subLink.name}</HoverSlideText>
+                                <HoverSlideText href={subLink.href} className="text-xl cursor-target">{subLink.name}</HoverSlideText>
                             </li>
                         ))
                     ))}

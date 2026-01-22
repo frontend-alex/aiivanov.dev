@@ -33,12 +33,12 @@ const LandingHero = () => {
             <div />
             <div className="mt-[100px] blur-on-scroll">
                 <div className="flex flex-col md:flex-row md:items-center justify-between uppercase text-2xl font-bold">
-                    <p>a</p>
-                    <p>really</p>
-                    <p>good</p>
+                    <p className="hero-intro-text">a</p>
+                    <p className="hero-intro-text">really</p>
+                    <p className="hero-intro-text">good</p>
                 </div>
 
-                <h1 className="header-title char text-[15vw] xl:text-[8vw] -tracking-[0.05em] font-black uppercase">
+                <h1 className="header-title char text-[15vw] xl:text-[8vw] -tracking-[0.05em] leading-[0.9] font-black uppercase">
                     Software Engineer
                 </h1>
             </div>

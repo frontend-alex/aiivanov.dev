@@ -162,7 +162,10 @@ const LandingVideo = () => {
                 ref={videoContainerRef}
                 onClick={toggleMute}
             >
-                <div className="header-video-preview">
+                <div
+                    className="header-video-preview"
+                    style={{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" }}
+                >
                     <VimeoPlayer
                         ref={vimeoPlayerRef}
                         videoId="1140981207"
@@ -183,7 +186,10 @@ const LandingVideo = () => {
             </div>
 
             <div className="header-video-container-mobile" onClick={toggleMute}>
-                <div className="header-video-preview">
+                <div
+                    className="header-video-preview"
+                    style={{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" }}
+                >
                     <div className="header-video-wrapper">
                         <VimeoPlayer
                             videoId="1140981207"

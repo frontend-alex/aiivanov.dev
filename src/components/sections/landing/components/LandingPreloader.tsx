@@ -34,6 +34,7 @@ const LandingPreloader = () => {
 
             if (headerSplit) {
                 gsap.set(headerSplit.chars, { opacity: 0, y: 100, filter: "blur(10px)" });
+                gsap.set(".hero-intro-text", { opacity: 0, y: 20, filter: "blur(5px)" });
             }
 
             const split = new SplitText(preloaderText, { type: "chars" });
@@ -133,7 +134,23 @@ const LandingPreloader = () => {
                                         stagger: 0.02,
                                         ease: "power3.out"
                                     }, "-=0.5");
+
+                                    exitTl.to(".hero-intro-text", {
+                                        opacity: 1,
+                                        y: 0,
+                                        filter: "blur(0px)",
+                                        duration: 0.8,
+                                        stagger: 0.5,
+                                        ease: "power2.out"
+                                    }, "-=0.2");
                                 }
+
+                                exitTl.to(".header-video-preview", {
+                                    clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+                                    duration: 1.5,
+                                    ease: "hop",
+                                    stagger: 0.1
+                                }, "-=0.4");
                             }
                         });
                     });
@@ -154,7 +171,34 @@ const LandingPreloader = () => {
                 gsap.set(navbarLogo, { opacity: 1, rotation: 0 });
             }
             if (headerSplit) {
-                gsap.set(headerSplit.chars, { opacity: 1, y: 0, scale: 1, filter: "none", rotationX: 0 });
+                gsap.set(headerSplit.chars, { opacity: 0, y: 100, filter: "blur(10px)" });
+                gsap.set(".hero-intro-text", { opacity: 0, y: 20, filter: "blur(5px)" });
+
+                const skipTl = gsap.timeline({ delay: 0.1 });
+
+                skipTl.to(headerSplit.chars, {
+                    opacity: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                    duration: 1,
+                    stagger: 0.02,
+                    ease: "power3.out"
+                });
+
+                skipTl.to(".hero-intro-text", {
+                    opacity: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                    duration: 0.8,
+                    stagger: 0.4,
+                    ease: "power2.out"
+                }, "-=0.5");
+
+                skipTl.to(".header-video-preview", {
+                    clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+                    duration: 1.5,
+                    ease: "hop",
+                }, "-=0.8");
             }
             return () => {
                 headerSplit?.revert();

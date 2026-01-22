@@ -33,8 +33,7 @@ const MobileMenu = () => {
                     duration: 1,
                     stagger: 0.1,
                     ease: "power4.out",
-                    delay: -1,
-                });
+                })
         },
         []
     );
@@ -83,7 +82,7 @@ const MobileMenu = () => {
 
             {/* Menu Overlay */}
             < div
-                className="menu-overlay fixed top-0 left-0 w-screen h-full w-full py-5 px-5 bg-black dark:bg-white z-[60] flex flex-col justify-between [clip-path:polygon(0%_0%,100%_0%,100%_0%,0%_0%)]"
+                className="menu-overlay fixed top-0 left-0 h-full w-full py-5 px-5 bg-black dark:bg-white z-60 flex flex-col justify-between [clip-path:polygon(0%_0%,100%_0%,100%_0%,0%_0%)]"
             >
                 {/* Header */}
                 < div className="flex justify-between items-center text-white px-5" >
@@ -110,7 +109,7 @@ const MobileMenu = () => {
                 </div >
 
                 {/* Footer / Button */}
-                <Link href="mailto:alex@aiivanov.dev" className="w-full">
+                <Link href="mailto:alex@aiivanov.dev" className="w-full menu-link-item-holder">
                     <button className="w-full py-4 bg-white dark:bg-black text-black dark:text-white text-xl rounded-full font-medium">
                         Get in touch
                     </button>

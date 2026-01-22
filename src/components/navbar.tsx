@@ -16,10 +16,11 @@ export const AppLogo = ({ className }: { className?: string }) => {
 
     return (
         <TransitionLink
-            href={isHome ? "#" : "/"} 
+            href={isHome ? "#" : "/"}
             className={`
                 ${className}
                 navbar-logo 
+                font-bold
                 relative inline-block
             `}
         >

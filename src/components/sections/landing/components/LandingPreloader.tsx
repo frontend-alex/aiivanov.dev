@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
+import { CustomEase } from "gsap/CustomEase";
 import { useLenis } from "lenis/react";
 import { usePreloader } from "@/contexts/preloader-context";
 
@@ -15,7 +16,8 @@ const LandingPreloader = () => {
     useEffect(() => {
         if (typeof window === "undefined") return;
 
-        gsap.registerPlugin(SplitText);
+        gsap.registerPlugin(SplitText, CustomEase);
+        CustomEase.create("hop", "0.76, 0, 0.24, 1");
 
         const headerTitle = document.querySelector(".header-title");
         let headerSplit: SplitText | null = null;
@@ -31,7 +33,7 @@ const LandingPreloader = () => {
             if (!preloaderText) return;
 
             if (headerSplit) {
-                gsap.set(headerSplit.chars, { opacity: 0 });
+                gsap.set(headerSplit.chars, { opacity: 0, y: 100, filter: "blur(10px)" });
             }
 
             const split = new SplitText(preloaderText, { type: "chars" });
@@ -105,23 +107,33 @@ const LandingPreloader = () => {
                             duration: 1.2,
                             ease: "power3.inOut",
                             onComplete: () => {
-                                gsap.delayedCall(0.1, () => {
-                                    gsap.set(".navbar-logo", { opacity: 1 });
-                                    gsap.to(preloaderRef.current, {
-                                        opacity: 0,
-                                        duration: 0.3,
-                                        onComplete: () => {
-                                            gsap.set(preloaderRef.current, { display: "none" });
-                                            lenis?.start();
-                                            document.body.style.overflow = "";
+                                gsap.set(".navbar-logo", { opacity: 1 });
 
-                                            if (headerSplit) {
-                                                gsap.to(headerSplit.chars, { opacity: 1, duration: 0.5, stagger: 0.02 });
-                                            }
-                                            setIsPreloaderComplete(true);
-                                        }
-                                    });
+                                const exitTl = gsap.timeline({
+                                    onComplete: () => {
+                                        gsap.set(preloaderRef.current, { display: "none" });
+                                        lenis?.start();
+                                        document.body.style.overflow = "";
+                                        setIsPreloaderComplete(true);
+                                    }
                                 });
+
+                                exitTl.to(preloaderRef.current, {
+                                    clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+                                    duration: 1.2,
+                                    ease: "hop",
+                                });
+
+                                if (headerSplit) {
+                                    exitTl.to(headerSplit.chars, {
+                                        opacity: 1,
+                                        y: 0,
+                                        filter: "blur(0px)",
+                                        duration: 1,
+                                        stagger: 0.02,
+                                        ease: "power3.out"
+                                    }, "-=0.5");
+                                }
                             }
                         });
                     });
@@ -153,7 +165,8 @@ const LandingPreloader = () => {
     return (
         <div
             ref={preloaderRef}
-            className="fixed inset-0 z-999 flex flex-col gap-3 items-center justify-center bg-background"
+            className="fixed inset-0 z-999 flex flex-col gap-3 items-center justify-center bg-neutral-100 dark:bg-neutral-900"
+            style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
         >
             <h1
                 ref={preloaderTextRef}

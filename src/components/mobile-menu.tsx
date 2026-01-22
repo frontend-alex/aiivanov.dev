@@ -6,8 +6,10 @@ import { useEffect, useRef, useState } from "react";
 import { footerLinks } from "@/constants/data";
 import TransitionLink from "./ui/text-animation/transition-link";
 import Link from "next/link";
+import { useLenis } from "lenis/react";
 
 const MobileMenu = () => {
+    const lenis = useLenis();
     const tl = useRef<gsap.core.Timeline | null>(null);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,19 +51,21 @@ const MobileMenu = () => {
         const preventTouch = (e: TouchEvent) => e.preventDefault();
 
         if (isMenuOpen) {
+            lenis?.stop();
             document.body.style.overflow = "hidden";
             document.documentElement.style.overflow = "hidden";
 
             // iOS / mobile fix
             document.addEventListener("touchmove", preventTouch, { passive: false });
         } else {
+            lenis?.start();
             document.body.style.overflow = "";
             document.documentElement.style.overflow = "";
-
             document.removeEventListener("touchmove", preventTouch);
         }
 
         return () => {
+            lenis?.start();
             document.body.style.overflow = "";
             document.documentElement.style.overflow = "";
             document.removeEventListener("touchmove", preventTouch);
@@ -74,7 +78,7 @@ const MobileMenu = () => {
                 className="cursor-pointer z-50 relative"
                 onClick={toggleMenu}
             >
-                <h1 className="text-xl font-bold">Menu</h1>
+                <div className="bg-foreground h-6 w-6" />
             </div >
 
             {/* Menu Overlay */}
@@ -82,13 +86,11 @@ const MobileMenu = () => {
                 className="menu-overlay fixed top-0 left-0 w-screen h-full w-full py-5 px-5 bg-black dark:bg-white z-[60] flex flex-col justify-between [clip-path:polygon(0%_0%,100%_0%,100%_0%,0%_0%)]"
             >
                 {/* Header */}
-                < div className="flex justify-between items-center text-white" >
+                < div className="flex justify-between items-center text-white px-5" >
                     <TransitionLink href="/" onClick={toggleMenu}>
                         <h1 className="text-2xl font-bold text-white dark:text-black">AI.</h1>
                     </TransitionLink>
-                    <div className="cursor-pointer" onClick={toggleMenu}>
-                        <h1 className="text-xl font-bold text-white dark:text-black">Close</h1>
-                    </div>
+                    <div className="cursor-pointer bg-background h-6 w-6" onClick={toggleMenu} />
                 </div >
 
                 {/* Links / Content */}
